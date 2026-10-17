@@ -54,6 +54,11 @@
       background: #38bdf8;
     }
 
+    *, ::before, ::after {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
     body {
       background-color: #060913;
       background-image: 
@@ -692,7 +697,7 @@
           <!-- Ergonomic Mobile Touch Controls & Instructions -->
           <div class="flex flex-col gap-2 pt-1">
             <div class="flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 px-0.5">
-              <span>🎮 조작: <strong>화면 직접 터치 드래그</strong> 또는 <strong>하단 버튼</strong> (PC: ← →)</span>
+              <span>🎮 조작: <strong>화면 직접 터치 드래그</strong> 또는 <strong>하단 버튼</strong> (단 1회 피격 시 즉시 격추)</span>
               <span class="text-cyan-400/90 font-mono text-[10px]">코어 획득 시 즉시 암호 해독</span>
             </div>
             
@@ -802,7 +807,95 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- Modal 1: PDF Download & Google Drive Center                               -->
+    <!-- ========================================================================= -->
+  <!-- Modal: Download Terms of Service Agreement                                -->
+  <!-- ========================================================================= -->
+  <div id="termsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-5">
+    <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-xl w-full p-4 sm:p-6 shadow-2xl max-h-[92vh] flex flex-col border border-slate-700/80">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-800 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          </div>
+          <div>
+            <h2 class="text-sm sm:text-base font-extrabold text-white">자료 다운로드 이용약관</h2>
+            <p class="text-[11px] sm:text-xs text-slate-400 mt-0.5">파일 다운로드 전 이용약관 확인 및 동의가 필요합니다.</p>
+          </div>
+        </div>
+        <button id="closeTermsModalBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 flex items-center justify-center text-sm font-bold">✕</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="mt-4 overflow-y-auto flex-1 space-y-3.5 pr-1 text-xs">
+        
+        <!-- Standard Summary Box -->
+        <div class="p-3.5 rounded-xl bg-dark-950/90 border border-slate-800 leading-relaxed text-slate-300">
+          <p>
+            본 자료는 창북중학교 기출 시험지 아카이브 시스템에서 제공하는 학업 참고용 자료입니다. 자료의 안전한 보존 및 디지털 저작권·이용 에티켓 준수를 위해 아래 서비스 이용약관에 동의하셔야 다운로드가 진행됩니다.
+          </p>
+        </div>
+
+        <!-- Toggle Detail Button -->
+        <div class="flex items-center justify-between px-0.5">
+          <span class="text-xs font-bold text-slate-300 font-mono">이용약관</span>
+          <button id="toggleTermsDetailBtn" type="button" class="text-xs text-cyan-400 hover:text-cyan-300 font-bold underline flex items-center gap-1 font-mono transition">
+            <span id="toggleTermsDetailText">자세히 보기 ▾</span>
+          </button>
+        </div>
+
+        <!-- Expanded Full Terms (Hidden by default, shown when 자세히보기 clicked) -->
+        <div id="termsDetailContainer" class="hidden space-y-3 transition-all">
+          <div class="max-h-52 overflow-y-auto p-3.5 rounded-xl bg-dark-950 border border-slate-800 text-[11px] text-slate-400 space-y-2 leading-relaxed font-sans">
+            <div>
+              <strong class="text-slate-200">제1조 (목적)</strong><br/>
+              본 약관은 창북중학교 3학년 2학기 기출 시험지 보안 아카이브(이하 '아카이브')에서 제공하는 디지털 문서 파일의 다운로드 및 열람에 관한 조건과 절차를 규정함을 목적으로 합니다.
+            </div>
+            <div>
+              <strong class="text-slate-200">제2조 (자료의 성격 및 이용 범위)</strong><br/>
+              제공되는 시험지 및 정답표 자료는 학생들의 학업 증진 및 자기주도 학습 참고용으로서 비영리적인 개인적 목적에 한하여 열람 및 활용할 수 있습니다.
+            </div>
+            <div>
+              <strong class="text-slate-200">제3조 (지적 재산 및 보안 준수)</strong><br/>
+              이용자는 아카이브 내 보안 프로토콜을 침해하거나 자료를 무단 상업적 재판매하는 행위를 할 수 없습니다.
+            </div>
+            <div class="p-2.5 rounded-lg bg-indigo-950/30 border border-indigo-500/20 text-slate-300">
+              <strong class="text-indigo-300">제4조 (디지털 에티켓 및 관계적 경계 규범)</strong><br/>
+              이용자는 건전한 정보 네트워크 환경과 상호 간의 사생활 보호를 성실히 준수하여야 하며, <strong>휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다.</strong> 또한 상호 신뢰를 저해하는 일체의 과도한 디지털 탐색을 엄격히 자제합니다.
+            </div>
+            <div>
+              <strong class="text-slate-200">제5조 (동의의 효력 및 다운로드)</strong><br/>
+              이용자가 약관에 동의하고 다운로드를 실행하는 것은 본 약관의 전 조항과 제4조의 서약 규범을 완전히 수용하고 이를 이행할 것에 확약한 것으로 봅니다.
+            </div>
+          </div>
+
+          <!-- Highlighted callout when 자세히보기 is open -->
+          <div class="p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-[11px] text-cyan-200 leading-relaxed font-mono">
+            <div class="font-bold text-cyan-400 mb-1">📋 서약 준수 조항 확인:</div>
+            "휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다"
+          </div>
+        </div>
+
+        <!-- Agreement Checkbox -->
+        <div id="termsCheckWrap" class="p-3 rounded-xl bg-dark-900 border border-slate-700/80 flex items-center gap-3 transition">
+          <input type="checkbox" id="termsAgreeCheck" class="w-4 h-4 rounded text-cyan-500 bg-dark-950 border-slate-700 cursor-pointer shrink-0">
+          <label for="termsAgreeCheck" id="termsAgreeLabel" class="text-xs text-slate-200 cursor-pointer select-none">
+            [필수] 이용약관에 동의합니다.
+          </label>
+        </div>
+
+        <!-- Download Action Button -->
+        <button id="confirmTermsDownloadBtn" type="button" class="w-full py-3.5 rounded-xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-xl transition active:scale-98 flex items-center justify-center gap-2 font-mono">
+          <span>동의하고 파일 다운로드</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+<!-- Modal 1: PDF Download & Google Drive Center                               -->
   <!-- ========================================================================= -->
   <div id="driveModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-5">
     <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl max-h-[90vh] flex flex-col">
@@ -822,7 +915,7 @@
       <div class="mt-4 overflow-y-auto flex-1 space-y-3 pr-1">
         <!-- Direct Google Drive Folder Link -->
         <a
-          href="https://drive.google.com/drive/folders/1oD6mmW7ca7W-viXCBmy9fgAhzH14lbOk"
+          href="https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing" onclick="interceptDownloadClick(event, 'https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing')"
           target="_blank"
           rel="noopener noreferrer"
           class="w-full p-3 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-between text-xs font-bold text-indigo-200 transition shadow-sm"
@@ -1328,7 +1421,7 @@
       vx: 0,
       targetX: 240,
       tilt: 0,
-      shields: 3,
+      shields: 1,
       invulnerableTimer: 0,
       isTouchDragging: false
     };
@@ -1377,7 +1470,7 @@
       player.y = logicalHeight - 45;
       player.vx = 0;
       player.tilt = 0;
-      player.shields = 3;
+      player.shields = 1;
       player.invulnerableTimer = 0;
       player.isTouchDragging = false;
       buttonInputDir = 0;
@@ -1399,13 +1492,13 @@
     }
 
     function updateArcadeHUD() {
-      // Shields
+      // Shields: 1-Hit KO Sudden Death System
       if (gameShields) {
-        let shieldIcons = '';
-        for (let i = 0; i < 3; i++) {
-          shieldIcons += i < player.shields ? '<span>🛡️</span>' : '<span class="opacity-20 grayscale">🛡️</span>';
+        if (player.shields > 0) {
+          gameShields.innerHTML = '<span class="text-emerald-400 font-bold">🛡️ 1/1</span> <span class="text-[10px] text-red-400 font-mono tracking-tight">(단 1회 피격 시 즉시 격추)</span>';
+        } else {
+          gameShields.innerHTML = '<span class="text-red-500 font-bold font-mono">💀 격추됨</span>';
         }
-        gameShields.innerHTML = shieldIcons;
       }
 
       // Progress Badge
@@ -1541,9 +1634,9 @@
       randomizeAccessCode('Arcade death breach');
 
       overlayIcon.textContent = '💥';
-      overlayTitle.textContent = 'SYSTEM BREACH // CIPHER RESET';
+      overlayTitle.textContent = 'SYSTEM BREACH // SHIP DESTROYED';
       overlayTitle.className = 'text-sm sm:text-lg font-black text-red-400 font-mono tracking-wide';
-      overlaySubtext.textContent = '프로브 파괴로 보안 시스템이 암호를 즉시 폐기하고 새로운 영단어로 재설정했습니다. 새 암호 코어를 탈취하세요!';
+      overlaySubtext.textContent = '장애물 단 1회 피격으로 프로브가 파괴되었습니다. 보안 프로토콜에 의해 암호가 즉시 폐기 및 재설정되었습니다.';
       overlayActionBtn.textContent = 'RETRY MISSION (새 암호로 재도전)';
       overlayActionBtn.className = 'mt-3 sm:mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white shadow-lg font-mono tracking-wider active:scale-95 transition';
       
@@ -1704,22 +1797,19 @@
 
         if (hit) {
           if (player.invulnerableTimer <= 0) {
-            player.shields--;
-            player.invulnerableTimer = 1.4;
-            screenShake = 12;
-            addExplosion(player.x, player.y, '#ef4444', 26);
+            // 1-Hit KO Sudden Death!
+            player.shields = 0;
+            screenShake = 18;
+            addExplosion(player.x, player.y, '#ef4444', 36);
             playDamageCrunch();
             
             if (window.navigator && window.navigator.vibrate) {
-              try { window.navigator.vibrate([60, 40, 80]); } catch(e){}
+              try { window.navigator.vibrate([100, 50, 150]); } catch(e){}
             }
 
             updateArcadeHUD();
-
-            if (player.shields <= 0) {
-              triggerGameOver();
-              return;
-            }
+            triggerGameOver();
+            return;
           }
           activeHazards.splice(i, 1);
           continue;
@@ -2670,7 +2760,7 @@
           chip.className = isCurrent
             ? 'py-3 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md'
             : 'py-3 rounded-xl text-xs font-bold bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700';
-          chip.innerHTML = isLast ? `🎯 정답표<br><span class="text-[10px] font-normal opacity-80">${i + 1}면</span>` : `${i + 1}면`;
+          chip.innerHTML = isLast ? `<span class="font-bold">🎯 정답표</span> <span class="text-[10px] opacity-80 font-mono">(${i + 1}면)</span>` : `${i + 1}면`;
           chip.addEventListener('click', () => {
             activePageIdx = i;
             closeSheet(sheetPages);
@@ -2814,10 +2904,10 @@
         
         const origButtons = isUnlocked
           ? `
-            <a href="${local.orig}" download class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition flex items-center gap-1 shadow-sm">
+            <a href="${local.orig}" onclick="interceptDownloadClick(event, '${local.orig}')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition flex items-center gap-1 shadow-sm">
               <span>⬇ 원본 PDF</span>
             </a>
-            <a href="${local.ts}" download class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition">
+            <a href="${local.ts}" onclick="interceptDownloadClick(event, '${local.ts}')" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition">
               TOP SECRET본
             </a>
           `
@@ -2838,7 +2928,7 @@
           </div>
           <div class="flex items-center gap-1.5 flex-wrap">
             ${origButtons}
-            <a href="${local.red}" download class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-600/20 hover:bg-red-600/30 text-red-200 border border-red-500/40 transition">
+            <a href="${local.red}" onclick="interceptDownloadClick(event, '${local.red}')" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-600/20 hover:bg-red-600/30 text-red-200 border border-red-500/40 transition">
               기밀블러 PDF
             </a>
           </div>
@@ -3127,6 +3217,7 @@
 
     // Close Modals on Outer Click
     window.addEventListener('click', (e) => {
+      if (e.target === termsModal) { closeTermsModal(); }
       if (e.target === driveModal) {
         driveModal.classList.add('hidden');
         driveModal.classList.remove('flex');
@@ -3139,6 +3230,100 @@
 
     // Initial Render
     renderAll();
-  </script>
+  
+    // =========================================================================
+    // Terms of Service Agreement & Download Interceptor
+    // =========================================================================
+    const termsModal = document.getElementById('termsModal');
+    const closeTermsModalBtn = document.getElementById('closeTermsModalBtn');
+    const toggleTermsDetailBtn = document.getElementById('toggleTermsDetailBtn');
+    const toggleTermsDetailText = document.getElementById('toggleTermsDetailText');
+    const termsDetailContainer = document.getElementById('termsDetailContainer');
+    const termsCheckWrap = document.getElementById('termsCheckWrap');
+    const termsAgreeCheck = document.getElementById('termsAgreeCheck');
+    const termsAgreeLabel = document.getElementById('termsAgreeLabel');
+    const confirmTermsDownloadBtn = document.getElementById('confirmTermsDownloadBtn');
+
+    const TARGET_DRIVE_DOWNLOAD_URL = 'https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing';
+    let pendingDownloadFileUrl = TARGET_DRIVE_DOWNLOAD_URL;
+
+    function openTermsModal(targetUrl = TARGET_DRIVE_DOWNLOAD_URL) {
+      pendingDownloadFileUrl = targetUrl || TARGET_DRIVE_DOWNLOAD_URL;
+      if (termsAgreeCheck) termsAgreeCheck.checked = false;
+      
+      // Default: 자세히보기 안 눌렀을 때는 '이용약관'으로만 표시
+      if (termsDetailContainer) termsDetailContainer.classList.add('hidden');
+      if (toggleTermsDetailText) toggleTermsDetailText.textContent = '자세히 보기 ▾';
+      if (termsAgreeLabel) termsAgreeLabel.textContent = '[필수] 이용약관에 동의합니다.';
+
+      if (termsModal) {
+        termsModal.classList.remove('hidden');
+        termsModal.classList.add('flex');
+      }
+    }
+
+    function closeTermsModal() {
+      if (termsModal) {
+        termsModal.classList.add('hidden');
+        termsModal.classList.remove('flex');
+      }
+    }
+
+    if (toggleTermsDetailBtn) {
+      toggleTermsDetailBtn.addEventListener('click', () => {
+        const isHidden = termsDetailContainer.classList.contains('hidden');
+        if (isHidden) {
+          termsDetailContainer.classList.remove('hidden');
+          toggleTermsDetailText.textContent = '접기 ▴';
+          termsAgreeLabel.innerHTML = '<strong>[필수]</strong> 이용약관 및 휘발성 감시의 역설에 관한 서약 내용에 완전히 동의합니다.';
+        } else {
+          termsDetailContainer.classList.add('hidden');
+          toggleTermsDetailText.textContent = '자세히 보기 ▾';
+          termsAgreeLabel.textContent = '[필수] 이용약관에 동의합니다.';
+        }
+      });
+    }
+
+    if (closeTermsModalBtn) {
+      closeTermsModalBtn.addEventListener('click', closeTermsModal);
+    }
+
+    if (confirmTermsDownloadBtn) {
+      confirmTermsDownloadBtn.addEventListener('click', () => {
+        if (!termsAgreeCheck || !termsAgreeCheck.checked) {
+          playBeep(220, 'sawtooth', 0.2);
+          if (termsCheckWrap) {
+            termsCheckWrap.classList.remove('shake-anim');
+            void termsCheckWrap.offsetWidth;
+            termsCheckWrap.classList.add('shake-anim');
+          }
+          showToast('[필수] 이용약관에 동의해주셔야 다운로드가 진행됩니다.', 'info');
+          return;
+        }
+
+        // Agreed!
+        playChime([523, 659, 784, 1046]);
+        showToast('이용약관 동의 완료! 지정된 기출 파일 다운로드로 연결합니다.', 'success');
+        closeTermsModal();
+
+        // Open target download URL
+        window.open(TARGET_DRIVE_DOWNLOAD_URL, '_blank');
+      });
+    }
+
+    // Intercept all file downloads to trigger Terms Modal first
+    function interceptDownloadClick(e, originalUrl) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      openTermsModal(originalUrl);
+    }
+
+    window.interceptDownloadClick = interceptDownloadClick;
+    window.openTermsModal = openTermsModal;
+    window.closeTermsModal = closeTermsModal;
+
+    </script>
 </body>
 </html>
