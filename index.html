@@ -784,6 +784,20 @@
               CLEARANCE OVERRIDE : 100% SUCCESS
             </div>
             <h4 class="text-xl sm:text-2xl font-black text-white font-mono tracking-tight">ACCESS GRANTED!</h4>
+            
+            <!-- Complete Decrypted Cipher Box -->
+            <div class="my-3 p-3.5 sm:p-4 rounded-2xl bg-cyan-950/60 border-2 border-cyan-400/80 shadow-2xl shadow-cyan-500/20 max-w-sm mx-auto font-mono">
+              <div class="text-[10px] text-cyan-300 font-bold uppercase tracking-widest mb-1 flex items-center justify-center gap-1.5">
+                <span>✦ 탈취 성공 // 온전한 마스터 암호 ✦</span>
+              </div>
+              <div id="resultCipherBox" class="text-2xl sm:text-3xl font-black text-white tracking-widest py-1 drop-shadow-md">
+                ------
+              </div>
+              <div class="text-[11px] text-emerald-400 font-bold mt-1">
+                ✓ 전체 자리수의 완전한 마스터 키가 성공적으로 복원되었습니다.
+              </div>
+            </div>
+
             <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
               사이버 미니게임을 성공적으로 클리어하여 보안 잠금이 해제되었습니다!<br/>
               전 과목 원본 시험지 및 NEIS 공식 정답표가 활성화됩니다.
@@ -1388,8 +1402,9 @@
     let buttonInputDir = 0;
     let keyInputDir = 0;
 
-    let harvestedLetters = []; // Letters collected for current word
-    let uncollectedLettersPool = [];
+    let currentWordLetters = [];
+    let collectedFlags = [];
+    let harvestedLetters = [];
     let activeCores = [];
     let activeHazards = [];
     let activeParticles = [];
@@ -1436,9 +1451,10 @@
       keyInputDir = 0;
       screenShake = 0;
 
+      // Ensure 100% complete cipher slots with zero duplicates and zero missing letters
+      currentWordLetters = currentAccessCode.split('');
+      collectedFlags = new Array(currentWordLetters.length).fill(false);
       harvestedLetters = [];
-      // Initialize pool with letters of currentAccessCode!
-      uncollectedLettersPool = [...currentAccessCode.split('')].sort(() => Math.random() - 0.5);
       activeCores = [];
       activeHazards = [];
       activeParticles = [];
@@ -1451,18 +1467,19 @@
     }
 
     function updateArcadeHUD() {
-      // Shields: 1-Hit KO Sudden Death System
+      // Shields: 1-Hit Sudden Death System
       if (gameShields) {
         if (player.shields > 0) {
-          gameShields.innerHTML = '<span class="text-emerald-400 font-bold">🛡️ 1/1</span> <span class="text-[10px] text-red-400 font-mono tracking-tight">(단 1회 피격 시 즉시 격추)</span>';
+          gameShields.innerHTML = '<span class="text-emerald-400 font-bold">🛡️ 1/1</span> <span class="text-[10px] text-red-400 font-mono tracking-tight">(단 1회 피격 시 즉시 종료)</span>';
         } else {
           gameShields.innerHTML = '<span class="text-red-500 font-bold font-mono">💀 격추됨</span>';
         }
       }
 
       // Progress Badge
+      const collectedCount = collectedFlags.filter(Boolean).length;
       if (gameCoreProgress) {
-        gameCoreProgress.textContent = `${harvestedLetters.length} / ${currentAccessCode.length}`;
+        gameCoreProgress.textContent = `${collectedCount} / ${currentWordLetters.length}`;
       }
 
       // Score
@@ -1470,19 +1487,18 @@
         gameScoreText.textContent = arcadeScore.toLocaleString();
       }
 
-      // Core preview slots
+      // Core preview slots: shows the complete word forming in place
       if (harvestedCoreSlots) {
         harvestedCoreSlots.innerHTML = '';
-        const targetArr = currentAccessCode.split('');
-        targetArr.forEach((l, idx) => {
-          const has = harvestedLetters[idx];
+        currentWordLetters.forEach((l, idx) => {
+          const isCollected = collectedFlags[idx];
           const chip = document.createElement('div');
-          if (has) {
-            chip.className = 'w-6 h-6 rounded bg-cyan-500/30 border border-cyan-400 text-cyan-300 font-mono font-black text-[11px] flex items-center justify-center shadow-sm animate-pulse';
-            chip.textContent = has;
+          if (isCollected) {
+            chip.className = 'w-7 h-8 rounded-lg bg-cyan-500/30 border border-cyan-400 text-cyan-200 font-mono font-black text-xs flex items-center justify-center shadow-md animate-pulse';
+            chip.textContent = l;
           } else {
-            chip.className = 'w-6 h-6 rounded bg-dark-900 border border-slate-800 text-slate-700 font-mono font-bold text-[10px] flex items-center justify-center';
-            chip.textContent = '·';
+            chip.className = 'w-7 h-8 rounded-lg bg-dark-900 border border-slate-800 text-slate-600 font-mono font-bold text-xs flex items-center justify-center';
+            chip.textContent = '?';
           }
           harvestedCoreSlots.appendChild(chip);
         });
@@ -1490,17 +1506,30 @@
     }
 
     function spawnDataCore() {
-      if (uncollectedLettersPool.length === 0) return;
+      // Find indices in currentWordLetters that are NOT collected AND NOT currently on screen
+      const activeIndices = activeCores.map(c => c.codeIndex);
+      const availableIndices = [];
+      for (let i = 0; i < currentWordLetters.length; i++) {
+        if (!collectedFlags[i] && !activeIndices.includes(i)) {
+          availableIndices.push(i);
+        }
+      }
+
+      if (availableIndices.length === 0) return;
+
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const logicalWidth = arcadeCanvas.width / dpr;
       
-      // Pick next uncollected letter from the current word
-      const letter = uncollectedLettersPool[Math.floor(Math.random() * uncollectedLettersPool.length)];
+      // Pick next needed index (Guaranteed to be an uncollected letter of the password)
+      const targetIdx = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+      const targetLetter = currentWordLetters[targetIdx];
+
       activeCores.push({
         x: 35 + Math.random() * (logicalWidth - 70),
         y: -25,
         radius: 17,
-        letter: letter,
+        codeIndex: targetIdx,
+        letter: targetLetter,
         speed: 1.8 + Math.random() * 0.9,
         rot: 0,
         pulse: Math.random() * Math.PI
@@ -1590,12 +1619,12 @@
       playDamageCrunch();
       
       // As requested: "한번이라도 죽거나 비번 입력 실패하면 비번 바뀌게해줘"
-      randomizeAccessCode('Arcade death breach');
+      randomizeAccessCode('Arcade 1-hit collision breach');
 
       overlayIcon.textContent = '💥';
-      overlayTitle.textContent = 'SYSTEM BREACH // SHIP DESTROYED';
+      overlayTitle.textContent = 'MISSION FAILED // 1-HIT ELIMINATED';
       overlayTitle.className = 'text-sm sm:text-lg font-black text-red-400 font-mono tracking-wide';
-      overlaySubtext.textContent = '장애물 단 1회 피격으로 프로브가 파괴되었습니다. 보안 프로토콜에 의해 암호가 즉시 폐기 및 재설정되었습니다.';
+      overlaySubtext.textContent = '장애물 1회 충돌로 즉시 게임이 종료되었습니다. 보안 프로토콜에 따라 암호가 새로운 영단어로 재설정되었습니다.';
       overlayActionBtn.textContent = 'RETRY MISSION (새 암호로 재도전)';
       overlayActionBtn.className = 'mt-3 sm:mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white shadow-lg font-mono tracking-wider active:scale-95 transition';
       
@@ -1606,13 +1635,26 @@
     function triggerStage1Clear() {
       stopArcadeGame();
       playFanfareSound();
-      showToast(`🎉 모든 ${currentAccessCode.length}개 암호 코어 탈취 성공! 마스터 키 해독실로 이동합니다.`, 'success');
+      if (window.navigator && window.navigator.vibrate) {
+        try { window.navigator.vibrate([50, 70, 50, 70, 100]); } catch(e){}
+      }
+
+      showToast(`🎉 온전한 마스터 암호 [ ${currentAccessCode} ] 탈취 성공!`, 'success');
 
       setTimeout(() => {
         gameStage1.classList.add('hidden');
-        gameStage2.classList.remove('hidden');
-        initDecryptionChamber();
-      }, 700);
+        if (gameStage2) gameStage2.classList.add('hidden');
+        if (gameStage3) gameStage3.classList.remove('hidden');
+
+        // Render the complete password into resultCipherBox
+        const resultCipherBox = document.getElementById('resultCipherBox');
+        if (resultCipherBox) {
+          resultCipherBox.textContent = currentAccessCode;
+        }
+
+        // Auto unlock archive
+        attemptUnlockWith(currentAccessCode);
+      }, 500);
     }
 
     function arcadeGameLoop(now) {
@@ -1637,38 +1679,22 @@
         player.x += player.vx * dt;
         player.targetX = player.x;
       } else if (player.isTouchDragging) {
-        const diff = player.targetX - player.x;
-        player.vx = diff * 18;
+        const dx = player.targetX - player.x;
+        player.vx = dx * 16;
         player.x += player.vx * dt;
       } else {
         player.vx *= Math.pow(FRICTION, dt * 60);
         player.x += player.vx * dt;
-        player.targetX = player.x;
       }
 
-      // Dynamic Banking/Tilt based on velocity
-      player.tilt = Math.max(-0.45, Math.min(0.45, (player.vx / MAX_SPEED) * 0.42));
-      player.x = Math.max(player.width / 2 + 6, Math.min(logicalWidth - player.width / 2 - 6, player.x));
+      // Clamp player within canvas bounds
+      player.x = Math.max(player.width / 2, Math.min(logicalWidth - player.width / 2, player.x));
 
-      if (player.invulnerableTimer > 0) {
-        player.invulnerableTimer -= dt;
-      }
+      // Dynamic Ship Bank / Tilt
+      const targetTilt = (player.vx / MAX_SPEED) * 0.35;
+      player.tilt += (targetTilt - player.tilt) * 0.2;
 
-      // Thruster Exhaust Particles
-      if (Math.random() < 0.75) {
-        activeParticles.push({
-          x: player.x + (Math.random() - 0.5) * 8,
-          y: player.y + 14,
-          vx: (Math.random() - 0.5) * 0.8,
-          vy: 2.8 + Math.random() * 2.5 + Math.abs(player.vx) * 0.005,
-          life: 0.6,
-          decay: 0.05,
-          color: Math.random() < 0.5 ? '#38bdf8' : '#818cf8',
-          size: 1.5 + Math.random() * 2
-        });
-      }
-
-      // 2. Starfield Update
+      // 2. Stars
       backgroundStars.forEach(st => {
         st.y += st.speed;
         if (st.y > logicalHeight) {
@@ -1679,7 +1705,7 @@
 
       // 3. Spawns
       spawnTimer += dt;
-      if (spawnTimer > 1.35 && activeCores.length < 3 && uncollectedLettersPool.length > 0) {
+      if (spawnTimer > 1.35 && activeCores.length < 3) {
         spawnDataCore();
         spawnTimer = 0;
       }
@@ -1699,14 +1725,13 @@
 
         // Collision with player
         const dist = Math.hypot(c.x - player.x, c.y - player.y);
-        if (dist < c.radius + player.width / 2 - 2) {
+        if (dist < c.radius + player.width / 2) {
           // Intercepted / Decrypted!
+          collectedFlags[c.codeIndex] = true;
           harvestedLetters.push(c.letter);
-          const idxInPool = uncollectedLettersPool.indexOf(c.letter);
-          if (idxInPool !== -1) uncollectedLettersPool.splice(idxInPool, 1);
           
           arcadeScore += 200;
-          addExplosion(c.x, c.y, '#38bdf8', 26);
+          addExplosion(c.x, c.y, '#38bdf8', 28);
           addFloatingText(c.x, c.y - 12, `✦ DECRYPTED: [ ${c.letter} ] ✦`, '#38bdf8');
           playPickupChime();
           
@@ -1717,7 +1742,8 @@
           activeCores.splice(i, 1);
           updateArcadeHUD();
 
-          if (harvestedLetters.length >= currentAccessCode.length) {
+          // If all letters of currentAccessCode are collected -> VICTORY!
+          if (collectedFlags.every(Boolean)) {
             triggerStage1Clear();
             return;
           }
@@ -1725,53 +1751,55 @@
         }
 
         if (c.y > logicalHeight + 30) {
+          // Core fell off screen without being caught -> removed from activeCores so it will respawn!
           activeCores.splice(i, 1);
         }
       }
 
-      // 5. Update Hazards & Check Collision
+      // 5. Update Hazards & Check Collision (INSTANT 1-HIT ELIMINATION)
       for (let i = activeHazards.length - 1; i >= 0; i--) {
         const h = activeHazards[i];
         h.y += h.speed;
 
         let hit = false;
         if (h.type === 'beam') {
-          // AABB hit
-          if (
-            player.x + player.width / 2 > h.x &&
-            player.x - player.width / 2 < h.x + h.width &&
-            player.y + player.height / 2 > h.y &&
-            player.y - player.height / 2 < h.y + h.height
-          ) {
+          // Responsive AABB hit
+          const shipLeft = player.x - player.width / 2;
+          const shipRight = player.x + player.width / 2;
+          const shipTop = player.y - player.height / 2;
+          const shipBottom = player.y + player.height / 2;
+
+          const beamLeft = h.x;
+          const beamRight = h.x + h.width;
+          const beamTop = h.y;
+          const beamBottom = h.y + h.height;
+
+          if (shipRight > beamLeft && shipLeft < beamRight && shipBottom > beamTop && shipTop < beamBottom) {
             hit = true;
           }
         } else {
           // Circle mine hit
           h.rot += dt * 3;
           const dist = Math.hypot(h.x - player.x, h.y - player.y);
-          if (dist < h.radius + player.width / 2 - 4) {
+          if (dist < h.radius + player.width / 2 - 1) {
             hit = true;
           }
         }
 
         if (hit) {
-          if (player.invulnerableTimer <= 0) {
-            // 1-Hit KO Sudden Death!
-            player.shields = 0;
-            screenShake = 18;
-            addExplosion(player.x, player.y, '#ef4444', 36);
-            playDamageCrunch();
-            
-            if (window.navigator && window.navigator.vibrate) {
-              try { window.navigator.vibrate([100, 50, 150]); } catch(e){}
-            }
-
-            updateArcadeHUD();
-            triggerGameOver();
-            return;
+          // INSTANT 1-HIT GAME OVER: No invulnerableTimer grace, immediate defeat!
+          player.shields = 0;
+          screenShake = 22;
+          addExplosion(player.x, player.y, '#ef4444', 45);
+          playDamageCrunch();
+          
+          if (window.navigator && window.navigator.vibrate) {
+            try { window.navigator.vibrate([150, 80, 200]); } catch(e){}
           }
-          activeHazards.splice(i, 1);
-          continue;
+
+          updateArcadeHUD();
+          triggerGameOver();
+          return;
         }
 
         if (h.y > logicalHeight + 30) {
@@ -1826,7 +1854,7 @@
         arcadeCtx.fillRect(st.x, st.y, st.size, st.size);
       });
 
-      // Draw Cores (HIDDEN CODE UNTIL INTERCEPTED!)
+      // Draw Cores (Hidden glyph before collection)
       activeCores.forEach(c => {
         arcadeCtx.save();
         arcadeCtx.translate(c.x, c.y);
@@ -1834,35 +1862,41 @@
         // Outer pulsing quantum radar ring
         const pulseR = c.radius + Math.sin(c.pulse) * 3.5;
         arcadeCtx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
-        arcadeCtx.lineWidth = 2;
+        arcadeCtx.lineWidth = 1.5;
         arcadeCtx.beginPath();
         arcadeCtx.arc(0, 0, pulseR, 0, Math.PI * 2);
         arcadeCtx.stroke();
 
-        // Inner glowing cyber orb
-        const grad = arcadeCtx.createRadialGradient(0, 0, 2, 0, 0, c.radius);
-        grad.addColorStop(0, '#ffffff');
-        grad.addColorStop(0.45, '#38bdf8');
-        grad.addColorStop(0.85, '#0284c7');
-        grad.addColorStop(1, '#0369a1');
-        arcadeCtx.fillStyle = grad;
-        arcadeCtx.beginPath();
-        arcadeCtx.arc(0, 0, c.radius, 0, Math.PI * 2);
-        arcadeCtx.fill();
+        // Rotating Data Hexagon
+        arcadeCtx.rotate(c.rot);
+        arcadeCtx.fillStyle = 'rgba(14, 165, 233, 0.25)';
+        arcadeCtx.strokeStyle = '#38bdf8';
+        arcadeCtx.lineWidth = 2;
+        arcadeCtx.shadowColor = '#38bdf8';
+        arcadeCtx.shadowBlur = 12;
 
-        // Encrypted Glitch Matrix Symbol (Letter is HIDDEN until eaten!)
-        const cypherGlyphs = ['0x', '?', '◆', '§', '✦', '※', '★'];
-        const glyphIdx = Math.floor((now / 140) + c.pulse) % cypherGlyphs.length;
-        arcadeCtx.fillStyle = '#06080d';
-        arcadeCtx.font = '900 13px "JetBrains Mono", monospace';
-        arcadeCtx.textAlign = 'center';
-        arcadeCtx.textBaseline = 'middle';
-        arcadeCtx.fillText(cypherGlyphs[glyphIdx], 0, 1);
+        arcadeCtx.beginPath();
+        for (let j = 0; j < 6; j++) {
+          const a = (j * Math.PI) / 3;
+          const hx = Math.cos(a) * c.radius;
+          const hy = Math.sin(a) * c.radius;
+          if (j === 0) arcadeCtx.moveTo(hx, hy);
+          else arcadeCtx.lineTo(hx, hy);
+        }
+        arcadeCtx.closePath();
+        arcadeCtx.fill();
+        arcadeCtx.stroke();
+
+        // Inner glowing core
+        arcadeCtx.fillStyle = '#f0f9ff';
+        arcadeCtx.beginPath();
+        arcadeCtx.arc(0, 0, 4, 0, Math.PI * 2);
+        arcadeCtx.fill();
 
         arcadeCtx.restore();
       });
 
-      // Draw Hazards
+      // Draw Hazards (Lasers & Mines)
       activeHazards.forEach(h => {
         arcadeCtx.save();
         if (h.type === 'beam') {
@@ -1871,7 +1905,7 @@
           arcadeCtx.shadowColor = '#ef4444';
           arcadeCtx.shadowBlur = 10;
           arcadeCtx.fillRect(h.x, h.y, h.width, h.height);
-
+          // High intensity core
           arcadeCtx.fillStyle = '#ffffff';
           arcadeCtx.fillRect(h.x, h.y + 3, h.width, 3);
         } else {
@@ -1879,29 +1913,40 @@
           arcadeCtx.translate(h.x, h.y);
           arcadeCtx.rotate(h.rot);
           arcadeCtx.fillStyle = '#dc2626';
-          arcadeCtx.shadowColor = '#f87171';
-          arcadeCtx.shadowBlur = 8;
+          arcadeCtx.shadowColor = '#ef4444';
+          arcadeCtx.shadowBlur = 12;
           arcadeCtx.beginPath();
           arcadeCtx.arc(0, 0, h.radius, 0, Math.PI * 2);
           arcadeCtx.fill();
 
-          arcadeCtx.strokeStyle = '#fca5a5';
-          arcadeCtx.lineWidth = 2;
-          arcadeCtx.strokeRect(-h.radius * 0.7, -h.radius * 0.7, h.radius * 1.4, h.radius * 1.4);
+          // Spikes
+          arcadeCtx.strokeStyle = '#f87171';
+          arcadeCtx.lineWidth = 2.5;
+          for (let s = 0; s < 4; s++) {
+            arcadeCtx.beginPath();
+            arcadeCtx.moveTo(-h.radius - 4, 0);
+            arcadeCtx.lineTo(h.radius + 4, 0);
+            arcadeCtx.stroke();
+            arcadeCtx.rotate(Math.PI / 4);
+          }
         }
         arcadeCtx.restore();
       });
 
-      // Draw Particles
+      // Draw Explosions
       activeParticles.forEach(p => {
         arcadeCtx.save();
         arcadeCtx.globalAlpha = Math.max(0, p.life);
         arcadeCtx.fillStyle = p.color;
-        arcadeCtx.fillRect(p.x, p.y, p.size, p.size);
+        arcadeCtx.shadowColor = p.color;
+        arcadeCtx.shadowBlur = 6;
+        arcadeCtx.beginPath();
+        arcadeCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        arcadeCtx.fill();
         arcadeCtx.restore();
       });
 
-      // Draw Floating Texts
+      // Draw Floating Feedback Texts
       floatingTexts.forEach(ft => {
         arcadeCtx.save();
         arcadeCtx.globalAlpha = Math.max(0, ft.alpha);
@@ -1916,18 +1961,6 @@
       arcadeCtx.save();
       arcadeCtx.translate(player.x, player.y);
       arcadeCtx.rotate(player.tilt);
-
-      // Invulnerability Blink & Forcefield Bubble
-      if (player.invulnerableTimer > 0) {
-        if (Math.floor(player.invulnerableTimer * 14) % 2 === 0) {
-          arcadeCtx.globalAlpha = 0.35;
-        }
-        arcadeCtx.strokeStyle = 'rgba(56, 189, 248, 0.7)';
-        arcadeCtx.lineWidth = 2;
-        arcadeCtx.beginPath();
-        arcadeCtx.arc(0, 0, player.width * 0.72, 0, Math.PI * 2);
-        arcadeCtx.stroke();
-      }
 
       // Dynamic Plasma Exhaust Jet
       const jetLength = 10 + Math.abs(player.vx) * 0.05 + Math.random() * 6;
