@@ -222,7 +222,7 @@
               <input
                 id="passwordInput"
                 type="password"
-                placeholder="보안 암호 (careful)"
+                placeholder="보안 암호 입력..."
                 autocomplete="off"
                 class="bg-transparent text-xs text-white placeholder-slate-500 pl-8 pr-12 py-1.5 w-40 focus:outline-none font-mono"
               />
@@ -372,7 +372,7 @@
         <span class="px-2.5 py-1 rounded-md bg-red-600 text-white text-[11px] font-black font-mono shrink-0 shadow-sm">TOP SECRET</span>
         <div class="text-xs text-slate-300 leading-relaxed">
           <p>현재 <strong class="text-red-300 font-bold">기밀·블러 미리보기 모드</strong>입니다. 핵심 지문·도형·도표가 블러 처리되었으며 정답표는 마스킹 상태입니다.</p>
-          <p class="text-[11px] text-slate-400 mt-0.5">보안 암호(<code class="text-amber-300 font-mono bg-dark-950 px-1 py-0.5 rounded border border-amber-500/30">careful</code>)를 직접 입력하거나, <strong>미니게임</strong>을 통해 알파벳을 획득하여 잠금을 해제하세요!</p>
+          <p class="text-[11px] text-slate-400 mt-0.5"><strong>사이버 미니게임</strong>을 클리어하여 암호를 해독하거나, 마스터 암호를 직접 입력하여 아카이브를 잠금 해제하세요!</p>
         </div>
       </div>
       <div class="flex items-center gap-2 flex-wrap shrink-0">
@@ -523,9 +523,9 @@
           <button id="mobileTogglePwdBtn" type="button" class="px-2 py-1 rounded bg-slate-800 text-[11px] font-mono text-slate-400">SHOW</button>
         </div>
         <div class="flex items-center justify-between text-xs text-slate-400 px-1">
-          <span>암호 힌트:</span>
-          <button id="quickFillPwdBtn" type="button" class="text-amber-400 font-mono font-bold hover:underline">
-            careful 자동입력
+          <span>비밀번호가 기억나지 않는다면?</span>
+          <button id="quickFillPwdBtn" type="button" class="text-cyan-400 font-bold hover:underline flex items-center gap-1">
+            <span>🎮 미니게임으로 해독</span>
           </button>
         </div>
         <div class="flex gap-2 pt-2">
@@ -594,110 +594,193 @@
   <!-- ========================================================================= -->
   <!-- Mini-Game Modal: Hacker Cipher Word Decryption                            -->
   <!-- ========================================================================= -->
-  <div id="gameModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-5">
-    <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-xl w-full p-4 sm:p-6 shadow-2xl border border-cyan-500/40 flex flex-col max-h-[92vh] overflow-y-auto">
+  <div id="gameModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-md p-2 sm:p-4">
+    <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-xl w-full p-3.5 sm:p-6 shadow-2xl border border-cyan-500/50 flex flex-col max-h-[96vh] overflow-y-auto relative">
       
-      <!-- Header -->
+      <!-- Top Title Bar -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-800 shrink-0">
         <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/50 text-cyan-300 flex items-center justify-center text-lg">
-            🎮
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500/30 to-blue-600/30 border border-cyan-500/60 text-cyan-300 flex items-center justify-center text-lg shadow-sm">
+            🚀
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h3 class="text-sm sm:text-base font-extrabold text-white">사이버 암호 해독 미니게임</h3>
-              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">HACK MATRIX</span>
+              <h3 class="text-sm sm:text-base font-black text-white tracking-wide flex items-center gap-1.5">
+                <span>CYBER INFILTRATOR</span>
+                <span class="text-cyan-400 font-mono text-xs">v2.4</span>
+              </h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 animate-pulse">
+                ARCADE MISSION
+              </span>
             </div>
-            <p class="text-[11px] text-slate-400 mt-0.5">보안 노드를 해킹해 알파벳을 얻고, 단어를 조합하여 잠금을 푸세요!</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">방화벽을 뚫고 7개의 암호 코어를 탈취하여 마스터 키를 해독하세요!</p>
           </div>
         </div>
-        <button id="closeGameModalBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 flex items-center justify-center text-sm font-bold">✕</button>
+        <div class="flex items-center gap-2">
+          <button id="gameMuteBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-400 hover:text-cyan-300 border border-slate-700/60 flex items-center justify-center text-xs font-bold transition" title="사운드 켜기/끄기">
+            🔊
+          </button>
+          <button id="closeGameModalBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 hover:text-white border border-slate-700/60 flex items-center justify-center text-sm font-bold transition">✕</button>
+        </div>
       </div>
 
-      <!-- Game Body -->
-      <div class="mt-4 flex flex-col gap-4">
+      <!-- Main Game Body -->
+      <div class="mt-3 flex flex-col gap-3">
         
-        <!-- Phase 1: Letter Hunt Grid -->
-        <div id="gamePhaseHunt" class="space-y-3">
-          <div class="flex items-center justify-between text-xs">
-            <span class="font-bold text-amber-300 flex items-center gap-1.5">
-              <span>[1단계] 보안 노드를 터치해 알파벳 7개를 수집하세요</span>
-            </span>
-            <span id="huntCountBadge" class="font-mono text-cyan-300 font-bold bg-cyan-950/60 px-2.5 py-0.5 rounded border border-cyan-500/40">
-              수집: 0 / 7
-            </span>
-          </div>
+        <!-- ================= STAGE 1: CANVAS ARCADE RUNNER ================= -->
+        <div id="gameStage1" class="flex flex-col gap-2.5">
+          
+          <!-- Arcade Status Ribbon (Shields, Letter Tracker, Score) -->
+          <div class="flex items-center justify-between text-xs bg-dark-950 p-2 sm:p-2.5 rounded-xl border border-slate-800">
+            <!-- Shields -->
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] font-mono text-slate-400 font-bold uppercase">SHIELD:</span>
+              <div id="gameShields" class="flex items-center gap-1 text-sm">
+                <span>🛡️</span><span>🛡️</span><span>🛡️</span>
+              </div>
+            </div>
 
-          <!-- Cyber Node Grid (12 nodes) -->
-          <div id="cyberNodeGrid" class="grid grid-cols-4 sm:grid-cols-4 gap-2"></div>
+            <!-- Letter Progress HUD -->
+            <div class="flex items-center gap-1 font-mono text-xs">
+              <span class="text-slate-400 text-[10px]">CORES:</span>
+              <span id="gameCoreProgress" class="font-bold text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/40">
+                0 / 7
+              </span>
+            </div>
 
-          <!-- Collected Letters Tray (Real-time) -->
-          <div class="p-3 rounded-2xl bg-dark-950 border border-slate-800 shadow-inner">
-            <div class="text-[11px] text-slate-400 mb-2 font-medium">수집된 알파벳 인벤토리:</div>
-            <div id="collectedTray" class="flex items-center gap-1.5 min-h-[42px] flex-wrap">
-              <span class="text-xs text-slate-600 font-mono">노드를 터치하여 알파벳을 발견하세요...</span>
+            <!-- Score -->
+            <div class="flex items-center gap-1 font-mono text-xs">
+              <span class="text-slate-400 text-[10px]">SCORE:</span>
+              <span id="gameScoreText" class="font-bold text-amber-300">0</span>
             </div>
           </div>
+
+          <!-- Harvested Cores Live Inventory Preview -->
+          <div class="p-2 sm:p-2.5 rounded-xl bg-dark-950 border border-slate-800/80 flex items-center justify-between gap-2">
+            <span class="text-[11px] text-slate-400 font-mono shrink-0">탈취된 암호 코어:</span>
+            <div id="harvestedCoreSlots" class="flex items-center gap-1 sm:gap-1.5 flex-1 justify-end">
+              <!-- 7 core slots -->
+            </div>
+          </div>
+
+          <!-- Game Canvas Container -->
+          <div class="relative w-full rounded-2xl overflow-hidden border-2 border-cyan-500/40 shadow-2xl bg-black">
+            <canvas id="arcadeCanvas" width="480" height="320" class="w-full h-[260px] sm:h-[320px] block cursor-crosshair touch-none select-none"></canvas>
+            
+            <!-- Canvas In-Game Start / Game Over Overlay -->
+            <div id="canvasOverlay" class="absolute inset-0 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center z-10">
+              <div id="overlayIcon" class="text-4xl mb-2">⚡</div>
+              <h4 id="overlayTitle" class="text-base sm:text-lg font-black text-white font-mono tracking-wide">SYSTEM READY</h4>
+              <p id="overlaySubtext" class="text-xs text-slate-300 mt-1 max-w-xs leading-relaxed">
+                터치 드래그 또는 키보드 방향키로 사이버 프로브를 조종하세요.
+              </p>
+              <button id="overlayActionBtn" type="button" class="mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg font-mono tracking-wider active:scale-95 transition">
+                START MISSION
+              </button>
+            </div>
+          </div>
+
+          <!-- Mobile Touch Controls & Instructions -->
+          <div class="flex items-center justify-between gap-2 text-slate-400">
+            <div class="text-[10px] sm:text-[11px] text-slate-400 leading-tight">
+              <span>🎮 조작: <strong>화면 터치 드래그</strong> / 키보드 <strong>← →</strong> 또는 <strong>A, D</strong></span>
+              <p class="text-[10px] text-slate-500">파란색 암호 코어를 모으고, 빨간색 방화벽 레이저를 피하세요!</p>
+            </div>
+            
+            <!-- On-Screen Left/Right Touch Controls for Mobile -->
+            <div class="flex items-center gap-2 shrink-0 sm:hidden">
+              <button id="touchLeftBtn" type="button" class="w-12 h-11 rounded-xl bg-dark-850 active:bg-cyan-950 border border-slate-700 active:border-cyan-400 text-white font-bold text-base flex items-center justify-center select-none shadow-md">
+                ◀
+              </button>
+              <button id="touchRightBtn" type="button" class="w-12 h-11 rounded-xl bg-dark-850 active:bg-cyan-950 border border-slate-700 active:border-cyan-400 text-white font-bold text-base flex items-center justify-center select-none shadow-md">
+                ▶
+              </button>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Phase 2: Word Assemble Panel -->
-        <div id="gamePhaseAssemble" class="space-y-3 hidden">
-          <div class="flex items-center justify-between text-xs">
-            <span class="font-bold text-emerald-300">
-              [2단계] 알파벳을 순서대로 터치하여 7글자 영단어를 완성하세요!
-            </span>
-            <button id="gameResetSlotsBtn" type="button" class="text-[10px] text-slate-400 hover:text-amber-300 underline font-mono">
-              다시 놓기
-            </button>
-          </div>
-
-          <div class="p-2.5 rounded-xl bg-amber-950/30 border border-amber-500/30 text-amber-200 text-[11px] flex items-center justify-between gap-2">
-            <div>
-              <span class="font-bold">💡 단어 힌트:</span>
-              <span class="text-slate-300 ml-1">"조심스러운, 주의 깊은"</span>
+        <!-- ================= STAGE 2: MASTERMIND DECRYPTION CHAMBER ================= -->
+        <div id="gameStage2" class="flex flex-col gap-3.5 hidden">
+          
+          <!-- Stage 2 Header & Briefing -->
+          <div class="p-3 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-dark-900 to-dark-900 border border-cyan-500/30">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs font-black text-cyan-300 font-mono flex items-center gap-1.5">
+                <span>[2단계] 마스터 패스워드 조합 해독</span>
+              </span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-950 text-cyan-400 border border-cyan-500/40">
+                DECRYPT ENGINE
+              </span>
             </div>
-            <span class="font-mono text-amber-300/80 font-bold text-[10px]">C · A · R · E · F · U · L</span>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              탈취한 7개의 알파벳 코어가 확보되었습니다. 올바른 순서로 7글자 마스터 키워드를 조합하여 방화벽을 영구 해제하세요!
+            </p>
+            <!-- Cryptic Clue (No answer spoiler!) -->
+            <div class="mt-2 p-2 rounded-xl bg-amber-950/30 border border-amber-500/30 text-amber-200 text-[11px] flex items-start gap-2">
+              <span class="shrink-0 text-sm">💡</span>
+              <div class="leading-relaxed">
+                <strong class="text-amber-300">해킹 브리핑 힌트:</strong>
+                <span class="text-slate-300">"위험한 보안 시스템일수록 가장 필요한 미덕... '돌다리도 두드려보고 건너듯 매사에 조심스럽고 주의 깊은' 성격의 7글자 영단어"</span>
+              </div>
+            </div>
           </div>
 
-          <!-- Target Word Slots -->
-          <div id="wordSlotsContainer" class="flex items-center justify-center gap-1.5 sm:gap-2 py-3 bg-dark-950 rounded-2xl border border-cyan-500/30 shadow-inner">
-            <div class="word-slot w-9 h-11 sm:w-11 sm:h-13 rounded-xl bg-dark-850 border-2 border-slate-700 flex items-center justify-center text-base sm:text-xl font-mono font-black text-white cursor-pointer hover:border-slate-500 transition" data-slot="0">_</div>
-            <div class="word-slot w-9 h-11 sm:w-11 sm:h-13 rounded-xl bg-dark-850 border-2 border-slate-700 flex items-center justify-center text-base sm:text-xl font-mono font-black text-white cursor-pointer hover:border-slate-500 transition" data-slot="1">_</div>
-            <div class="word-slot w-9 h-11 sm:w-11 sm:h-13 rounded-xl bg-dark-850 border-2 border-slate-700 flex items-center justify-center text-base sm:text-xl font-mono font-black text-white cursor-pointer hover:border-slate-500 transition" data-slot="2">_</div>
-            <div class="word-slot w-9 h-11 sm:w-11 sm:h-13 rounded-xl bg-dark-850 border-2 border-slate-700 flex items-center justify-center text-base sm:text-xl font-mono font-black text-white cursor-pointer hover:border-slate-500 transition" data-slot="3">_</div>
-            <div class="word-slot w-9 h-11 sm:w-11 sm:h-13 rounded-xl bg-dark-850 border-2 border-slate-700 flex items-center justify-center text-base sm:text-xl font-mono font-black text-white cursor-pointer hover:border-slate-500 transition" data-slot="4">_</div>
-            <div class="word-slot w-9 h-11 sm:w-11 sm:h-13 rounded-xl bg-dark-850 border-2 border-slate-700 flex items-center justify-center text-base sm:text-xl font-mono font-black text-white cursor-pointer hover:border-slate-500 transition" data-slot="5">_</div>
-            <div class="word-slot w-9 h-11 sm:w-11 sm:h-13 rounded-xl bg-dark-850 border-2 border-slate-700 flex items-center justify-center text-base sm:text-xl font-mono font-black text-white cursor-pointer hover:border-slate-500 transition" data-slot="6">_</div>
+          <!-- Word Slots (7 Slots with 3D Flip style) -->
+          <div>
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-1.5">
+              <span class="font-medium text-slate-300">조합 슬롯:</span>
+              <button id="clearSlotsBtn" type="button" class="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline font-mono flex items-center gap-1">
+                <span>↺ 슬롯 비우기</span>
+              </button>
+            </div>
+            
+            <div id="decoderSlotsContainer" class="flex items-center justify-center gap-1.5 sm:gap-2.5 py-3.5 px-2 bg-dark-950 rounded-2xl border border-cyan-500/30 shadow-inner">
+              <!-- 7 interactive slots data-slot="0" .. "6" -->
+            </div>
+
+            <!-- Feedback Guide -->
+            <div id="decoderFeedback" class="mt-2 text-center text-xs font-mono min-h-[20px] text-slate-400">
+              알파벳 타일을 터치하여 7개 슬롯을 채우세요.
+            </div>
           </div>
 
-          <!-- Available Letters to Click -->
+          <!-- Scrambled Alphabet Inventory Tiles -->
           <div>
             <div class="text-[11px] text-slate-400 mb-1.5 font-medium flex items-center justify-between">
-              <span>알파벳 타일을 터치하여 순서대로 넣으세요:</span>
-              <span class="text-[10px] text-slate-500">(채워진 슬롯을 누르면 빠집니다)</span>
+              <span>수집된 알파벳 코어 (터치하여 슬롯에 배치):</span>
+              <span class="text-[10px] text-slate-500">(슬롯의 글자를 터치하면 다시 회수됩니다)</span>
             </div>
-            <div id="assembleTileTray" class="flex items-center justify-center gap-2 flex-wrap min-h-[50px] p-2 rounded-xl bg-dark-900 border border-slate-800"></div>
+            <div id="decoderLetterTray" class="flex items-center justify-center gap-2 flex-wrap min-h-[52px] p-2 rounded-xl bg-dark-900 border border-slate-800">
+              <!-- Rendered tiles -->
+            </div>
           </div>
 
-          <!-- Submit / Execute Button -->
-          <div class="pt-2">
-            <button id="submitAssembleBtn" type="button" class="w-full py-3 rounded-xl text-sm font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-lg active:scale-98 transition flex items-center justify-center gap-2">
-              <span>⚡ 암호 해독 및 잠금 해제 실행</span>
+          <!-- Execute Decrypt Button -->
+          <div class="pt-1">
+            <button id="executeDecryptBtn" type="button" class="w-full py-3 sm:py-3.5 rounded-xl text-sm font-extrabold bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 hover:from-cyan-400 hover:to-blue-400 text-slate-950 shadow-xl active:scale-98 transition flex items-center justify-center gap-2 font-mono tracking-wider">
+              <span>⚡ 암호 해독 및 방화벽 해제 실행 (EXECUTE)</span>
             </button>
           </div>
+
         </div>
 
-        <!-- Phase 3: Victory Success -->
-        <div id="gamePhaseSuccess" class="space-y-4 py-4 text-center hidden">
-          <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center text-3xl animate-bounce">
+        <!-- ================= STAGE 3: VICTORY & ACCESS GRANTED ================= -->
+        <div id="gameStage3" class="space-y-4 py-6 text-center hidden">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center text-4xl shadow-2xl shadow-emerald-500/30 animate-bounce">
             🔓
           </div>
           <div>
-            <h4 class="text-lg font-black text-emerald-300 font-mono tracking-wider">SECURITY CLEARANCE GRANTED!</h4>
-            <p class="text-xs text-slate-300 mt-1">암호 <strong class="text-white font-mono">careful</strong>이 성공적으로 해독되었습니다.</p>
-            <p class="text-[11px] text-slate-400 mt-0.5">전 과목 원본 시험지 및 정답/배점표가 즉시 열람됩니다.</p>
+            <div class="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono text-xs font-bold uppercase tracking-widest mb-2">
+              CLEARANCE OVERRIDE : 100% SUCCESS
+            </div>
+            <h4 class="text-xl sm:text-2xl font-black text-white font-mono tracking-tight">ACCESS GRANTED!</h4>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
+              사이버 미니게임을 성공적으로 클리어하여 보안 잠금이 해제되었습니다!<br/>
+              전 과목 원본 시험지 및 NEIS 공식 정답표가 활성화됩니다.
+            </p>
           </div>
-          <button id="gameDoneBtn" type="button" class="w-full py-3 rounded-xl text-sm font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg transition">
+          <button id="gameEnterArchiveBtn" type="button" class="w-full py-3.5 rounded-xl text-sm font-black bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-xl transition active:scale-98 font-mono">
             시험지 아카이브 바로 열람하기
           </button>
         </div>
@@ -1096,25 +1179,40 @@
     const quickFillPwdBtn = document.getElementById('quickFillPwdBtn');
     const mobileOpenGameBtn = document.getElementById('mobileOpenGameBtn');
 
-    // Game Elements
+    // =========================================================================
+    // Arcade & Cipher Mini-Game Elements
+    // =========================================================================
     const gameModal = document.getElementById('gameModal');
     const closeGameModalBtn = document.getElementById('closeGameModalBtn');
-    const gamePhaseHunt = document.getElementById('gamePhaseHunt');
-    const gamePhaseAssemble = document.getElementById('gamePhaseAssemble');
-    const gamePhaseSuccess = document.getElementById('gamePhaseSuccess');
-    const huntCountBadge = document.getElementById('huntCountBadge');
-    const cyberNodeGrid = document.getElementById('cyberNodeGrid');
-    const collectedTray = document.getElementById('collectedTray');
-    const assembleTileTray = document.getElementById('assembleTileTray');
-    const wordSlotsContainer = document.getElementById('wordSlotsContainer');
-    const gameResetSlotsBtn = document.getElementById('gameResetSlotsBtn');
-    const submitAssembleBtn = document.getElementById('submitAssembleBtn');
-    const gameDoneBtn = document.getElementById('gameDoneBtn');
+    const gameMuteBtn = document.getElementById('gameMuteBtn');
+    const gameStage1 = document.getElementById('gameStage1');
+    const gameStage2 = document.getElementById('gameStage2');
+    const gameStage3 = document.getElementById('gameStage3');
+    const arcadeCanvas = document.getElementById('arcadeCanvas');
+    const canvasOverlay = document.getElementById('canvasOverlay');
+    const overlayTitle = document.getElementById('overlayTitle');
+    const overlaySubtext = document.getElementById('overlaySubtext');
+    const overlayIcon = document.getElementById('overlayIcon');
+    const overlayActionBtn = document.getElementById('overlayActionBtn');
+    const gameShields = document.getElementById('gameShields');
+    const gameCoreProgress = document.getElementById('gameCoreProgress');
+    const gameScoreText = document.getElementById('gameScoreText');
+    const harvestedCoreSlots = document.getElementById('harvestedCoreSlots');
+    const touchLeftBtn = document.getElementById('touchLeftBtn');
+    const touchRightBtn = document.getElementById('touchRightBtn');
+    const decoderSlotsContainer = document.getElementById('decoderSlotsContainer');
+    const decoderLetterTray = document.getElementById('decoderLetterTray');
+    const decoderFeedback = document.getElementById('decoderFeedback');
+    const clearSlotsBtn = document.getElementById('clearSlotsBtn');
+    const executeDecryptBtn = document.getElementById('executeDecryptBtn');
+    const gameEnterArchiveBtn = document.getElementById('gameEnterArchiveBtn');
 
     // =========================================================================
-    // Web Audio API Synthesizer (Retro Cyber Sound FX)
+    // Web Audio API Synthesizer (Retro Cyber Sound FX & Ambient Chimes)
     // =========================================================================
     let audioCtx = null;
+    let isGameMuted = false;
+
     function getAudioCtx() {
       if (!audioCtx) {
         const AudioClass = window.AudioContext || window.webkitAudioContext;
@@ -1126,7 +1224,8 @@
       return audioCtx;
     }
 
-    function playBeep(freq, type = 'sine', duration = 0.08) {
+    function playBeep(freq, type = 'sine', duration = 0.08, vol = 0.12) {
+      if (isGameMuted) return;
       try {
         const ctx = getAudioCtx();
         if (!ctx) return;
@@ -1134,8 +1233,8 @@
         const gain = ctx.createGain();
         osc.type = type;
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        gain.gain.setValueAtTime(0.06, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+        gain.gain.setValueAtTime(vol, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start();
@@ -1144,241 +1243,925 @@
     }
 
     function playChime(freqs, type = 'triangle') {
+      if (isGameMuted) return;
       freqs.forEach((f, i) => {
-        setTimeout(() => playBeep(f, type, 0.18), i * 95);
+        setTimeout(() => playBeep(f, type, 0.18, 0.12), i * 95);
+      });
+    }
+
+    function playLaserSound() {
+      if (isGameMuted) return;
+      try {
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.12);
+      } catch (e) {}
+    }
+
+    function playPickupChime() {
+      if (isGameMuted) return;
+      [587, 740, 880, 1175].forEach((f, i) => {
+        setTimeout(() => playBeep(f, 'triangle', 0.12, 0.12), i * 50);
+      });
+    }
+
+    function playDamageCrunch() {
+      if (isGameMuted) return;
+      try {
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(120, ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(40, ctx.currentTime + 0.25);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.25);
+      } catch (e) {}
+    }
+
+    function playFanfareSound() {
+      if (isGameMuted) return;
+      const notes = [523, 659, 784, 1046, 1318];
+      notes.forEach((f, i) => {
+        setTimeout(() => playBeep(f, 'triangle', 0.25, 0.18), i * 90);
       });
     }
 
     // =========================================================================
-    // Cipher Word Mini-Game Logic
+    // CYBER INFILTRATOR: ARCADE RUNNER & MASTERMIND CIPHER ENGINE
     // =========================================================================
-    const TARGET_WORD = 'CAREFUL';
+    const TARGET_SECRET = 'CAREFUL';
     const TARGET_LETTERS = ['C', 'A', 'R', 'E', 'F', 'U', 'L'];
-    let gameNodes = [];
-    let foundLetters = [];
-    let assembledSlots = [null, null, null, null, null, null, null];
 
-    function initMiniGame() {
-      const baseNodes = [
-        { letter: 'C', isTarget: true, hex: '0x43' },
-        { letter: 'A', isTarget: true, hex: '0x41' },
-        { letter: 'R', isTarget: true, hex: '0x52' },
-        { letter: 'E', isTarget: true, hex: '0x45' },
-        { letter: 'F', isTarget: true, hex: '0x46' },
-        { letter: 'U', isTarget: true, hex: '0x55' },
-        { letter: 'L', isTarget: true, hex: '0x4C' },
-        { letter: '9', isTarget: false, hex: '0x39' },
-        { letter: 'X', isTarget: false, hex: '0x58' },
-        { letter: 'Z', isTarget: false, hex: '0x5A' },
-        { letter: '7', isTarget: false, hex: '0x37' },
-        { letter: 'Q', isTarget: false, hex: '0x51' },
-      ];
+    // -------------------------------------------------------------------------
+    // ARCADE RUNNER ENGINE (Stage 1)
+    // -------------------------------------------------------------------------
+    let arcadeCtx = null;
+    let arcadeAnimId = null;
+    let isArcadeRunning = false;
+    let lastFrameTime = 0;
 
-      gameNodes = baseNodes.sort(() => Math.random() - 0.5).map((item, idx) => ({
-        ...item,
-        id: idx,
-        revealed: false
-      }));
+    let player = {
+      x: 240,
+      y: 280,
+      width: 38,
+      height: 28,
+      vx: 0,
+      targetX: 240,
+      tilt: 0,
+      shields: 3,
+      invulnerableTimer: 0
+    };
 
-      foundLetters = [];
-      assembledSlots = [null, null, null, null, null, null, null];
+    let harvestedLetters = []; // Target 7 unique letters
+    let uncollectedLettersPool = [];
+    let activeCores = [];
+    let activeHazards = [];
+    let activeParticles = [];
+    let floatingTexts = [];
+    let backgroundStars = [];
+    let arcadeScore = 0;
+    let spawnTimer = 0;
+    let hazardTimer = 0;
 
-      gamePhaseHunt.classList.remove('hidden');
-      gamePhaseAssemble.classList.add('hidden');
-      gamePhaseSuccess.classList.add('hidden');
+    function initArcadeEngine() {
+      if (!arcadeCanvas) return;
+      arcadeCtx = arcadeCanvas.getContext('2d');
+      
+      // Setup High-DPI canvas
+      const rect = arcadeCanvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      arcadeCanvas.width = Math.floor((rect.width || 480) * dpr);
+      arcadeCanvas.height = Math.floor(320 * dpr);
+      arcadeCtx.scale(dpr, dpr);
 
-      renderGameHuntGrid();
-      renderCollectedTray();
+      // Create starfield
+      backgroundStars = [];
+      const logicalWidth = arcadeCanvas.width / dpr;
+      const logicalHeight = 320;
+      for (let i = 0; i < 45; i++) {
+        backgroundStars.push({
+          x: Math.random() * logicalWidth,
+          y: Math.random() * logicalHeight,
+          speed: 0.5 + Math.random() * 2.2,
+          size: Math.random() < 0.3 ? 2 : 1,
+          color: Math.random() < 0.4 ? '#38bdf8' : '#e2e8f0'
+        });
+      }
+
+      player.x = logicalWidth / 2;
+      player.targetX = logicalWidth / 2;
+      player.y = logicalHeight - 45;
+      player.shields = 3;
+      player.invulnerableTimer = 0;
+
+      harvestedLetters = [];
+      uncollectedLettersPool = [...TARGET_LETTERS].sort(() => Math.random() - 0.5);
+      activeCores = [];
+      activeHazards = [];
+      activeParticles = [];
+      floatingTexts = [];
+      arcadeScore = 0;
+      spawnTimer = 0;
+      hazardTimer = 0;
+
+      updateArcadeHUD();
     }
 
-    function renderGameHuntGrid() {
-      cyberNodeGrid.innerHTML = '';
-      huntCountBadge.textContent = `수집: ${foundLetters.length} / 7`;
+    function updateArcadeHUD() {
+      // Shields
+      if (gameShields) {
+        let shieldIcons = '';
+        for (let i = 0; i < 3; i++) {
+          shieldIcons += i < player.shields ? '<span>🛡️</span>' : '<span class="opacity-20 grayscale">🛡️</span>';
+        }
+        gameShields.innerHTML = shieldIcons;
+      }
 
-      gameNodes.forEach((node) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
+      // Progress Badge
+      if (gameCoreProgress) {
+        gameCoreProgress.textContent = `${harvestedLetters.length} / 7`;
+      }
 
-        if (node.revealed) {
-          if (node.isTarget) {
-            btn.className = 'h-14 sm:h-16 rounded-xl bg-cyan-950/70 border-2 border-cyan-400 text-cyan-300 font-mono font-black text-xl sm:text-2xl flex flex-col items-center justify-center shadow-lg transform scale-[0.98] transition';
-            btn.innerHTML = `<span>${node.letter}</span><span class="text-[9px] font-normal text-cyan-400/80 -mt-1 font-mono">${node.hex}</span>`;
+      // Score
+      if (gameScoreText) {
+        gameScoreText.textContent = arcadeScore.toLocaleString();
+      }
+
+      // Core preview slots
+      if (harvestedCoreSlots) {
+        harvestedCoreSlots.innerHTML = '';
+        TARGET_LETTERS.forEach((l, idx) => {
+          const has = harvestedLetters[idx];
+          const chip = document.createElement('div');
+          if (has) {
+            chip.className = 'w-6 h-6 rounded bg-cyan-500/25 border border-cyan-400 text-cyan-300 font-mono font-black text-[11px] flex items-center justify-center shadow-sm animate-pulse';
+            chip.textContent = has;
           } else {
-            btn.className = 'h-14 sm:h-16 rounded-xl bg-dark-900 border border-slate-700 text-slate-500 font-mono font-bold text-sm flex flex-col items-center justify-center opacity-60';
-            btn.innerHTML = `<span class="line-through text-red-400">${node.letter}</span><span class="text-[8px] text-slate-600">DECOY</span>`;
+            chip.className = 'w-6 h-6 rounded bg-dark-900 border border-slate-800 text-slate-700 font-mono font-bold text-[10px] flex items-center justify-center';
+            chip.textContent = '·';
+          }
+          harvestedCoreSlots.appendChild(chip);
+        });
+      }
+    }
+
+    function spawnDataCore() {
+      if (uncollectedLettersPool.length === 0) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const logicalWidth = arcadeCanvas.width / dpr;
+      
+      // Pick a random uncollected letter
+      const letter = uncollectedLettersPool[Math.floor(Math.random() * uncollectedLettersPool.length)];
+      activeCores.push({
+        x: 30 + Math.random() * (logicalWidth - 60),
+        y: -25,
+        radius: 16,
+        letter: letter,
+        speed: 1.8 + Math.random() * 0.8,
+        rot: 0,
+        pulse: 0
+      });
+    }
+
+    function spawnHazard() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const logicalWidth = arcadeCanvas.width / dpr;
+      
+      const isBeam = Math.random() < 0.45;
+      if (isBeam) {
+        // Red laser barrier
+        const w = 65 + Math.random() * 45;
+        activeHazards.push({
+          type: 'beam',
+          x: 20 + Math.random() * (logicalWidth - w - 40),
+          y: -20,
+          width: w,
+          height: 10,
+          speed: 2.2 + Math.random() * 1.0
+        });
+      } else {
+        // Spiked EMP glitch mine
+        activeHazards.push({
+          type: 'mine',
+          x: 25 + Math.random() * (logicalWidth - 50),
+          y: -20,
+          radius: 12,
+          speed: 2.5 + Math.random() * 1.2,
+          rot: 0
+        });
+      }
+    }
+
+    function addExplosion(x, y, color = '#38bdf8', count = 14) {
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const spd = 1 + Math.random() * 3.5;
+        activeParticles.push({
+          x: x,
+          y: y,
+          vx: Math.cos(angle) * spd,
+          vy: Math.sin(angle) * spd,
+          life: 1.0,
+          decay: 0.02 + Math.random() * 0.03,
+          color: color,
+          size: 2 + Math.random() * 2.5
+        });
+      }
+    }
+
+    function addFloatingText(x, y, text, color = '#38bdf8') {
+      floatingTexts.push({
+        x: x,
+        y: y,
+        text: text,
+        color: color,
+        alpha: 1.0,
+        vy: -1.2
+      });
+    }
+
+    function startArcadeGame() {
+      initArcadeEngine();
+      canvasOverlay.classList.add('hidden');
+      canvasOverlay.classList.remove('flex');
+      isArcadeRunning = true;
+      lastFrameTime = performance.now();
+      if (arcadeAnimId) cancelAnimationFrame(arcadeAnimId);
+      arcadeAnimId = requestAnimationFrame(arcadeGameLoop);
+      playBeep(523, 'sine', 0.15);
+    }
+
+    function stopArcadeGame() {
+      isArcadeRunning = false;
+      if (arcadeAnimId) {
+        cancelAnimationFrame(arcadeAnimId);
+        arcadeAnimId = null;
+      }
+    }
+
+    function triggerGameOver() {
+      stopArcadeGame();
+      playDamageCrunch();
+      
+      overlayIcon.textContent = '💥';
+      overlayTitle.textContent = 'SYSTEM BREACH // MISSION FAILED';
+      overlayTitle.className = 'text-base sm:text-lg font-black text-red-400 font-mono tracking-wide';
+      overlaySubtext.textContent = '방화벽에 탐지되어 프로브 쉴드가 모두 소진되었습니다. 다시 도전하여 암호 코어를 탈취하세요!';
+      overlayActionBtn.textContent = 'RETRY MISSION (다시 시도)';
+      overlayActionBtn.className = 'mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white shadow-lg font-mono tracking-wider active:scale-95 transition';
+      
+      canvasOverlay.classList.remove('hidden');
+      canvasOverlay.classList.add('flex');
+    }
+
+    function triggerStage1Clear() {
+      stopArcadeGame();
+      playFanfareSound();
+      showToast('🎉 모든 7개 암호 코어 탈취 성공! 마스터 키 해독실로 이동합니다.', 'success');
+
+      setTimeout(() => {
+        gameStage1.classList.add('hidden');
+        gameStage2.classList.remove('hidden');
+        initDecryptionChamber();
+      }, 700);
+    }
+
+    function arcadeGameLoop(now) {
+      if (!isArcadeRunning) return;
+      const dt = Math.min((now - lastFrameTime) / 1000, 0.1);
+      lastFrameTime = now;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const logicalWidth = arcadeCanvas.width / dpr;
+      const logicalHeight = 320;
+
+      // 1. Update Player Movement (Smooth Lerp towards targetX)
+      const dx = player.targetX - player.x;
+      player.vx = dx * 10;
+      player.x += player.vx * dt;
+      player.tilt = Math.max(-0.4, Math.min(0.4, player.vx * 0.003));
+      player.x = Math.max(player.width / 2 + 5, Math.min(logicalWidth - player.width / 2 - 5, player.x));
+
+      if (player.invulnerableTimer > 0) {
+        player.invulnerableTimer -= dt;
+      }
+
+      // Thruster Exhaust Particles
+      if (Math.random() < 0.6) {
+        activeParticles.push({
+          x: player.x + (Math.random() - 0.5) * 8,
+          y: player.y + 14,
+          vx: (Math.random() - 0.5) * 0.8,
+          vy: 2.5 + Math.random() * 2,
+          life: 0.6,
+          decay: 0.05,
+          color: Math.random() < 0.5 ? '#38bdf8' : '#818cf8',
+          size: 1.5 + Math.random() * 2
+        });
+      }
+
+      // 2. Starfield Update
+      backgroundStars.forEach(st => {
+        st.y += st.speed;
+        if (st.y > logicalHeight) {
+          st.y = -5;
+          st.x = Math.random() * logicalWidth;
+        }
+      });
+
+      // 3. Spawns
+      spawnTimer += dt;
+      if (spawnTimer > 1.4 && activeCores.length < 3 && uncollectedLettersPool.length > 0) {
+        spawnDataCore();
+        spawnTimer = 0;
+      }
+
+      hazardTimer += dt;
+      if (hazardTimer > 1.1) {
+        spawnHazard();
+        hazardTimer = 0;
+      }
+
+      // 4. Update Cores & Check Collision
+      for (let i = activeCores.length - 1; i >= 0; i--) {
+        const c = activeCores[i];
+        c.y += c.speed;
+        c.rot += dt * 2.5;
+        c.pulse += dt * 5;
+
+        // Collision with player
+        const dist = Math.hypot(c.x - player.x, c.y - player.y);
+        if (dist < c.radius + player.width / 2 - 2) {
+          // Harvested!
+          harvestedLetters.push(c.letter);
+          const idxInPool = uncollectedLettersPool.indexOf(c.letter);
+          if (idxInPool !== -1) uncollectedLettersPool.splice(idxInPool, 1);
+          
+          arcadeScore += 150;
+          addExplosion(c.x, c.y, '#38bdf8', 18);
+          addFloatingText(c.x, c.y - 10, `+150 [${c.letter}]`, '#38bdf8');
+          playPickupChime();
+          activeCores.splice(i, 1);
+          updateArcadeHUD();
+
+          if (harvestedLetters.length >= 7) {
+            triggerStage1Clear();
+            return;
+          }
+          continue;
+        }
+
+        if (c.y > logicalHeight + 30) {
+          activeCores.splice(i, 1);
+        }
+      }
+
+      // 5. Update Hazards & Check Collision
+      for (let i = activeHazards.length - 1; i >= 0; i--) {
+        const h = activeHazards[i];
+        h.y += h.speed;
+
+        let hit = false;
+        if (h.type === 'beam') {
+          // AABB hit
+          if (
+            player.x + player.width / 2 > h.x &&
+            player.x - player.width / 2 < h.x + h.width &&
+            player.y + player.height / 2 > h.y &&
+            player.y - player.height / 2 < h.y + h.height
+          ) {
+            hit = true;
           }
         } else {
-          btn.className = 'h-14 sm:h-16 rounded-xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 hover:border-cyan-500/60 text-slate-300 font-mono font-semibold text-xs flex flex-col items-center justify-center transition active:scale-95 shadow-sm';
-          btn.innerHTML = `<span class="text-cyan-400/80 font-mono text-[11px]">${node.hex}</span><span class="text-[9px] text-slate-500 mt-0.5">ENCRYPTED</span>`;
-          btn.addEventListener('click', () => handleNodeClick(node.id));
+          // Circle mine hit
+          h.rot += dt * 3;
+          const dist = Math.hypot(h.x - player.x, h.y - player.y);
+          if (dist < h.radius + player.width / 2 - 4) {
+            hit = true;
+          }
         }
 
-        cyberNodeGrid.appendChild(btn);
+        if (hit) {
+          if (player.invulnerableTimer <= 0) {
+            player.shields--;
+            player.invulnerableTimer = 1.3;
+            addExplosion(player.x, player.y, '#ef4444', 24);
+            playDamageCrunch();
+            updateArcadeHUD();
+
+            if (player.shields <= 0) {
+              triggerGameOver();
+              return;
+            }
+          }
+          activeHazards.splice(i, 1);
+          continue;
+        }
+
+        if (h.y > logicalHeight + 30) {
+          activeHazards.splice(i, 1);
+        }
+      }
+
+      // 6. Update Particles
+      for (let i = activeParticles.length - 1; i >= 0; i--) {
+        const p = activeParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= p.decay;
+        if (p.life <= 0) activeParticles.splice(i, 1);
+      }
+
+      // 7. Update Floating Texts
+      for (let i = floatingTexts.length - 1; i >= 0; i--) {
+        const ft = floatingTexts[i];
+        ft.y += ft.vy;
+        ft.alpha -= dt * 1.2;
+        if (ft.alpha <= 0) floatingTexts.splice(i, 1);
+      }
+
+      // ---------------- RENDER ----------------
+      arcadeCtx.fillStyle = '#06080d';
+      arcadeCtx.fillRect(0, 0, logicalWidth, logicalHeight);
+
+      // Draw Grid Lines (Cyber Horizon)
+      arcadeCtx.strokeStyle = 'rgba(14, 165, 233, 0.08)';
+      arcadeCtx.lineWidth = 1;
+      for (let x = 0; x < logicalWidth; x += 32) {
+        arcadeCtx.beginPath();
+        arcadeCtx.moveTo(x, 0);
+        arcadeCtx.lineTo(x, logicalHeight);
+        arcadeCtx.stroke();
+      }
+
+      // Draw Starfield
+      backgroundStars.forEach(st => {
+        arcadeCtx.fillStyle = st.color;
+        arcadeCtx.fillRect(st.x, st.y, st.size, st.size);
+      });
+
+      // Draw Cores
+      activeCores.forEach(c => {
+        arcadeCtx.save();
+        arcadeCtx.translate(c.x, c.y);
+        
+        // Outer pulsing ring
+        const pulseR = c.radius + Math.sin(c.pulse) * 3;
+        arcadeCtx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+        arcadeCtx.lineWidth = 2;
+        arcadeCtx.beginPath();
+        arcadeCtx.arc(0, 0, pulseR, 0, Math.PI * 2);
+        arcadeCtx.stroke();
+
+        // Inner glowing core
+        const grad = arcadeCtx.createRadialGradient(0, 0, 2, 0, 0, c.radius);
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(0.5, '#38bdf8');
+        grad.addColorStop(1, '#0284c7');
+        arcadeCtx.fillStyle = grad;
+        arcadeCtx.beginPath();
+        arcadeCtx.arc(0, 0, c.radius, 0, Math.PI * 2);
+        arcadeCtx.fill();
+
+        // Core Glyph Letter
+        arcadeCtx.fillStyle = '#06080d';
+        arcadeCtx.font = 'bold 15px "JetBrains Mono", monospace';
+        arcadeCtx.textAlign = 'center';
+        arcadeCtx.textBaseline = 'middle';
+        arcadeCtx.fillText(c.letter, 0, 1);
+
+        arcadeCtx.restore();
+      });
+
+      // Draw Hazards
+      activeHazards.forEach(h => {
+        arcadeCtx.save();
+        if (h.type === 'beam') {
+          // Red Laser Barrier
+          arcadeCtx.fillStyle = 'rgba(239, 68, 68, 0.85)';
+          arcadeCtx.shadowColor = '#ef4444';
+          arcadeCtx.shadowBlur = 10;
+          arcadeCtx.fillRect(h.x, h.y, h.width, h.height);
+
+          arcadeCtx.fillStyle = '#ffffff';
+          arcadeCtx.fillRect(h.x, h.y + 3, h.width, 3);
+        } else {
+          // Glitch Mine
+          arcadeCtx.translate(h.x, h.y);
+          arcadeCtx.rotate(h.rot);
+          arcadeCtx.fillStyle = '#dc2626';
+          arcadeCtx.shadowColor = '#f87171';
+          arcadeCtx.shadowBlur = 8;
+          arcadeCtx.beginPath();
+          arcadeCtx.arc(0, 0, h.radius, 0, Math.PI * 2);
+          arcadeCtx.fill();
+
+          arcadeCtx.strokeStyle = '#fca5a5';
+          arcadeCtx.lineWidth = 2;
+          arcadeCtx.strokeRect(-h.radius * 0.7, -h.radius * 0.7, h.radius * 1.4, h.radius * 1.4);
+        }
+        arcadeCtx.restore();
+      });
+
+      // Draw Particles
+      activeParticles.forEach(p => {
+        arcadeCtx.save();
+        arcadeCtx.globalAlpha = Math.max(0, p.life);
+        arcadeCtx.fillStyle = p.color;
+        arcadeCtx.fillRect(p.x, p.y, p.size, p.size);
+        arcadeCtx.restore();
+      });
+
+      // Draw Floating Texts
+      floatingTexts.forEach(ft => {
+        arcadeCtx.save();
+        arcadeCtx.globalAlpha = Math.max(0, ft.alpha);
+        arcadeCtx.fillStyle = ft.color;
+        arcadeCtx.font = 'bold 13px "JetBrains Mono", monospace';
+        arcadeCtx.textAlign = 'center';
+        arcadeCtx.fillText(ft.text, ft.x, ft.y);
+        arcadeCtx.restore();
+      });
+
+      // Draw Player Vessel
+      arcadeCtx.save();
+      arcadeCtx.translate(player.x, player.y);
+      arcadeCtx.rotate(player.tilt);
+
+      // Invulnerability Blink
+      if (player.invulnerableTimer > 0 && Math.floor(player.invulnerableTimer * 12) % 2 === 0) {
+        arcadeCtx.globalAlpha = 0.3;
+      }
+
+      // Ship Body (Futuristic Vector Fighter)
+      arcadeCtx.shadowColor = '#38bdf8';
+      arcadeCtx.shadowBlur = 12;
+
+      // Outer Hull
+      arcadeCtx.fillStyle = '#0f172a';
+      arcadeCtx.strokeStyle = '#38bdf8';
+      arcadeCtx.lineWidth = 2;
+      arcadeCtx.beginPath();
+      arcadeCtx.moveTo(0, -16); // Nose
+      arcadeCtx.lineTo(player.width / 2, 12); // Right wing
+      arcadeCtx.lineTo(player.width / 4, 8);
+      arcadeCtx.lineTo(0, 14); // Tail
+      arcadeCtx.lineTo(-player.width / 4, 8);
+      arcadeCtx.lineTo(-player.width / 2, 12); // Left wing
+      arcadeCtx.closePath();
+      arcadeCtx.fill();
+      arcadeCtx.stroke();
+
+      // Cockpit Glow
+      arcadeCtx.fillStyle = '#38bdf8';
+      arcadeCtx.beginPath();
+      arcadeCtx.moveTo(0, -8);
+      arcadeCtx.lineTo(4, 2);
+      arcadeCtx.lineTo(-4, 2);
+      arcadeCtx.closePath();
+      arcadeCtx.fill();
+
+      arcadeCtx.restore();
+
+      arcadeAnimId = requestAnimationFrame(arcadeGameLoop);
+    }
+
+    // Canvas Input Handlers
+    function setPlayerTargetFromClientX(clientX) {
+      if (!arcadeCanvas) return;
+      const rect = arcadeCanvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const logicalWidth = arcadeCanvas.width / dpr;
+      const relX = clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, relX / rect.width));
+      player.targetX = ratio * logicalWidth;
+    }
+
+    if (arcadeCanvas) {
+      // Touch events
+      arcadeCanvas.addEventListener('touchstart', (e) => {
+        if (!isArcadeRunning) return;
+        if (e.touches.length > 0) {
+          setPlayerTargetFromClientX(e.touches[0].clientX);
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      arcadeCanvas.addEventListener('touchmove', (e) => {
+        if (!isArcadeRunning) return;
+        if (e.touches.length > 0) {
+          setPlayerTargetFromClientX(e.touches[0].clientX);
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // Mouse events
+      arcadeCanvas.addEventListener('mousemove', (e) => {
+        if (!isArcadeRunning) return;
+        setPlayerTargetFromClientX(e.clientX);
       });
     }
 
-    function handleNodeClick(nodeId) {
-      const node = gameNodes.find(n => n.id === nodeId);
-      if (!node || node.revealed) return;
-
-      node.revealed = true;
-
-      if (node.isTarget) {
-        foundLetters.push(node.letter);
-        playBeep(880, 'sine', 0.12);
-        showToast(`알파벳 [${node.letter}] 획득! (${foundLetters.length}/7)`, 'success');
-      } else {
-        playBeep(220, 'sawtooth', 0.15);
-        showToast(`디코이 데이터 [${node.letter}] 감지! 다른 보안 노드를 스캔하세요.`, 'error');
+    // Keyboard controls
+    window.addEventListener('keydown', (e) => {
+      if (!isArcadeRunning || gameModal.classList.contains('hidden')) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const logicalWidth = arcadeCanvas.width / dpr;
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        player.targetX = Math.max(25, player.targetX - 28);
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        player.targetX = Math.min(logicalWidth - 25, player.targetX + 28);
       }
+    });
 
-      renderGameHuntGrid();
-      renderCollectedTray();
-
-      if (foundLetters.length === 7) {
-        playChime([523, 659, 784, 1046]);
-        setTimeout(() => {
-          showToast('🎉 모든 알파벳 7개 수집 완료! 2단계 단어 조합으로 이동합니다.', 'success');
-          startAssemblePhase();
-        }, 700);
+    // Mobile on-screen buttons
+    let touchMoveInterval = null;
+    function startTouchMove(dir) {
+      if (!isArcadeRunning) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const logicalWidth = arcadeCanvas.width / dpr;
+      player.targetX = Math.max(25, Math.min(logicalWidth - 25, player.targetX + dir * 30));
+      if (touchMoveInterval) clearInterval(touchMoveInterval);
+      touchMoveInterval = setInterval(() => {
+        player.targetX = Math.max(25, Math.min(logicalWidth - 25, player.targetX + dir * 25));
+      }, 50);
+    }
+    function stopTouchMove() {
+      if (touchMoveInterval) {
+        clearInterval(touchMoveInterval);
+        touchMoveInterval = null;
       }
     }
 
-    function renderCollectedTray() {
-      collectedTray.innerHTML = '';
-      if (foundLetters.length === 0) {
-        collectedTray.innerHTML = '<span class="text-xs text-slate-600 font-mono">노드를 터치하여 알파벳을 발견하세요...</span>';
-        return;
-      }
-      foundLetters.forEach(l => {
-        const chip = document.createElement('div');
-        chip.className = 'w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-mono font-bold flex items-center justify-center text-sm shadow-sm animate-pulse';
-        chip.textContent = l;
-        collectedTray.appendChild(chip);
+    if (touchLeftBtn) {
+      touchLeftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startTouchMove(-1); });
+      touchLeftBtn.addEventListener('touchend', stopTouchMove);
+      touchLeftBtn.addEventListener('mousedown', () => startTouchMove(-1));
+      touchLeftBtn.addEventListener('mouseup', stopTouchMove);
+      touchLeftBtn.addEventListener('mouseleave', stopTouchMove);
+    }
+    if (touchRightBtn) {
+      touchRightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startTouchMove(1); });
+      touchRightBtn.addEventListener('touchend', stopTouchMove);
+      touchRightBtn.addEventListener('mousedown', () => startTouchMove(1));
+      touchRightBtn.addEventListener('mouseup', stopTouchMove);
+      touchRightBtn.addEventListener('mouseleave', stopTouchMove);
+    }
+
+    if (overlayActionBtn) {
+      overlayActionBtn.addEventListener('click', () => {
+        startArcadeGame();
       });
     }
 
-    function startAssemblePhase() {
-      gamePhaseHunt.classList.add('hidden');
-      gamePhaseAssemble.classList.remove('hidden');
+    // -------------------------------------------------------------------------
+    // MASTERMIND CIPHER CHAMBER (Stage 2)
+    // -------------------------------------------------------------------------
+    let decoderSlots = [null, null, null, null, null, null, null];
+    let trayTiles = [];
+    let slotEvaluation = [null, null, null, null, null, null, null];
 
-      const shuffledLetters = [...foundLetters].sort(() => Math.random() - 0.5);
-      renderWordAssemble(shuffledLetters);
+    function initDecryptionChamber() {
+      decoderSlots = [null, null, null, null, null, null, null];
+      slotEvaluation = [null, null, null, null, null, null, null];
+      
+      // Scramble harvested letters into tray
+      const shuffled = [...harvestedLetters].sort(() => Math.random() - 0.5);
+      trayTiles = shuffled.map((ch, idx) => ({
+        id: idx,
+        letter: ch,
+        used: false
+      }));
+
+      decoderFeedback.innerHTML = '<span class="text-slate-400">알파벳 타일을 터치하여 7개 슬롯을 채우세요.</span>';
+      renderDecoderSlots();
+      renderDecoderTray();
     }
 
-    let currentTrayLetters = [];
+    function renderDecoderSlots() {
+      if (!decoderSlotsContainer) return;
+      decoderSlotsContainer.innerHTML = '';
 
-    function renderWordAssemble(initialTray) {
-      if (initialTray) {
-        currentTrayLetters = initialTray.map((ch, i) => ({ id: i, letter: ch, used: false }));
-        assembledSlots = [null, null, null, null, null, null, null];
-      }
+      for (let i = 0; i < 7; i++) {
+        const item = decoderSlots[i];
+        const evalState = slotEvaluation[i]; // 'correct', 'present', 'wrong', null
+        
+        const slotEl = document.createElement('div');
+        let baseClass = 'w-9 h-12 sm:w-12 sm:h-14 rounded-xl flex items-center justify-center text-base sm:text-xl font-mono font-black cursor-pointer transition-all duration-300 shadow-md select-none ';
 
-      const slots = wordSlotsContainer.querySelectorAll('.word-slot');
-      slots.forEach((slotEl, idx) => {
-        const item = assembledSlots[idx];
+        if (evalState === 'correct') {
+          baseClass += 'bg-emerald-950/90 border-2 border-emerald-400 text-emerald-300 shadow-emerald-500/20';
+        } else if (evalState === 'present') {
+          baseClass += 'bg-amber-950/90 border-2 border-amber-400 text-amber-300 shadow-amber-500/20';
+        } else if (evalState === 'wrong') {
+          baseClass += 'bg-dark-900 border-2 border-slate-700 text-slate-500';
+        } else if (item) {
+          baseClass += 'bg-cyan-950/80 border-2 border-cyan-400 text-cyan-200 hover:border-red-400';
+        } else {
+          baseClass += 'bg-dark-850 border-2 border-slate-700 text-slate-600 hover:border-slate-500';
+        }
+
+        slotEl.className = baseClass;
+        slotEl.textContent = item ? item.letter : '_';
+        
         if (item) {
-          slotEl.textContent = item.letter;
-          slotEl.className = 'word-slot w-9 h-11 sm:w-11 sm:h-13 rounded-xl bg-cyan-950/80 border-2 border-cyan-400 flex items-center justify-center text-base sm:text-xl font-mono font-black text-cyan-300 cursor-pointer shadow-lg hover:border-red-400 transition';
-          slotEl.onclick = () => removeSlotLetter(idx);
-        } else {
-          slotEl.textContent = '_';
-          slotEl.className = 'word-slot w-9 h-11 sm:w-11 sm:h-13 rounded-xl bg-dark-850 border-2 border-slate-700 flex items-center justify-center text-base sm:text-xl font-mono font-black text-slate-500 cursor-pointer hover:border-slate-500 transition';
-          slotEl.onclick = null;
+          slotEl.onclick = () => removeSlotLetter(i);
         }
-      });
 
-      assembleTileTray.innerHTML = '';
-      currentTrayLetters.forEach((tile) => {
-        const tileBtn = document.createElement('button');
-        tileBtn.type = 'button';
+        decoderSlotsContainer.appendChild(slotEl);
+      }
+    }
+
+    function renderDecoderTray() {
+      if (!decoderLetterTray) return;
+      decoderLetterTray.innerHTML = '';
+
+      trayTiles.forEach(tile => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
         if (tile.used) {
-          tileBtn.className = 'w-11 h-12 rounded-xl bg-dark-950 border border-slate-800 text-slate-700 font-mono font-bold text-lg opacity-30 cursor-not-allowed';
-          tileBtn.textContent = tile.letter;
-          tileBtn.disabled = true;
+          btn.className = 'w-11 h-12 rounded-xl bg-dark-950 border border-slate-800 text-slate-700 font-mono font-bold text-lg opacity-30 cursor-not-allowed select-none';
+          btn.textContent = tile.letter;
+          btn.disabled = true;
         } else {
-          tileBtn.className = 'w-11 h-12 rounded-xl bg-dark-850 hover:bg-dark-800 active:scale-95 border-2 border-cyan-500/60 text-cyan-200 font-mono font-black text-lg shadow-md transition';
-          tileBtn.textContent = tile.letter;
-          tileBtn.addEventListener('click', () => putLetterIntoNextSlot(tile));
+          btn.className = 'w-11 h-12 rounded-xl bg-dark-850 hover:bg-dark-800 active:scale-95 border-2 border-cyan-500/60 text-cyan-200 font-mono font-black text-lg shadow-md transition select-none';
+          btn.textContent = tile.letter;
+          btn.onclick = () => placeTileIntoSlot(tile);
         }
-        assembleTileTray.appendChild(tileBtn);
+        decoderLetterTray.appendChild(btn);
       });
     }
 
-    function putLetterIntoNextSlot(tile) {
-      const emptyIdx = assembledSlots.indexOf(null);
+    function placeTileIntoSlot(tile) {
+      const emptyIdx = decoderSlots.indexOf(null);
       if (emptyIdx === -1) return;
 
-      playBeep(620, 'sine', 0.08);
+      playBeep(587, 'sine', 0.08);
       tile.used = true;
-      assembledSlots[emptyIdx] = tile;
-      renderWordAssemble();
-
-      if (!assembledSlots.includes(null)) {
-        setTimeout(verifyAssembledWord, 200);
-      }
+      decoderSlots[emptyIdx] = tile;
+      slotEvaluation = [null, null, null, null, null, null, null];
+      renderDecoderSlots();
+      renderDecoderTray();
     }
 
-    function removeSlotLetter(slotIdx) {
-      const item = assembledSlots[slotIdx];
+    function removeSlotLetter(idx) {
+      const item = decoderSlots[idx];
       if (!item) return;
 
       playBeep(440, 'sine', 0.08);
       item.used = false;
-      assembledSlots[slotIdx] = null;
-      renderWordAssemble();
+      decoderSlots[idx] = null;
+      slotEvaluation = [null, null, null, null, null, null, null];
+      renderDecoderSlots();
+      renderDecoderTray();
     }
 
-    function resetAllSlots() {
-      assembledSlots = [null, null, null, null, null, null, null];
-      currentTrayLetters.forEach(t => t.used = false);
+    function clearAllDecoderSlots() {
+      decoderSlots = [null, null, null, null, null, null, null];
+      slotEvaluation = [null, null, null, null, null, null, null];
+      trayTiles.forEach(t => t.used = false);
       playBeep(350, 'triangle', 0.1);
-      renderWordAssemble();
+      renderDecoderSlots();
+      renderDecoderTray();
     }
 
-    function verifyAssembledWord() {
-      const formedWord = assembledSlots.map(s => s ? s.letter : '').join('');
-      if (formedWord === TARGET_WORD) {
-        playChime([523, 659, 784, 1046], 'triangle');
-        gamePhaseAssemble.classList.add('hidden');
-        gamePhaseSuccess.classList.remove('hidden');
+    function executeDecryption() {
+      if (decoderSlots.includes(null)) {
+        showToast('7자리 알파벳을 모두 슬롯에 배치한 후 해독을 실행하세요!', 'info');
+        playBeep(220, 'sawtooth', 0.15);
+        return;
+      }
 
+      const guess = decoderSlots.map(s => s.letter).join('');
+      const targetArr = TARGET_SECRET.split('');
+      const guessArr = guess.split('');
+
+      // Mastermind / Wordle Check
+      let correctCount = 0;
+      let presentCount = 0;
+      const targetUsed = [false, false, false, false, false, false, false];
+      const guessResult = ['wrong', 'wrong', 'wrong', 'wrong', 'wrong', 'wrong', 'wrong'];
+
+      // First pass: exact matches (Green)
+      for (let i = 0; i < 7; i++) {
+        if (guessArr[i] === targetArr[i]) {
+          guessResult[i] = 'correct';
+          targetUsed[i] = true;
+          correctCount++;
+        }
+      }
+
+      // Second pass: present elsewhere (Yellow)
+      for (let i = 0; i < 7; i++) {
+        if (guessResult[i] !== 'correct') {
+          for (let j = 0; j < 7; j++) {
+            if (!targetUsed[j] && guessArr[i] === targetArr[j]) {
+              guessResult[i] = 'present';
+              targetUsed[j] = true;
+              presentCount++;
+              break;
+            }
+          }
+        }
+      }
+
+      slotEvaluation = guessResult;
+      renderDecoderSlots();
+
+      // Trigger animation on container
+      decoderSlotsContainer.classList.remove('shake-anim');
+      void decoderSlotsContainer.offsetWidth;
+
+      if (correctCount === 7) {
+        // VICTORY!
+        playFanfareSound();
+        decoderFeedback.innerHTML = '<span class="text-emerald-400 font-bold">🎉 암호 해독 100% 일치! 마스터 보안 잠금이 해제되었습니다!</span>';
+        
         setTimeout(() => {
+          gameStage2.classList.add('hidden');
+          gameStage3.classList.remove('hidden');
           attemptUnlockWith('careful');
+          
           setTimeout(() => {
-            gameModal.classList.add('hidden');
-            gameModal.classList.remove('flex');
-          }, 1800);
-        }, 600);
+            closeMiniGameModal();
+          }, 2400);
+        }, 800);
+
       } else {
-        playBeep(180, 'sawtooth', 0.2);
-        wordSlotsContainer.classList.remove('shake-anim');
-        void wordSlotsContainer.offsetWidth;
-        wordSlotsContainer.classList.add('shake-anim');
-        showToast(`단어가 일치하지 않습니다 (${formedWord}). 다시 배열해보세요! (힌트: C · A · R · E · F · U · L)`, 'error');
+        decoderSlotsContainer.classList.add('shake-anim');
+        playDamageCrunch();
+        decoderFeedback.innerHTML = `<span class="text-amber-300 font-mono font-bold">해독 실패 (일치율: ${correctCount}/7)</span><br/><span class="text-[11px] text-slate-400">🟩 녹색: 정확한 위치 | 🟨 노란색: 위치 다름</span>`;
+        showToast(`암호가 일치하지 않습니다. (🟩 정확: ${correctCount}개 / 🟨 위치 다름: ${presentCount}개)`, 'error');
       }
     }
 
+    // Modal Visibility Triggers
     function openMiniGameModal() {
       closeAllSheets();
-      initMiniGame();
+      gameStage1.classList.remove('hidden');
+      gameStage2.classList.add('hidden');
+      gameStage3.classList.add('hidden');
+      
+      initArcadeEngine();
+      overlayIcon.textContent = '⚡';
+      overlayTitle.textContent = 'SYSTEM READY';
+      overlayTitle.className = 'text-base sm:text-lg font-black text-white font-mono tracking-wide';
+      overlaySubtext.textContent = '터치 드래그 또는 키보드 방향키로 사이버 프로브를 조종하세요.';
+      overlayActionBtn.textContent = 'START MISSION';
+      overlayActionBtn.className = 'mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg font-mono tracking-wider active:scale-95 transition';
+      canvasOverlay.classList.remove('hidden');
+      canvasOverlay.classList.add('flex');
+
       gameModal.classList.remove('hidden');
       gameModal.classList.add('flex');
     }
 
     function closeMiniGameModal() {
+      stopArcadeGame();
       gameModal.classList.add('hidden');
       gameModal.classList.remove('flex');
     }
 
-    // Modal Triggers
+    // Event Listeners for Game
     if (openGameBtn) openGameBtn.addEventListener('click', openMiniGameModal);
     if (desktopOpenGameBtn) desktopOpenGameBtn.addEventListener('click', openMiniGameModal);
     if (mobileOpenGameBtn) mobileOpenGameBtn.addEventListener('click', openMiniGameModal);
     if (closeGameModalBtn) closeGameModalBtn.addEventListener('click', closeMiniGameModal);
-    if (gameResetSlotsBtn) gameResetSlotsBtn.addEventListener('click', resetAllSlots);
-    if (submitAssembleBtn) submitAssembleBtn.addEventListener('click', verifyAssembledWord);
-    if (gameDoneBtn) gameDoneBtn.addEventListener('click', closeMiniGameModal);
+    if (clearSlotsBtn) clearSlotsBtn.addEventListener('click', clearAllDecoderSlots);
+    if (executeDecryptBtn) executeDecryptBtn.addEventListener('click', executeDecryption);
+    if (gameEnterArchiveBtn) gameEnterArchiveBtn.addEventListener('click', closeMiniGameModal);
+
+    if (gameMuteBtn) {
+      gameMuteBtn.addEventListener('click', () => {
+        isGameMuted = !isGameMuted;
+        gameMuteBtn.textContent = isGameMuted ? '🔇' : '🔊';
+        showToast(isGameMuted ? '게임 사운드가 꺼졌습니다.' : '게임 사운드가 켜졌습니다.', 'info');
+      });
+    }
+
+    // SheetAuth Quick Fill -> Opens Mini Game instead of typing password!
+    const quickFillBtn = document.getElementById('quickFillPwdBtn');
+    if (quickFillBtn) {
+      quickFillBtn.addEventListener('click', () => {
+        openMiniGameModal();
+      });
+    }
 
     window.addEventListener('click', (e) => {
       if (e.target === gameModal) {
@@ -1520,7 +2303,7 @@
         unlockFormWrap.classList.remove('shake-anim');
         void unlockFormWrap.offsetWidth;
         unlockFormWrap.classList.add('shake-anim');
-        showToast('보안 암호가 올바르지 않습니다. (힌트: careful)', 'error');
+        showToast('암호가 올바르지 않습니다. 미니게임을 통해 암호를 획득해보세요!', 'error');
       }
     }
 
@@ -1888,7 +2671,7 @@
     function renderDriveModalContent() {
       driveModalSub.textContent = isUnlocked
         ? '보안 인증 완료: 원본 재구성본, TOP SECRET 워터마크본, 기밀블러본 PDF를 모두 다운로드할 수 있습니다.'
-        : '잠금 상태에서는 기밀·블러처리 PDF만 다운로드 가능합니다. 원본 PDF는 암호(careful) 입력 후 활성화됩니다.';
+        : '잠금 상태에서는 기밀·블러처리 PDF만 다운로드 가능합니다. 원본 PDF는 보안 암호 해제 후 활성화됩니다.';
 
       driveLinksTableWrap.innerHTML = '';
       SUBJECT_DATA.forEach((subj) => {
@@ -1941,7 +2724,7 @@
             passwordInput.focus();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }
-          showToast('보안 암호(careful)를 입력하시면 원본 PDF 다운로드가 즉시 활성화됩니다.', 'info');
+          showToast('보안 암호를 해제하시면 원본 PDF 다운로드가 활성화됩니다.', 'info');
         });
       });
     }
@@ -2043,8 +2826,7 @@
     }
     if (quickFillPwdBtn) {
       quickFillPwdBtn.addEventListener('click', () => {
-        mobilePasswordInput.value = 'careful';
-        attemptUnlockWith('careful');
+        openMiniGameModal();
       });
     }
 
