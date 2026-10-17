@@ -40,52 +40,61 @@
   <style>
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #0b0f17;
+      background: #050811;
     }
     ::-webkit-scrollbar-thumb {
-      background: #1f293d;
+      background: #1e293b;
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #334155;
+      background: #38bdf8;
     }
 
     body {
-      background-color: #06080d;
+      background-color: #060913;
+      background-image: 
+        radial-gradient(ellipse at 50% 0%, rgba(14, 165, 233, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 85% 100%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 28px 28px;
       color: #f1f5f9;
       font-feature-settings: "cv02", "cv03", "cv04", "cv11";
       -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Glass Panels */
+    /* Refined Glass Panels */
     .glass-panel {
-      background: rgba(11, 15, 23, 0.82);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .glass-panel-subtle {
-      background: rgba(16, 22, 34, 0.65);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .glass-dock {
-      background: rgba(8, 12, 19, 0.92);
+      background: rgba(13, 19, 33, 0.78);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    .glass-panel-subtle {
+      background: rgba(10, 15, 28, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .glass-dock {
+      background: rgba(8, 12, 22, 0.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 -10px 35px rgba(0, 0, 0, 0.75);
     }
 
-    /* Paper Shadow & Presentation */
+    /* Paper Frame & Shadow */
     .paper-shadow {
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), 
-                  0 0 1px 1px rgba(255, 255, 255, 0.07);
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 
+                  0 0 1px 1px rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
     }
 
     /* Pulse Glow Animations */
@@ -607,13 +616,13 @@
             <div class="flex items-center gap-2">
               <h3 class="text-xs sm:text-base font-black text-white tracking-wide flex items-center gap-1.5">
                 <span>CYBER INFILTRATOR</span>
-                <span class="text-cyan-400 font-mono text-[11px] sm:text-xs">v3.0</span>
+                <span class="text-cyan-400 font-mono text-[11px] sm:text-xs">v3.2</span>
               </h3>
               <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 animate-pulse">
-                DYNAMIC PROTOCOL
+                DYNAMIC CIPHER
               </span>
             </div>
-            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">암호화된 코어를 탈취하여 실시간 보안 마스터 키를 해독하세요!</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">암호화된 코어를 탈취하여 실시간 마스터 키워드를 해독하세요!</p>
           </div>
         </div>
         <div class="flex items-center gap-1.5">
@@ -705,26 +714,26 @@
         <!-- ================= STAGE 2: MASTERMIND DECRYPTION CHAMBER ================= -->
         <div id="gameStage2" class="flex flex-col gap-3 hidden">
           
-          <!-- Stage 2 Header & Briefing -->
+          <!-- Stage 2 Header & Technical Briefing -->
           <div class="p-3 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-dark-900 to-dark-900 border border-cyan-500/30">
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-xs font-black text-cyan-300 font-mono flex items-center gap-1.5">
                 <span>[2단계] 마스터 패스워드 조합 해독</span>
               </span>
               <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-950 text-cyan-400 border border-cyan-500/40">
-                DECRYPT ENGINE
+                WORDLE CIPHER ENGINE
               </span>
             </div>
             <p class="text-xs text-slate-300 leading-relaxed">
-              탈취한 알파벳 코어가 확보되었습니다. 올바른 순서로 마스터 키워드를 조합하여 방화벽을 영구 해제하세요! (오답 시 암호가 즉시 교체됩니다)
+              탈취한 알파벳 코어가 확보되었습니다. 올바른 순서로 유효한 마스터 영단어를 조합하여 방화벽을 해제하세요!
             </p>
-            <!-- Cryptic Clue (No answer spoiler!) -->
-            <div class="mt-2 p-2 rounded-xl bg-amber-950/30 border border-amber-500/30 text-amber-200 text-[11px] flex items-start gap-2">
-              <span class="shrink-0 text-sm">💡</span>
-              <div class="leading-relaxed">
-                <strong class="text-amber-300">해킹 브리핑 힌트:</strong>
-                <span id="decoderHintText" class="text-slate-300">"위험한 보안 시스템일수록 가장 필요한 미덕..."</span>
+            <!-- High-Tech Analysis Guide (Pure Cryptogram deduction, NO semantic spoilers) -->
+            <div class="mt-2 p-2 rounded-xl bg-dark-950/70 border border-slate-800 text-[11px] text-slate-300 flex items-center justify-between gap-2 font-mono">
+              <div class="flex items-center gap-2">
+                <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">🟩 정확한 위치</span>
+                <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold border border-amber-500/30">🟨 다른 위치 포함</span>
               </div>
+              <span class="text-[10px] text-red-400/90 font-bold">※ 오답 시 암호 즉시 교체</span>
             </div>
           </div>
 
@@ -1091,31 +1100,23 @@
     // Application State
     // =========================================================================
     // =========================================================================
-    // Dynamic Security Master Cipher System ("조심해" 테마 단어 풀)
     // =========================================================================
-    const CAREFUL_WORDS = [
-      { word: 'CAREFUL', hint: '돌다리도 두드려보고 건너는 신중하고 조심스러운 성격' },
-      { word: 'CAUTION', hint: '위험을 방지하기 위해 각별히 기울이는 주의와 조심' },
-      { word: 'BEWARE',  hint: '다가오는 위험이나 맹수를 "조심하라!"고 알리는 경고' },
-      { word: 'PRUDENT', hint: '경솔하지 않고 매사에 빈틈없이 사려 깊고 신중한 태도' },
-      { word: 'MINDFUL', hint: '방심하지 않고 위험을 늘 마음에 유념하며 조심하는 상태' },
-      { word: 'HEEDFUL', hint: '경고나 충고에 귀를 기울이며 각별히 주의하고 조심하는' },
-      { word: 'WATCH',   hint: '발밑과 주변 위험을 시선 떼지 않고 주의 깊게 살피며 조심하다' },
-      { word: 'ALERT',   hint: '어떤 비상 상황에도 즉시 대응할 수 있도록 팽팽히 경계하는' },
-      { word: 'GUARD',   hint: '방심하지 않고 방어선을 지키며 빈틈없이 경계하고 조심하다' },
-      { word: 'WARILY',  hint: '의심과 경계를 늦추지 않고 살금살금 조심스럽게' }
+    // Dynamic Security Master Cipher System (No Spoilers)
+    // =========================================================================
+    const CIPHER_WORDS_POOL = [
+      'CAREFUL', 'CAUTION', 'BEWARE', 'PRUDENT', 'MINDFUL',
+      'HEEDFUL', 'WATCH', 'ALERT', 'GUARD', 'WARILY'
     ];
 
-    let currentWordObj = CAREFUL_WORDS[Math.floor(Math.random() * CAREFUL_WORDS.length)];
-    let currentAccessCode = currentWordObj.word;
+    let currentAccessCode = CIPHER_WORDS_POOL[Math.floor(Math.random() * CIPHER_WORDS_POOL.length)];
 
     function randomizeAccessCode(reason = '') {
-      const candidates = CAREFUL_WORDS.filter(w => w.word !== currentAccessCode);
-      currentWordObj = candidates[Math.floor(Math.random() * candidates.length)];
-      currentAccessCode = currentWordObj.word;
-      console.log(`[SECURITY ROTATION] Cipher changed to ${currentAccessCode.length}-letter word (${reason})`);
-      return currentWordObj;
+      const candidates = CIPHER_WORDS_POOL.filter(w => w !== currentAccessCode);
+      currentAccessCode = candidates[Math.floor(Math.random() * candidates.length)];
+      console.log(`[SECURITY ROTATION] Cipher changed to ${currentAccessCode.length}-letter keyword (${reason})`);
+      return currentAccessCode;
     }
+
     let isUnlocked = false;
     let viewMode = 'redacted'; // 'orig' | 'ts_orig' | 'redacted' | 'split'
     let activeSubjIdx = 0;
@@ -1230,7 +1231,6 @@
     const decoderSlotsContainer = document.getElementById('decoderSlotsContainer');
     const decoderLetterTray = document.getElementById('decoderLetterTray');
     const decoderFeedback = document.getElementById('decoderFeedback');
-    const decoderHintText = document.getElementById('decoderHintText');
     const clearSlotsBtn = document.getElementById('clearSlotsBtn');
     const executeDecryptBtn = document.getElementById('executeDecryptBtn');
     const gameEnterArchiveBtn = document.getElementById('gameEnterArchiveBtn');
@@ -1543,7 +1543,7 @@
       overlayIcon.textContent = '💥';
       overlayTitle.textContent = 'SYSTEM BREACH // CIPHER RESET';
       overlayTitle.className = 'text-sm sm:text-lg font-black text-red-400 font-mono tracking-wide';
-      overlaySubtext.textContent = '프로브 파괴로 보안 시스템이 암호를 즉시 폐기하고 새로운 "조심해" 단어로 재설정했습니다. 새 암호 코어를 탈취하세요!';
+      overlaySubtext.textContent = '프로브 파괴로 보안 시스템이 암호를 즉시 폐기하고 새로운 영단어로 재설정했습니다. 새 암호 코어를 탈취하세요!';
       overlayActionBtn.textContent = 'RETRY MISSION (새 암호로 재도전)';
       overlayActionBtn.className = 'mt-3 sm:mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white shadow-lg font-mono tracking-wider active:scale-95 transition';
       
@@ -1817,6 +1817,7 @@
       activeHazards.forEach(h => {
         arcadeCtx.save();
         if (h.type === 'beam') {
+          // Red Laser Barrier
           arcadeCtx.fillStyle = 'rgba(239, 68, 68, 0.85)';
           arcadeCtx.shadowColor = '#ef4444';
           arcadeCtx.shadowBlur = 10;
@@ -1825,6 +1826,7 @@
           arcadeCtx.fillStyle = '#ffffff';
           arcadeCtx.fillRect(h.x, h.y + 3, h.width, 3);
         } else {
+          // Glitch Mine
           arcadeCtx.translate(h.x, h.y);
           arcadeCtx.rotate(h.rot);
           arcadeCtx.fillStyle = '#dc2626';
@@ -2035,10 +2037,6 @@
     function initDecryptionChamber() {
       decoderSlots = new Array(currentAccessCode.length).fill(null);
       slotEvaluation = new Array(currentAccessCode.length).fill(null);
-      
-      if (decoderHintText) {
-        decoderHintText.textContent = `"${currentWordObj.hint} (${currentAccessCode.length}글자)"`;
-      }
 
       // Scramble harvested letters into tray
       const shuffled = [...harvestedLetters].sort(() => Math.random() - 0.5);
@@ -2048,7 +2046,7 @@
         used: false
       }));
 
-      decoderFeedback.innerHTML = `<span class="text-slate-400">알파벳 타일을 터치하여 ${currentAccessCode.length}개 슬롯을 채우세요. (단 1회 오답 시 암호가 즉시 교체됩니다!)</span>`;
+      decoderFeedback.innerHTML = `<span class="text-slate-400 font-mono">탈취한 알파벳 코어를 터치하여 <strong>${currentAccessCode.length}자리</strong> 슬롯을 채우세요.<br/><span class="text-[11px] text-slate-500">🟩 녹색: 정확한 위치 | 🟨 노란색: 다른 위치 포함 (오답 시 암호 즉시 교체)</span></span>`;
       renderDecoderSlots();
       renderDecoderTray();
     }
@@ -2219,7 +2217,7 @@
         // As requested: "한번이라도 비번 입력 실패하면 비번 바뀌게해줘"
         randomizeAccessCode('Decryption guess failed');
 
-        decoderFeedback.innerHTML = `<span class="text-red-400 font-mono font-bold">⚠️ 해독 실패! 보안 시스템이 암호를 즉시 폐기 및 재설정했습니다.</span><br/><span class="text-[11px] text-slate-400">새로운 "조심해" 암호 코어를 탈취하러 1단계로 강제 복귀합니다.</span>`;
+        decoderFeedback.innerHTML = `<span class="text-red-400 font-mono font-bold">⚠️ 해독 실패! 보안 시스템이 암호를 즉시 폐기 및 재설정했습니다.</span><br/><span class="text-[11px] text-slate-400">새로운 알파벳 코어를 탈취하러 1단계로 복귀합니다.</span>`;
         showToast('암호 해독 실패! 보안 프로토콜에 의해 암호가 즉시 교체되었습니다.', 'error');
 
         setTimeout(() => {
@@ -2229,7 +2227,7 @@
           overlayIcon.textContent = '🔄';
           overlayTitle.textContent = 'SECURITY OVERRIDE // CIPHER ROTATED';
           overlayTitle.className = 'text-sm sm:text-lg font-black text-amber-400 font-mono tracking-wide';
-          overlaySubtext.textContent = '암호 불일치로 마스터 암호가 새로운 "조심해" 단어로 재설정되었습니다. 새 코어를 탈취하세요!';
+          overlaySubtext.textContent = '암호 불일치로 마스터 암호가 새롭게 재설정되었습니다. 새 코어를 탈취하세요!';
           overlayActionBtn.textContent = 'START NEW MISSION (새 암호 탈취 시작)';
           canvasOverlay.classList.remove('hidden');
           canvasOverlay.classList.add('flex');
@@ -2433,12 +2431,12 @@
         renderAll();
       } else {
         // As requested: "한번이라도 죽거나 비번 입력 실패하면 비번 바뀌게해줘"
-        randomizeAccessCode('Wrong password attempt');
+        randomizeAccessCode('Wrong manual input attempt');
         playBeep(220, 'sawtooth', 0.2);
         unlockFormWrap.classList.remove('shake-anim');
         void unlockFormWrap.offsetWidth;
         unlockFormWrap.classList.add('shake-anim');
-        showToast('암호 불일치! 보안 침해로 인해 암호가 즉시 새로운 "조심해" 단어로 재설정되었습니다.', 'error');
+        showToast('암호 불일치! 보안 침해로 인해 암호가 즉시 새로운 영단어로 재설정되었습니다.', 'error');
       }
     }
 
