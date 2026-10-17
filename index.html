@@ -236,7 +236,7 @@
               <input
                 id="passwordInput"
                 type="password"
-                placeholder="보안 암호 입력..."
+                placeholder="직접 입력 차단됨 (미니게임 전용)"
                 autocomplete="off"
                 class="bg-transparent text-xs text-white placeholder-slate-500 pl-8 pr-12 py-1.5 w-40 focus:outline-none font-mono"
               />
@@ -387,7 +387,7 @@
           <span>🎮 미니게임으로 해독</span>
         </button>
         <button id="focusPwdBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md shrink-0 transition flex items-center justify-center gap-1.5 active:scale-95">
-          <span>직접 암호 입력</span>
+          <span>미니게임으로 해독</span>
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
         </button>
       </div>
@@ -523,7 +523,7 @@
           <input
             id="mobilePasswordInput"
             type="password"
-            placeholder="보안 암호 입력..."
+            placeholder="직접 입력 차단됨 (미니게임 전용)"
             autocomplete="off"
             class="flex-1 bg-transparent text-sm text-white placeholder-slate-500 pl-2 py-2 focus:outline-none font-mono"
           />
@@ -1653,7 +1653,7 @@
         }
 
         // Auto unlock archive
-        attemptUnlockWith(currentAccessCode);
+        unlockArchiveFromGame();
       }, 500);
     }
 
@@ -2281,7 +2281,7 @@
         setTimeout(() => {
           gameStage2.classList.add('hidden');
           gameStage3.classList.remove('hidden');
-          attemptUnlockWith(currentAccessCode);
+          unlockArchiveFromGame();
           
           setTimeout(() => {
             closeMiniGameModal();
@@ -2499,27 +2499,30 @@
     });
 
     // Unlock & Lock Functions
+    function unlockArchiveFromGame() {
+      isUnlocked = true;
+      viewMode = 'orig';
+      if (passwordInput) passwordInput.value = '';
+      if (mobilePasswordInput) mobilePasswordInput.value = '';
+      closeAllSheets();
+      playChime([523, 659, 784, 1046]);
+      showToast('🎉 사이버 미니게임 클리어! 전 과목 원본 시험지가 활성화되었습니다.', 'success');
+      renderAll();
+    }
+
     function attemptUnlockWith(val) {
-      if (!val) return;
-      const cleanVal = val.trim().toUpperCase();
-      if (cleanVal === currentAccessCode) {
-        isUnlocked = true;
-        viewMode = 'orig';
-        passwordInput.value = '';
-        mobilePasswordInput.value = '';
-        closeAllSheets();
-        playChime([523, 659, 784, 1046]);
-        showToast('🎉 보안 잠금 해제 성공! 전 과목 원본 시험지가 활성화되었습니다.', 'success');
-        renderAll();
-      } else {
-        // As requested: "한번이라도 죽거나 비번 입력 실패하면 비번 바뀌게해줘"
-        randomizeAccessCode('Wrong manual input attempt');
-        playBeep(220, 'sawtooth', 0.2);
+      // Direct manual typing is completely blocked as requested:
+      // "그리고 그냥 비번으로 시도할떄에는 안열리게 해줘 직접 치는거느"
+      randomizeAccessCode('Direct manual typing attempt blocked');
+      playBeep(220, 'sawtooth', 0.25);
+      if (unlockFormWrap) {
         unlockFormWrap.classList.remove('shake-anim');
         void unlockFormWrap.offsetWidth;
         unlockFormWrap.classList.add('shake-anim');
-        showToast('암호 불일치! 보안 침해로 인해 암호가 즉시 새로운 영단어로 재설정되었습니다.', 'error');
       }
+      if (passwordInput) passwordInput.value = '';
+      if (mobilePasswordInput) mobilePasswordInput.value = '';
+      showToast('⚠️ 직접 암호 입력 방식은 차단되었습니다! [미니게임으로 해독]을 통해서만 아카이브가 해제됩니다.', 'error');
     }
 
     function lockArchive() {
@@ -3052,13 +3055,7 @@
     // Focus Password Triggers
     if (focusPwdBtn) {
       focusPwdBtn.addEventListener('click', () => {
-        if (window.innerWidth < 1024) {
-          openSheet(sheetAuth);
-          setTimeout(() => mobilePasswordInput.focus(), 150);
-        } else {
-          passwordInput.focus();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        openMiniGameModal();
       });
     }
 
