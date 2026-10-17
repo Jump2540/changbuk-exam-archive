@@ -595,28 +595,28 @@
   <!-- Mini-Game Modal: Hacker Cipher Word Decryption                            -->
   <!-- ========================================================================= -->
   <div id="gameModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-md p-2 sm:p-4">
-    <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-xl w-full p-3.5 sm:p-6 shadow-2xl border border-cyan-500/50 flex flex-col max-h-[96vh] overflow-y-auto relative">
+    <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-xl w-full p-3 sm:p-6 shadow-2xl border border-cyan-500/50 flex flex-col max-h-[96vh] overflow-y-auto relative">
       
       <!-- Top Title Bar -->
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800 shrink-0">
+      <div class="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-slate-800 shrink-0">
         <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500/30 to-blue-600/30 border border-cyan-500/60 text-cyan-300 flex items-center justify-center text-lg shadow-sm">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-cyan-500/30 to-blue-600/30 border border-cyan-500/60 text-cyan-300 flex items-center justify-center text-base sm:text-lg shadow-sm">
             🚀
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h3 class="text-sm sm:text-base font-black text-white tracking-wide flex items-center gap-1.5">
+              <h3 class="text-xs sm:text-base font-black text-white tracking-wide flex items-center gap-1.5">
                 <span>CYBER INFILTRATOR</span>
-                <span class="text-cyan-400 font-mono text-xs">v2.4</span>
+                <span class="text-cyan-400 font-mono text-[11px] sm:text-xs">v2.5</span>
               </h3>
-              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 animate-pulse">
+              <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 animate-pulse">
                 ARCADE MISSION
               </span>
             </div>
-            <p class="text-[11px] text-slate-400 mt-0.5">방화벽을 뚫고 7개의 암호 코어를 탈취하여 마스터 키를 해독하세요!</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">암호화된 7개 코어를 가로채어 마스터 패스워드를 해독하세요!</p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5">
           <button id="gameMuteBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-400 hover:text-cyan-300 border border-slate-700/60 flex items-center justify-center text-xs font-bold transition" title="사운드 켜기/끄기">
             🔊
           </button>
@@ -625,75 +625,77 @@
       </div>
 
       <!-- Main Game Body -->
-      <div class="mt-3 flex flex-col gap-3">
+      <div class="mt-2.5 sm:mt-3 flex flex-col gap-2.5 sm:gap-3">
         
         <!-- ================= STAGE 1: CANVAS ARCADE RUNNER ================= -->
-        <div id="gameStage1" class="flex flex-col gap-2.5">
+        <div id="gameStage1" class="flex flex-col gap-2">
           
           <!-- Arcade Status Ribbon (Shields, Letter Tracker, Score) -->
           <div class="flex items-center justify-between text-xs bg-dark-950 p-2 sm:p-2.5 rounded-xl border border-slate-800">
             <!-- Shields -->
             <div class="flex items-center gap-1.5">
-              <span class="text-[10px] font-mono text-slate-400 font-bold uppercase">SHIELD:</span>
-              <div id="gameShields" class="flex items-center gap-1 text-sm">
+              <span class="text-[9px] sm:text-[10px] font-mono text-slate-400 font-bold uppercase">SHIELD:</span>
+              <div id="gameShields" class="flex items-center gap-1 text-xs sm:text-sm">
                 <span>🛡️</span><span>🛡️</span><span>🛡️</span>
               </div>
             </div>
 
             <!-- Letter Progress HUD -->
             <div class="flex items-center gap-1 font-mono text-xs">
-              <span class="text-slate-400 text-[10px]">CORES:</span>
-              <span id="gameCoreProgress" class="font-bold text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/40">
+              <span class="text-slate-400 text-[9px] sm:text-[10px]">DECRYPTED:</span>
+              <span id="gameCoreProgress" class="font-bold text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/40 text-[11px] sm:text-xs">
                 0 / 7
               </span>
             </div>
 
             <!-- Score -->
             <div class="flex items-center gap-1 font-mono text-xs">
-              <span class="text-slate-400 text-[10px]">SCORE:</span>
-              <span id="gameScoreText" class="font-bold text-amber-300">0</span>
+              <span class="text-slate-400 text-[9px] sm:text-[10px]">SCORE:</span>
+              <span id="gameScoreText" class="font-bold text-amber-300 text-xs sm:text-sm">0</span>
             </div>
           </div>
 
           <!-- Harvested Cores Live Inventory Preview -->
-          <div class="p-2 sm:p-2.5 rounded-xl bg-dark-950 border border-slate-800/80 flex items-center justify-between gap-2">
-            <span class="text-[11px] text-slate-400 font-mono shrink-0">탈취된 암호 코어:</span>
+          <div class="p-2 sm:p-2.5 rounded-xl bg-dark-950 border border-slate-800/80 flex items-center justify-between gap-1.5">
+            <span class="text-[10px] sm:text-[11px] text-slate-400 font-mono shrink-0">해독된 알파벳 보관함:</span>
             <div id="harvestedCoreSlots" class="flex items-center gap-1 sm:gap-1.5 flex-1 justify-end">
               <!-- 7 core slots -->
             </div>
           </div>
 
           <!-- Game Canvas Container -->
-          <div class="relative w-full rounded-2xl overflow-hidden border-2 border-cyan-500/40 shadow-2xl bg-black">
-            <canvas id="arcadeCanvas" width="480" height="320" class="w-full h-[260px] sm:h-[320px] block cursor-crosshair touch-none select-none"></canvas>
+          <div class="relative w-full rounded-2xl overflow-hidden border-2 border-cyan-500/40 shadow-2xl bg-black touch-none">
+            <canvas id="arcadeCanvas" width="480" height="320" class="w-full h-[250px] sm:h-[320px] block cursor-crosshair touch-none select-none"></canvas>
             
             <!-- Canvas In-Game Start / Game Over Overlay -->
             <div id="canvasOverlay" class="absolute inset-0 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center z-10">
-              <div id="overlayIcon" class="text-4xl mb-2">⚡</div>
-              <h4 id="overlayTitle" class="text-base sm:text-lg font-black text-white font-mono tracking-wide">SYSTEM READY</h4>
-              <p id="overlaySubtext" class="text-xs text-slate-300 mt-1 max-w-xs leading-relaxed">
-                터치 드래그 또는 키보드 방향키로 사이버 프로브를 조종하세요.
+              <div id="overlayIcon" class="text-3xl sm:text-4xl mb-2">⚡</div>
+              <h4 id="overlayTitle" class="text-sm sm:text-lg font-black text-white font-mono tracking-wide">SYSTEM READY</h4>
+              <p id="overlaySubtext" class="text-[11px] sm:text-xs text-slate-300 mt-1 max-w-xs leading-relaxed">
+                터치 드래그 또는 조작 버튼으로 사이버 프로브를 조종하세요.
               </p>
-              <button id="overlayActionBtn" type="button" class="mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg font-mono tracking-wider active:scale-95 transition">
+              <button id="overlayActionBtn" type="button" class="mt-3 sm:mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg font-mono tracking-wider active:scale-95 transition">
                 START MISSION
               </button>
             </div>
           </div>
 
-          <!-- Mobile Touch Controls & Instructions -->
-          <div class="flex items-center justify-between gap-2 text-slate-400">
-            <div class="text-[10px] sm:text-[11px] text-slate-400 leading-tight">
-              <span>🎮 조작: <strong>화면 터치 드래그</strong> / 키보드 <strong>← →</strong> 또는 <strong>A, D</strong></span>
-              <p class="text-[10px] text-slate-500">파란색 암호 코어를 모으고, 빨간색 방화벽 레이저를 피하세요!</p>
+          <!-- Ergonomic Mobile Touch Controls & Instructions -->
+          <div class="flex flex-col gap-2 pt-1">
+            <div class="flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 px-0.5">
+              <span>🎮 조작: <strong>화면 직접 터치 드래그</strong> 또는 <strong>하단 버튼</strong> (PC: ← →)</span>
+              <span class="text-cyan-400/90 font-mono text-[10px]">코어 획득 시 즉시 암호 해독</span>
             </div>
             
-            <!-- On-Screen Left/Right Touch Controls for Mobile -->
-            <div class="flex items-center gap-2 shrink-0 sm:hidden">
-              <button id="touchLeftBtn" type="button" class="w-12 h-11 rounded-xl bg-dark-850 active:bg-cyan-950 border border-slate-700 active:border-cyan-400 text-white font-bold text-base flex items-center justify-center select-none shadow-md">
-                ◀
+            <!-- Dedicated Ergonomic Thumb Steering Buttons for Mobile -->
+            <div class="grid grid-cols-2 gap-2 sm:hidden">
+              <button id="touchLeftBtn" type="button" class="py-3 rounded-xl bg-dark-850 active:bg-cyan-950 border border-slate-700 active:border-cyan-400 text-cyan-300 font-mono font-bold text-xs flex items-center justify-center gap-2 select-none shadow-md touch-none active:scale-98">
+                <span class="text-base font-black">◀</span>
+                <span>좌측 이동 (LEFT)</span>
               </button>
-              <button id="touchRightBtn" type="button" class="w-12 h-11 rounded-xl bg-dark-850 active:bg-cyan-950 border border-slate-700 active:border-cyan-400 text-white font-bold text-base flex items-center justify-center select-none shadow-md">
-                ▶
+              <button id="touchRightBtn" type="button" class="py-3 rounded-xl bg-dark-850 active:bg-cyan-950 border border-slate-700 active:border-cyan-400 text-cyan-300 font-mono font-bold text-xs flex items-center justify-center gap-2 select-none shadow-md touch-none active:scale-98">
+                <span>우측 이동 (RIGHT)</span>
+                <span class="text-base font-black">▶</span>
               </button>
             </div>
           </div>
@@ -701,7 +703,7 @@
         </div>
 
         <!-- ================= STAGE 2: MASTERMIND DECRYPTION CHAMBER ================= -->
-        <div id="gameStage2" class="flex flex-col gap-3.5 hidden">
+        <div id="gameStage2" class="flex flex-col gap-3 hidden">
           
           <!-- Stage 2 Header & Briefing -->
           <div class="p-3 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-dark-900 to-dark-900 border border-cyan-500/30">
@@ -735,7 +737,7 @@
               </button>
             </div>
             
-            <div id="decoderSlotsContainer" class="flex items-center justify-center gap-1.5 sm:gap-2.5 py-3.5 px-2 bg-dark-950 rounded-2xl border border-cyan-500/30 shadow-inner">
+            <div id="decoderSlotsContainer" class="flex items-center justify-center gap-1.5 sm:gap-2.5 py-3.5 px-1 bg-dark-950 rounded-2xl border border-cyan-500/30 shadow-inner">
               <!-- 7 interactive slots data-slot="0" .. "6" -->
             </div>
 
@@ -758,7 +760,7 @@
 
           <!-- Execute Decrypt Button -->
           <div class="pt-1">
-            <button id="executeDecryptBtn" type="button" class="w-full py-3 sm:py-3.5 rounded-xl text-sm font-extrabold bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 hover:from-cyan-400 hover:to-blue-400 text-slate-950 shadow-xl active:scale-98 transition flex items-center justify-center gap-2 font-mono tracking-wider">
+            <button id="executeDecryptBtn" type="button" class="w-full py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 hover:from-cyan-400 hover:to-blue-400 text-slate-950 shadow-xl active:scale-98 transition flex items-center justify-center gap-2 font-mono tracking-wider">
               <span>⚡ 암호 해독 및 방화벽 해제 실행 (EXECUTE)</span>
             </button>
           </div>
@@ -1249,29 +1251,10 @@
       });
     }
 
-    function playLaserSound() {
-      if (isGameMuted) return;
-      try {
-        const ctx = getAudioCtx();
-        if (!ctx) return;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(880, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.12);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.12);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.12);
-      } catch (e) {}
-    }
-
     function playPickupChime() {
       if (isGameMuted) return;
-      [587, 740, 880, 1175].forEach((f, i) => {
-        setTimeout(() => playBeep(f, 'triangle', 0.12, 0.12), i * 50);
+      [659, 880, 1046, 1318].forEach((f, i) => {
+        setTimeout(() => playBeep(f, 'triangle', 0.14, 0.15), i * 45);
       });
     }
 
@@ -1283,27 +1266,27 @@
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'square';
-        osc.frequency.setValueAtTime(120, ctx.currentTime);
-        osc.frequency.linearRampToValueAtTime(40, ctx.currentTime + 0.25);
-        gain.gain.setValueAtTime(0.2, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.frequency.setValueAtTime(140, ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(35, ctx.currentTime + 0.22);
+        gain.gain.setValueAtTime(0.22, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start();
-        osc.stop(ctx.currentTime + 0.25);
+        osc.stop(ctx.currentTime + 0.22);
       } catch (e) {}
     }
 
     function playFanfareSound() {
       if (isGameMuted) return;
-      const notes = [523, 659, 784, 1046, 1318];
+      const notes = [523, 659, 784, 1046, 1318, 1568];
       notes.forEach((f, i) => {
-        setTimeout(() => playBeep(f, 'triangle', 0.25, 0.18), i * 90);
+        setTimeout(() => playBeep(f, 'triangle', 0.25, 0.18), i * 85);
       });
     }
 
     // =========================================================================
-    // CYBER INFILTRATOR: ARCADE RUNNER & MASTERMIND CIPHER ENGINE
+    // CYBER INFILTRATOR: 60FPS ARCADE & CIPHER DECRYPTION ENGINE
     // =========================================================================
     const TARGET_SECRET = 'CAREFUL';
     const TARGET_LETTERS = ['C', 'A', 'R', 'E', 'F', 'U', 'L'];
@@ -1315,18 +1298,23 @@
     let arcadeAnimId = null;
     let isArcadeRunning = false;
     let lastFrameTime = 0;
+    let screenShake = 0;
 
     let player = {
       x: 240,
-      y: 280,
-      width: 38,
-      height: 28,
+      y: 275,
+      width: 40,
+      height: 30,
       vx: 0,
       targetX: 240,
       tilt: 0,
       shields: 3,
-      invulnerableTimer: 0
+      invulnerableTimer: 0,
+      isTouchDragging: false
     };
+
+    let buttonInputDir = 0;
+    let keyInputDir = 0;
 
     let harvestedLetters = []; // Target 7 unique letters
     let uncollectedLettersPool = [];
@@ -1350,25 +1338,31 @@
       arcadeCanvas.height = Math.floor(320 * dpr);
       arcadeCtx.scale(dpr, dpr);
 
-      // Create starfield
+      // Create dynamic starfield
       backgroundStars = [];
       const logicalWidth = arcadeCanvas.width / dpr;
       const logicalHeight = 320;
-      for (let i = 0; i < 45; i++) {
+      for (let i = 0; i < 50; i++) {
         backgroundStars.push({
           x: Math.random() * logicalWidth,
           y: Math.random() * logicalHeight,
-          speed: 0.5 + Math.random() * 2.2,
-          size: Math.random() < 0.3 ? 2 : 1,
-          color: Math.random() < 0.4 ? '#38bdf8' : '#e2e8f0'
+          speed: 0.8 + Math.random() * 2.8,
+          size: Math.random() < 0.25 ? 2 : 1,
+          color: Math.random() < 0.4 ? '#38bdf8' : (Math.random() < 0.2 ? '#c084fc' : '#e2e8f0')
         });
       }
 
       player.x = logicalWidth / 2;
       player.targetX = logicalWidth / 2;
       player.y = logicalHeight - 45;
+      player.vx = 0;
+      player.tilt = 0;
       player.shields = 3;
       player.invulnerableTimer = 0;
+      player.isTouchDragging = false;
+      buttonInputDir = 0;
+      keyInputDir = 0;
+      screenShake = 0;
 
       harvestedLetters = [];
       uncollectedLettersPool = [...TARGET_LETTERS].sort(() => Math.random() - 0.5);
@@ -1410,7 +1404,7 @@
           const has = harvestedLetters[idx];
           const chip = document.createElement('div');
           if (has) {
-            chip.className = 'w-6 h-6 rounded bg-cyan-500/25 border border-cyan-400 text-cyan-300 font-mono font-black text-[11px] flex items-center justify-center shadow-sm animate-pulse';
+            chip.className = 'w-6 h-6 rounded bg-cyan-500/30 border border-cyan-400 text-cyan-300 font-mono font-black text-[11px] flex items-center justify-center shadow-sm animate-pulse';
             chip.textContent = has;
           } else {
             chip.className = 'w-6 h-6 rounded bg-dark-900 border border-slate-800 text-slate-700 font-mono font-bold text-[10px] flex items-center justify-center';
@@ -1426,16 +1420,16 @@
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const logicalWidth = arcadeCanvas.width / dpr;
       
-      // Pick a random uncollected letter
+      // Pick next uncollected letter
       const letter = uncollectedLettersPool[Math.floor(Math.random() * uncollectedLettersPool.length)];
       activeCores.push({
-        x: 30 + Math.random() * (logicalWidth - 60),
+        x: 35 + Math.random() * (logicalWidth - 70),
         y: -25,
-        radius: 16,
+        radius: 17,
         letter: letter,
-        speed: 1.8 + Math.random() * 0.8,
+        speed: 1.8 + Math.random() * 0.9,
         rot: 0,
-        pulse: 0
+        pulse: Math.random() * Math.PI
       });
     }
 
@@ -1446,32 +1440,32 @@
       const isBeam = Math.random() < 0.45;
       if (isBeam) {
         // Red laser barrier
-        const w = 65 + Math.random() * 45;
+        const w = 70 + Math.random() * 45;
         activeHazards.push({
           type: 'beam',
           x: 20 + Math.random() * (logicalWidth - w - 40),
-          y: -20,
+          y: -22,
           width: w,
-          height: 10,
-          speed: 2.2 + Math.random() * 1.0
+          height: 11,
+          speed: 2.2 + Math.random() * 1.1
         });
       } else {
         // Spiked EMP glitch mine
         activeHazards.push({
           type: 'mine',
           x: 25 + Math.random() * (logicalWidth - 50),
-          y: -20,
-          radius: 12,
-          speed: 2.5 + Math.random() * 1.2,
+          y: -22,
+          radius: 13,
+          speed: 2.5 + Math.random() * 1.3,
           rot: 0
         });
       }
     }
 
-    function addExplosion(x, y, color = '#38bdf8', count = 14) {
+    function addExplosion(x, y, color = '#38bdf8', count = 18) {
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const spd = 1 + Math.random() * 3.5;
+        const spd = 1.2 + Math.random() * 3.8;
         activeParticles.push({
           x: x,
           y: y,
@@ -1492,7 +1486,7 @@
         text: text,
         color: color,
         alpha: 1.0,
-        vy: -1.2
+        vy: -1.3
       });
     }
 
@@ -1509,6 +1503,8 @@
 
     function stopArcadeGame() {
       isArcadeRunning = false;
+      buttonInputDir = 0;
+      keyInputDir = 0;
       if (arcadeAnimId) {
         cancelAnimationFrame(arcadeAnimId);
         arcadeAnimId = null;
@@ -1521,10 +1517,10 @@
       
       overlayIcon.textContent = '💥';
       overlayTitle.textContent = 'SYSTEM BREACH // MISSION FAILED';
-      overlayTitle.className = 'text-base sm:text-lg font-black text-red-400 font-mono tracking-wide';
+      overlayTitle.className = 'text-sm sm:text-lg font-black text-red-400 font-mono tracking-wide';
       overlaySubtext.textContent = '방화벽에 탐지되어 프로브 쉴드가 모두 소진되었습니다. 다시 도전하여 암호 코어를 탈취하세요!';
       overlayActionBtn.textContent = 'RETRY MISSION (다시 시도)';
-      overlayActionBtn.className = 'mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white shadow-lg font-mono tracking-wider active:scale-95 transition';
+      overlayActionBtn.className = 'mt-3 sm:mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white shadow-lg font-mono tracking-wider active:scale-95 transition';
       
       canvasOverlay.classList.remove('hidden');
       canvasOverlay.classList.add('flex');
@@ -1551,24 +1547,46 @@
       const logicalWidth = arcadeCanvas.width / dpr;
       const logicalHeight = 320;
 
-      // 1. Update Player Movement (Smooth Lerp towards targetX)
-      const dx = player.targetX - player.x;
-      player.vx = dx * 10;
-      player.x += player.vx * dt;
-      player.tilt = Math.max(-0.4, Math.min(0.4, player.vx * 0.003));
-      player.x = Math.max(player.width / 2 + 5, Math.min(logicalWidth - player.width / 2 - 5, player.x));
+      // 1. Realistic Physics & Responsive Inertia Steering
+      const ACCEL = 2200; // px/s^2 snappy acceleration
+      const MAX_SPEED = 420; // px/s
+      const FRICTION = 0.85; // natural air damping
+
+      const inputDir = buttonInputDir !== 0 ? buttonInputDir : keyInputDir;
+
+      if (inputDir !== 0) {
+        // Continuous button/key steering
+        player.vx += inputDir * ACCEL * dt;
+        player.vx = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, player.vx));
+        player.x += player.vx * dt;
+        player.targetX = player.x;
+      } else if (player.isTouchDragging) {
+        // Direct Touch Drag with spring-damper follow
+        const diff = player.targetX - player.x;
+        player.vx = diff * 18;
+        player.x += player.vx * dt;
+      } else {
+        // Natural friction deceleration
+        player.vx *= Math.pow(FRICTION, dt * 60);
+        player.x += player.vx * dt;
+        player.targetX = player.x;
+      }
+
+      // Dynamic Banking/Tilt based on velocity
+      player.tilt = Math.max(-0.45, Math.min(0.45, (player.vx / MAX_SPEED) * 0.42));
+      player.x = Math.max(player.width / 2 + 6, Math.min(logicalWidth - player.width / 2 - 6, player.x));
 
       if (player.invulnerableTimer > 0) {
         player.invulnerableTimer -= dt;
       }
 
       // Thruster Exhaust Particles
-      if (Math.random() < 0.6) {
+      if (Math.random() < 0.75) {
         activeParticles.push({
           x: player.x + (Math.random() - 0.5) * 8,
           y: player.y + 14,
           vx: (Math.random() - 0.5) * 0.8,
-          vy: 2.5 + Math.random() * 2,
+          vy: 2.8 + Math.random() * 2.5 + Math.abs(player.vx) * 0.005,
           life: 0.6,
           decay: 0.05,
           color: Math.random() < 0.5 ? '#38bdf8' : '#818cf8',
@@ -1587,7 +1605,7 @@
 
       // 3. Spawns
       spawnTimer += dt;
-      if (spawnTimer > 1.4 && activeCores.length < 3 && uncollectedLettersPool.length > 0) {
+      if (spawnTimer > 1.35 && activeCores.length < 3 && uncollectedLettersPool.length > 0) {
         spawnDataCore();
         spawnTimer = 0;
       }
@@ -1608,15 +1626,20 @@
         // Collision with player
         const dist = Math.hypot(c.x - player.x, c.y - player.y);
         if (dist < c.radius + player.width / 2 - 2) {
-          // Harvested!
+          // Intercepted / Decrypted!
           harvestedLetters.push(c.letter);
           const idxInPool = uncollectedLettersPool.indexOf(c.letter);
           if (idxInPool !== -1) uncollectedLettersPool.splice(idxInPool, 1);
           
-          arcadeScore += 150;
-          addExplosion(c.x, c.y, '#38bdf8', 18);
-          addFloatingText(c.x, c.y - 10, `+150 [${c.letter}]`, '#38bdf8');
+          arcadeScore += 200;
+          addExplosion(c.x, c.y, '#38bdf8', 26);
+          addFloatingText(c.x, c.y - 12, `✦ DECRYPTED: [ ${c.letter} ] ✦`, '#38bdf8');
           playPickupChime();
+          
+          if (window.navigator && window.navigator.vibrate) {
+            try { window.navigator.vibrate([25, 30, 25]); } catch(e){}
+          }
+          
           activeCores.splice(i, 1);
           updateArcadeHUD();
 
@@ -1660,9 +1683,15 @@
         if (hit) {
           if (player.invulnerableTimer <= 0) {
             player.shields--;
-            player.invulnerableTimer = 1.3;
-            addExplosion(player.x, player.y, '#ef4444', 24);
+            player.invulnerableTimer = 1.4;
+            screenShake = 12;
+            addExplosion(player.x, player.y, '#ef4444', 26);
             playDamageCrunch();
+            
+            if (window.navigator && window.navigator.vibrate) {
+              try { window.navigator.vibrate([60, 40, 80]); } catch(e){}
+            }
+
             updateArcadeHUD();
 
             if (player.shields <= 0) {
@@ -1697,6 +1726,16 @@
       }
 
       // ---------------- RENDER ----------------
+      arcadeCtx.save();
+      
+      // Screen Shake Transform
+      if (screenShake > 0.1) {
+        const sx = (Math.random() - 0.5) * screenShake;
+        const sy = (Math.random() - 0.5) * screenShake;
+        arcadeCtx.translate(sx, sy);
+        screenShake *= 0.88;
+      }
+
       arcadeCtx.fillStyle = '#06080d';
       arcadeCtx.fillRect(0, 0, logicalWidth, logicalHeight);
 
@@ -1716,35 +1755,38 @@
         arcadeCtx.fillRect(st.x, st.y, st.size, st.size);
       });
 
-      // Draw Cores
+      // Draw Cores (HIDDEN CODE UNTIL INTERCEPTED!)
       activeCores.forEach(c => {
         arcadeCtx.save();
         arcadeCtx.translate(c.x, c.y);
         
-        // Outer pulsing ring
-        const pulseR = c.radius + Math.sin(c.pulse) * 3;
-        arcadeCtx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+        // Outer pulsing quantum radar ring
+        const pulseR = c.radius + Math.sin(c.pulse) * 3.5;
+        arcadeCtx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
         arcadeCtx.lineWidth = 2;
         arcadeCtx.beginPath();
         arcadeCtx.arc(0, 0, pulseR, 0, Math.PI * 2);
         arcadeCtx.stroke();
 
-        // Inner glowing core
+        // Inner glowing cyber orb
         const grad = arcadeCtx.createRadialGradient(0, 0, 2, 0, 0, c.radius);
         grad.addColorStop(0, '#ffffff');
-        grad.addColorStop(0.5, '#38bdf8');
-        grad.addColorStop(1, '#0284c7');
+        grad.addColorStop(0.45, '#38bdf8');
+        grad.addColorStop(0.85, '#0284c7');
+        grad.addColorStop(1, '#0369a1');
         arcadeCtx.fillStyle = grad;
         arcadeCtx.beginPath();
         arcadeCtx.arc(0, 0, c.radius, 0, Math.PI * 2);
         arcadeCtx.fill();
 
-        // Core Glyph Letter
+        // Encrypted Glitch Matrix Symbol (Letter is HIDDEN until eaten!)
+        const cypherGlyphs = ['0x', '?', '◆', '§', '✦', '※', '★'];
+        const glyphIdx = Math.floor((now / 140) + c.pulse) % cypherGlyphs.length;
         arcadeCtx.fillStyle = '#06080d';
-        arcadeCtx.font = 'bold 15px "JetBrains Mono", monospace';
+        arcadeCtx.font = '900 13px "JetBrains Mono", monospace';
         arcadeCtx.textAlign = 'center';
         arcadeCtx.textBaseline = 'middle';
-        arcadeCtx.fillText(c.letter, 0, 1);
+        arcadeCtx.fillText(cypherGlyphs[glyphIdx], 0, 1);
 
         arcadeCtx.restore();
       });
@@ -1804,45 +1846,70 @@
       arcadeCtx.translate(player.x, player.y);
       arcadeCtx.rotate(player.tilt);
 
-      // Invulnerability Blink
-      if (player.invulnerableTimer > 0 && Math.floor(player.invulnerableTimer * 12) % 2 === 0) {
-        arcadeCtx.globalAlpha = 0.3;
+      // Invulnerability Blink & Forcefield Bubble
+      if (player.invulnerableTimer > 0) {
+        if (Math.floor(player.invulnerableTimer * 14) % 2 === 0) {
+          arcadeCtx.globalAlpha = 0.35;
+        }
+        arcadeCtx.strokeStyle = 'rgba(56, 189, 248, 0.7)';
+        arcadeCtx.lineWidth = 2;
+        arcadeCtx.beginPath();
+        arcadeCtx.arc(0, 0, player.width * 0.72, 0, Math.PI * 2);
+        arcadeCtx.stroke();
       }
 
-      // Ship Body (Futuristic Vector Fighter)
-      arcadeCtx.shadowColor = '#38bdf8';
-      arcadeCtx.shadowBlur = 12;
+      // Dynamic Plasma Exhaust Jet
+      const jetLength = 10 + Math.abs(player.vx) * 0.05 + Math.random() * 6;
+      const jetGrad = arcadeCtx.createLinearGradient(0, 10, 0, 10 + jetLength);
+      jetGrad.addColorStop(0, '#ffffff');
+      jetGrad.addColorStop(0.3, '#38bdf8');
+      jetGrad.addColorStop(1, 'transparent');
+      arcadeCtx.fillStyle = jetGrad;
+      arcadeCtx.beginPath();
+      arcadeCtx.moveTo(-6, 10);
+      arcadeCtx.lineTo(0, 10 + jetLength);
+      arcadeCtx.lineTo(6, 10);
+      arcadeCtx.closePath();
+      arcadeCtx.fill();
 
-      // Outer Hull
+      // Ship Outer Wings & Armor
+      arcadeCtx.shadowColor = '#38bdf8';
+      arcadeCtx.shadowBlur = 10;
       arcadeCtx.fillStyle = '#0f172a';
       arcadeCtx.strokeStyle = '#38bdf8';
       arcadeCtx.lineWidth = 2;
       arcadeCtx.beginPath();
-      arcadeCtx.moveTo(0, -16); // Nose
+      arcadeCtx.moveTo(0, -18); // Nose
       arcadeCtx.lineTo(player.width / 2, 12); // Right wing
-      arcadeCtx.lineTo(player.width / 4, 8);
-      arcadeCtx.lineTo(0, 14); // Tail
-      arcadeCtx.lineTo(-player.width / 4, 8);
+      arcadeCtx.lineTo(player.width / 4, 7);
+      arcadeCtx.lineTo(0, 13); // Tail notch
+      arcadeCtx.lineTo(-player.width / 4, 7);
       arcadeCtx.lineTo(-player.width / 2, 12); // Left wing
       arcadeCtx.closePath();
       arcadeCtx.fill();
       arcadeCtx.stroke();
 
-      // Cockpit Glow
+      // Wingtip Neon Glows
       arcadeCtx.fillStyle = '#38bdf8';
+      arcadeCtx.fillRect(player.width / 2 - 2, 8, 3, 4);
+      arcadeCtx.fillRect(-player.width / 2 - 1, 8, 3, 4);
+
+      // Cockpit Glow
+      arcadeCtx.fillStyle = '#67e8f9';
       arcadeCtx.beginPath();
-      arcadeCtx.moveTo(0, -8);
-      arcadeCtx.lineTo(4, 2);
-      arcadeCtx.lineTo(-4, 2);
+      arcadeCtx.moveTo(0, -9);
+      arcadeCtx.lineTo(4, 1);
+      arcadeCtx.lineTo(-4, 1);
       arcadeCtx.closePath();
       arcadeCtx.fill();
 
+      arcadeCtx.restore();
       arcadeCtx.restore();
 
       arcadeAnimId = requestAnimationFrame(arcadeGameLoop);
     }
 
-    // Canvas Input Handlers
+    // Touch & Mouse Input Handlers
     function setPlayerTargetFromClientX(clientX) {
       if (!arcadeCanvas) return;
       const rect = arcadeCanvas.getBoundingClientRect();
@@ -1854,10 +1921,11 @@
     }
 
     if (arcadeCanvas) {
-      // Touch events
+      // Touch drag events (Smooth direct finger steering)
       arcadeCanvas.addEventListener('touchstart', (e) => {
         if (!isArcadeRunning) return;
         if (e.touches.length > 0) {
+          player.isTouchDragging = true;
           setPlayerTargetFromClientX(e.touches[0].clientX);
           e.preventDefault();
         }
@@ -1866,10 +1934,18 @@
       arcadeCanvas.addEventListener('touchmove', (e) => {
         if (!isArcadeRunning) return;
         if (e.touches.length > 0) {
+          player.isTouchDragging = true;
           setPlayerTargetFromClientX(e.touches[0].clientX);
           e.preventDefault();
         }
       }, { passive: false });
+
+      arcadeCanvas.addEventListener('touchend', () => {
+        player.isTouchDragging = false;
+      });
+      arcadeCanvas.addEventListener('touchcancel', () => {
+        player.isTouchDragging = false;
+      });
 
       // Mouse events
       arcadeCanvas.addEventListener('mousemove', (e) => {
@@ -1881,47 +1957,48 @@
     // Keyboard controls
     window.addEventListener('keydown', (e) => {
       if (!isArcadeRunning || gameModal.classList.contains('hidden')) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const logicalWidth = arcadeCanvas.width / dpr;
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-        player.targetX = Math.max(25, player.targetX - 28);
+        keyInputDir = -1;
       } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-        player.targetX = Math.min(logicalWidth - 25, player.targetX + 28);
+        keyInputDir = 1;
       }
     });
 
-    // Mobile on-screen buttons
-    let touchMoveInterval = null;
-    function startTouchMove(dir) {
-      if (!isArcadeRunning) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const logicalWidth = arcadeCanvas.width / dpr;
-      player.targetX = Math.max(25, Math.min(logicalWidth - 25, player.targetX + dir * 30));
-      if (touchMoveInterval) clearInterval(touchMoveInterval);
-      touchMoveInterval = setInterval(() => {
-        player.targetX = Math.max(25, Math.min(logicalWidth - 25, player.targetX + dir * 25));
-      }, 50);
-    }
-    function stopTouchMove() {
-      if (touchMoveInterval) {
-        clearInterval(touchMoveInterval);
-        touchMoveInterval = null;
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        if (keyInputDir === -1) keyInputDir = 0;
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        if (keyInputDir === 1) keyInputDir = 0;
       }
+    });
+
+    // Mobile Thumb Steering Buttons
+    function handleBtnDown(dir) {
+      if (!isArcadeRunning) return;
+      buttonInputDir = dir;
+      if (window.navigator && window.navigator.vibrate) {
+        try { window.navigator.vibrate(12); } catch(e){}
+      }
+    }
+    function handleBtnUp() {
+      buttonInputDir = 0;
     }
 
     if (touchLeftBtn) {
-      touchLeftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startTouchMove(-1); });
-      touchLeftBtn.addEventListener('touchend', stopTouchMove);
-      touchLeftBtn.addEventListener('mousedown', () => startTouchMove(-1));
-      touchLeftBtn.addEventListener('mouseup', stopTouchMove);
-      touchLeftBtn.addEventListener('mouseleave', stopTouchMove);
+      touchLeftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); handleBtnDown(-1); }, { passive: false });
+      touchLeftBtn.addEventListener('touchend', (e) => { e.preventDefault(); handleBtnUp(); });
+      touchLeftBtn.addEventListener('touchcancel', (e) => { e.preventDefault(); handleBtnUp(); });
+      touchLeftBtn.addEventListener('mousedown', () => handleBtnDown(-1));
+      touchLeftBtn.addEventListener('mouseup', handleBtnUp);
+      touchLeftBtn.addEventListener('mouseleave', handleBtnUp);
     }
     if (touchRightBtn) {
-      touchRightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startTouchMove(1); });
-      touchRightBtn.addEventListener('touchend', stopTouchMove);
-      touchRightBtn.addEventListener('mousedown', () => startTouchMove(1));
-      touchRightBtn.addEventListener('mouseup', stopTouchMove);
-      touchRightBtn.addEventListener('mouseleave', stopTouchMove);
+      touchRightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); handleBtnDown(1); }, { passive: false });
+      touchRightBtn.addEventListener('touchend', (e) => { e.preventDefault(); handleBtnUp(); });
+      touchRightBtn.addEventListener('touchcancel', (e) => { e.preventDefault(); handleBtnUp(); });
+      touchRightBtn.addEventListener('mousedown', () => handleBtnDown(1));
+      touchRightBtn.addEventListener('mouseup', handleBtnUp);
+      touchRightBtn.addEventListener('mouseleave', handleBtnUp);
     }
 
     if (overlayActionBtn) {
@@ -2013,6 +2090,9 @@
       if (emptyIdx === -1) return;
 
       playBeep(587, 'sine', 0.08);
+      if (window.navigator && window.navigator.vibrate) {
+        try { window.navigator.vibrate(15); } catch(e){}
+      }
       tile.used = true;
       decoderSlots[emptyIdx] = tile;
       slotEvaluation = [null, null, null, null, null, null, null];
@@ -2025,6 +2105,9 @@
       if (!item) return;
 
       playBeep(440, 'sine', 0.08);
+      if (window.navigator && window.navigator.vibrate) {
+        try { window.navigator.vibrate(10); } catch(e){}
+      }
       item.used = false;
       decoderSlots[idx] = null;
       slotEvaluation = [null, null, null, null, null, null, null];
@@ -2091,6 +2174,9 @@
       if (correctCount === 7) {
         // VICTORY!
         playFanfareSound();
+        if (window.navigator && window.navigator.vibrate) {
+          try { window.navigator.vibrate([40, 60, 40, 60, 80]); } catch(e){}
+        }
         decoderFeedback.innerHTML = '<span class="text-emerald-400 font-bold">🎉 암호 해독 100% 일치! 마스터 보안 잠금이 해제되었습니다!</span>';
         
         setTimeout(() => {
@@ -2106,6 +2192,9 @@
       } else {
         decoderSlotsContainer.classList.add('shake-anim');
         playDamageCrunch();
+        if (window.navigator && window.navigator.vibrate) {
+          try { window.navigator.vibrate([80, 50, 80]); } catch(e){}
+        }
         decoderFeedback.innerHTML = `<span class="text-amber-300 font-mono font-bold">해독 실패 (일치율: ${correctCount}/7)</span><br/><span class="text-[11px] text-slate-400">🟩 녹색: 정확한 위치 | 🟨 노란색: 위치 다름</span>`;
         showToast(`암호가 일치하지 않습니다. (🟩 정확: ${correctCount}개 / 🟨 위치 다름: ${presentCount}개)`, 'error');
       }
@@ -2121,10 +2210,10 @@
       initArcadeEngine();
       overlayIcon.textContent = '⚡';
       overlayTitle.textContent = 'SYSTEM READY';
-      overlayTitle.className = 'text-base sm:text-lg font-black text-white font-mono tracking-wide';
-      overlaySubtext.textContent = '터치 드래그 또는 키보드 방향키로 사이버 프로브를 조종하세요.';
+      overlayTitle.className = 'text-sm sm:text-lg font-black text-white font-mono tracking-wide';
+      overlaySubtext.textContent = '터치 드래그 또는 조작 버튼으로 사이버 프로브를 조종하세요.';
       overlayActionBtn.textContent = 'START MISSION';
-      overlayActionBtn.className = 'mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg font-mono tracking-wider active:scale-95 transition';
+      overlayActionBtn.className = 'mt-3 sm:mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg font-mono tracking-wider active:scale-95 transition';
       canvasOverlay.classList.remove('hidden');
       canvasOverlay.classList.add('flex');
 
