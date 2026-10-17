@@ -2,22 +2,104 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover">
   <title>창북중학교 2025학년도 2학기 기말고사 3학년 기출 보안 아카이브</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- Fonts: Pretendard, Inter, JetBrains Mono -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Pretendard', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            dark: {
+              950: '#06080d',
+              900: '#0b0f17',
+              850: '#101622',
+              800: '#161f30',
+              750: '#1d283e',
+              700: '#26344d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0f17;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f293d;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
     body {
-      font-family: 'Inter', 'Noto Sans KR', sans-serif;
-      background-color: #0b0f17;
+      background-color: #06080d;
       color: #f1f5f9;
-      overflow-x: hidden;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-tap-highlight-color: transparent;
     }
-    .mono {
-      font-family: 'JetBrains Mono', monospace;
+
+    /* Glass Panels */
+    .glass-panel {
+      background: rgba(11, 15, 23, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
+    .glass-panel-subtle {
+      background: rgba(16, 22, 34, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .glass-dock {
+      background: rgba(8, 12, 19, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Paper Shadow & Presentation */
+    .paper-shadow {
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), 
+                  0 0 1px 1px rgba(255, 255, 255, 0.07);
+    }
+
+    /* Pulse Glow Animations */
+    @keyframes pulseGlowRed {
+      0%, 100% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.25); }
+      50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.5); }
+    }
+    @keyframes pulseGlowGreen {
+      0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.25); }
+      50% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); }
+    }
+    .glow-red { animation: pulseGlowRed 3s infinite ease-in-out; }
+    .glow-green { animation: pulseGlowGreen 3s infinite ease-in-out; }
+
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       20% { transform: translateX(-6px); }
@@ -25,83 +107,117 @@
       60% { transform: translateX(-4px); }
       80% { transform: translateX(4px); }
     }
-    .shake-anim {
-      animation: shake 0.38s ease-in-out;
-    }
-    .paper-shadow {
-      box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.78), 0 0 1px 1px rgba(255, 255, 255, 0.08);
-    }
+    .shake-anim { animation: shake 0.38s ease-in-out; }
+
+    /* Overlay Stamp */
     .ts-stamp-overlay {
       pointer-events: none;
       user-select: none;
     }
+
+    /* Safe Area padding for modern phones */
+    .safe-bottom {
+      padding-bottom: max(env(safe-area-inset-bottom), 12px);
+    }
+    .safe-top {
+      padding-top: max(env(safe-area-inset-top), 0px);
+    }
+
+    /* Bottom Sheet slide animation */
+    .bottom-sheet {
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+    }
+    .bottom-sheet-closed {
+      transform: translateY(100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .bottom-sheet-open {
+      transform: translateY(0%);
+      opacity: 1;
+      pointer-events: auto;
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+<body class="min-h-screen flex flex-col font-sans select-text pb-24 lg:pb-8">
 
-  <!-- Top Classification Ribbon -->
-  <div id="securityRibbon" class="w-full py-1.5 px-4 text-center text-xs font-bold tracking-widest uppercase transition-colors duration-300 bg-red-900/90 text-red-100 border-b border-red-700/60 mono">
-    TOP SECRET // CHANG-BUK M.S. EXAM ARCHIVE // PREVIEW MODE (KEY SECTIONS BLURRED &amp; REDACTED)
+  <!-- ========================================================================= -->
+  <!-- Top Security Status Bar (Classification Ticker)                           -->
+  <!-- ========================================================================= -->
+  <div id="securityRibbon" class="w-full py-1.5 px-3 sm:px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-300 bg-red-950/90 text-red-200 border-b border-red-800/60 font-mono flex items-center justify-center gap-2 safe-top">
+    <span class="inline-block w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+    <span id="ribbonText">TOP SECRET // 기밀 보안 1등급 // 미리보기 모드 (핵심 지문·정답 블러 및 마스킹)</span>
   </div>
 
-  <!-- Main Header & Password Control Bar -->
-  <header class="sticky top-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-lg">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-      <!-- Brand / Title -->
-      <div class="flex items-center gap-3">
-        <div id="statusIconBox" class="w-10 h-10 rounded-xl flex items-center justify-center bg-red-500/15 border border-red-500/40 text-red-400 shrink-0 transition-colors duration-300">
-          <svg id="lockSvg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+  <!-- ========================================================================= -->
+  <!-- Desktop & Tablet Main Header                                              -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80 shadow-xl">
+    <div class="max-w-7xl mx-auto px-3 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between gap-3">
+      
+      <!-- Brand & Security Status Badge -->
+      <div class="flex items-center gap-2.5 sm:gap-3.5">
+        <div id="statusIconBox" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center bg-red-500/15 border border-red-500/35 text-red-400 shrink-0 transition-all duration-300">
+          <svg id="lockSvg" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
         </div>
         <div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">창북중학교 3학년 2학기 기말고사 기출 아카이브</h1>
-            <span id="clearanceBadge" class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-red-500/20 text-red-300 border border-red-500/40 mono">
-              TOP SECRET PREVIEW
+          <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            <h1 class="text-sm sm:text-base lg:text-lg font-extrabold tracking-tight text-white flex items-center gap-1.5">
+              <span>창북중학교 3학년 2학기 기말 기출</span>
+              <span class="hidden sm:inline text-slate-500">|</span>
+              <span class="hidden sm:inline text-slate-300 text-xs sm:text-sm font-semibold">보안 아카이브</span>
+            </h1>
+            <span id="clearanceBadge" class="px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-red-500/20 text-red-300 border border-red-500/40 font-mono">
+              TOP SECRET
             </span>
           </div>
-          <p id="headerSubtext" class="text-xs text-slate-400 mt-0.5">
-            현재 주요 지문·도형 블러 및 정답 기밀처리(REDACTED) 미리보기 상태입니다. 원본 열람은 보안 암호를 입력하세요.
+          <p id="headerSubtext" class="text-[11px] text-slate-400 hidden sm:block truncate max-w-xl mt-0.5">
+            전 과목(국어·영어·수학·사회·역사·과학) 기출 시험지 &amp; 공식 NEIS 정답표 아카이브
           </p>
         </div>
       </div>
 
-      <!-- Password Input & Action Controls -->
-      <div class="flex flex-wrap items-center gap-2">
-        <!-- Locked State Form -->
-        <div id="unlockFormWrap" class="flex items-center gap-1.5 bg-slate-950/90 border border-slate-700 rounded-xl p-1 focus-within:border-amber-400/70 transition">
+      <!-- Desktop Unlock Bar & Controls (hidden on mobile, managed in bottom sheet / dock) -->
+      <div class="hidden lg:flex items-center gap-2.5">
+        
+        <!-- Locked Mode Input -->
+        <div id="unlockFormWrap" class="flex items-center gap-1.5 bg-dark-950/90 border border-slate-700/80 rounded-xl p-1 focus-within:border-amber-400/80 transition-all shadow-inner">
           <div class="relative flex items-center">
+            <svg class="w-3.5 h-3.5 text-slate-500 absolute left-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
             <input
               id="passwordInput"
               type="password"
-              placeholder="보안 암호 입력..."
+              placeholder="보안 암호 (careful)"
               autocomplete="off"
-              class="bg-transparent text-sm text-white placeholder-slate-500 pl-3 pr-8 py-1.5 w-40 sm:w-48 focus:outline-none mono"
+              class="bg-transparent text-xs text-white placeholder-slate-500 pl-8 pr-12 py-1.5 w-44 focus:outline-none font-mono"
             />
             <button
               id="togglePwdBtn"
               type="button"
-              title="암호 표시/숨기기"
-              class="absolute right-2 text-slate-400 hover:text-slate-200 text-xs px-1"
+              class="absolute right-2 text-slate-400 hover:text-slate-200 text-[10px] font-mono px-1 py-0.5 rounded bg-slate-800"
             >
-              보기
+              SHOW
             </button>
           </div>
           <button
             id="unlockBtn"
             type="button"
-            class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition shadow-sm shrink-0"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all shadow-md shrink-0 flex items-center gap-1"
           >
-            잠금 해제
+            <span>잠금 해제</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </button>
         </div>
 
-        <!-- Unlocked State Controls (Hidden while locked) -->
-        <div id="unlockedControlsWrap" class="hidden items-center gap-2 flex-wrap">
-          <div class="inline-flex rounded-xl bg-slate-950 p-1 border border-slate-800">
-            <button id="modeOrigBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500 text-slate-950 transition">
+        <!-- Unlocked Mode Controls -->
+        <div id="unlockedControlsWrap" class="hidden items-center gap-2">
+          <div class="inline-flex rounded-xl bg-dark-950 p-1 border border-slate-800 shadow-inner">
+            <button id="modeOrigBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition">
               원본 클린
             </button>
             <button id="modeTsOrigBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">
@@ -117,169 +233,426 @@
           <button
             id="lockBtn"
             type="button"
-            class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-red-900/60 text-slate-200 hover:text-red-200 border border-slate-700 transition"
+            class="px-3 py-1.5 rounded-xl text-xs font-bold bg-dark-850 hover:bg-red-950/70 text-slate-300 hover:text-red-200 border border-slate-700/80 transition flex items-center gap-1.5"
           >
-            다시 잠그기
+            <svg class="w-3 h-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>잠그기</span>
           </button>
         </div>
 
-        <!-- Drive & GitHub Guide Buttons -->
+        <!-- Download & Guide Modals Trigger -->
         <button
           id="openDriveModalBtn"
           type="button"
-          class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition"
+          class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700/70 transition flex items-center gap-1.5"
         >
-          PDF 다운로드 / Drive
+          <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          <span>PDF 다운로드</span>
         </button>
         <button
           id="openGithubModalBtn"
           type="button"
-          class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600/25 hover:bg-indigo-600/40 text-indigo-200 border border-indigo-500/40 transition"
+          class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-950/40 hover:bg-indigo-900/50 text-indigo-300 border border-indigo-700/50 transition flex items-center gap-1.5"
         >
-          GitHub 호스팅 안내
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          <span>안내</span>
         </button>
       </div>
+
+      <!-- Mobile Top Quick Bar (과목 뱃지 & 잠금 상태 클릭 가능) -->
+      <div class="flex items-center gap-1.5 lg:hidden">
+        <button
+          id="mobileSubjectQuickBtn"
+          type="button"
+          class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-dark-850 hover:bg-dark-800 text-slate-100 border border-slate-700/80 flex items-center gap-1.5"
+        >
+          <span id="mobileSubjQuickName">국어</span>
+          <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <button
+          id="mobileAuthQuickBtn"
+          type="button"
+          class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 flex items-center gap-1"
+        >
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          <span id="mobileAuthQuickLabel">해제</span>
+        </button>
+      </div>
+
     </div>
 
-    <!-- Toast / Feedback Banner -->
-    <div id="toastBanner" class="hidden max-w-7xl mx-auto px-4 pb-2.5">
-      <div id="toastInner" class="px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border">
+    <!-- Toast Notification Banner -->
+    <div id="toastBanner" class="hidden max-w-7xl mx-auto px-3 sm:px-5 pb-2.5 transition-all">
+      <div id="toastInner" class="px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border shadow-lg">
         <span id="toastText"></span>
-        <button id="closeToastBtn" type="button" class="ml-3 text-xs font-bold opacity-75 hover:opacity-100">닫기</button>
+        <button id="closeToastBtn" type="button" class="ml-3 text-xs font-bold opacity-75 hover:opacity-100">✕</button>
       </div>
     </div>
 
-    <!-- Subject Navigation Tabs -->
-    <div class="bg-slate-950/70 border-t border-slate-800/80">
-      <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto">
-        <div id="subjectTabs" class="flex items-center gap-1.5"></div>
+    <!-- Subject Tabs (Desktop & Tablet Scrolling Bar) -->
+    <div class="bg-dark-950/80 border-t border-slate-800/60">
+      <div class="max-w-7xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <div id="subjectTabs" class="flex items-center gap-1.5 min-w-max"></div>
       </div>
     </div>
   </header>
 
-  <!-- Secondary Toolbar: Page Selector, View Layout, Zoom, Answer Sheet Jump -->
-  <div class="bg-slate-900/70 border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
-      <!-- Subject Metadata Summary -->
-      <div class="flex items-center gap-2 flex-wrap">
-        <span id="activeSubjBadge" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-white border border-slate-700"></span>
-        <span id="activeSubjMeta" class="text-xs text-slate-400"></span>
+  <!-- ========================================================================= -->
+  <!-- Secondary Control Toolbar                                                 -->
+  <!-- ========================================================================= -->
+  <div class="glass-panel-subtle border-b border-slate-800/80 py-2 sm:py-2.5 px-3 sm:px-5 sticky top-[95px] sm:top-[103px] z-30">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-2.5">
+      
+      <!-- Left: Subject Metadata Info -->
+      <div class="flex items-center gap-2 flex-wrap text-xs">
+        <span id="activeSubjBadge" class="px-2.5 py-1 rounded-lg font-bold bg-dark-850 text-white border border-slate-700/80 shadow-sm flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span id="activeSubjBadgeText">국어 (과목코드 [01])</span>
+        </span>
+        <span id="activeSubjMeta" class="text-slate-400 text-[11px] sm:text-xs">
+          10월 23일 1교시 실시 · 총 27문항 (100점 만점) · 총 9면
+        </span>
       </div>
 
-      <!-- Page Controls -->
-      <div class="flex items-center gap-1.5 flex-wrap">
-        <button id="prevPageBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-40 transition">
-          ◀ 이전 면
+      <!-- Right: Page Selector, Quick Answer Jump, Zoom & View Modes -->
+      <div class="flex items-center justify-between md:justify-end gap-2 flex-wrap">
+        
+        <!-- Page Chips (Desktop & Tablet) -->
+        <div class="hidden sm:flex items-center gap-1">
+          <button id="prevPageBtn" type="button" class="px-2 py-1 rounded-lg text-xs font-semibold bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition">
+            ◀ 이전
+          </button>
+          <div id="pageChipsWrap" class="flex items-center gap-1 overflow-x-auto"></div>
+          <button id="nextPageBtn" type="button" class="px-2 py-1 rounded-lg text-xs font-semibold bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition">
+            다음 ▶
+          </button>
+        </div>
+
+        <!-- Quick Answer Sheet Jump Button -->
+        <button id="jumpAnsBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition flex items-center gap-1 shrink-0">
+          <span>🎯 정답/배점표</span>
         </button>
-        <div id="pageChipsWrap" class="flex items-center gap-1 flex-wrap"></div>
-        <button id="nextPageBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-40 transition">
-          다음 면 ▶
+
+        <!-- Scroll / Continuous Mode Toggle -->
+        <button id="toggleScrollModeBtn" type="button" class="hidden md:flex px-2.5 py-1 rounded-lg text-xs font-semibold bg-dark-850 hover:bg-dark-800 text-slate-300 border border-slate-700 transition">
+          전체 연속 보기
         </button>
-        <button id="jumpAnsBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition">
-          정답/배점표 면
-        </button>
+
+        <!-- Zoom Pill Controls -->
+        <div class="hidden sm:inline-flex items-center rounded-lg bg-dark-850 border border-slate-700 p-0.5 shadow-sm">
+          <button id="zoomOutBtn" type="button" class="px-2 py-0.5 text-xs font-bold text-slate-300 hover:text-white" title="축소">-</button>
+          <span id="zoomLabel" class="px-2 text-[11px] font-mono font-bold text-slate-200">100%</span>
+          <button id="zoomInBtn" type="button" class="px-2 py-0.5 text-xs font-bold text-slate-300 hover:text-white" title="확대">+</button>
+          <button id="zoomFitBtn" type="button" class="px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 hover:text-emerald-300 border-l border-slate-700" title="너비 맞춤">Fit</button>
+        </div>
+
       </div>
 
-      <!-- Scroll Mode & Zoom -->
-      <div class="flex items-center gap-1.5">
-        <button id="toggleScrollModeBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
-          전 페이지 연속 보기
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- Main Exam Paper Viewport Container                                        -->
+  <!-- ========================================================================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 lg:px-6 py-4 sm:py-6 flex flex-col items-center">
+    
+    <!-- Security Notice Callout (Shown when Locked) -->
+    <div id="lockedCallout" class="w-full max-w-4xl mb-4 sm:mb-6 p-3 sm:p-4 rounded-2xl bg-gradient-to-r from-red-950/80 via-dark-900 to-dark-900 border border-red-700/60 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div class="flex items-start sm:items-center gap-3">
+        <span class="px-2.5 py-1 rounded-md bg-red-600 text-white text-[11px] font-black font-mono shrink-0 shadow-sm">TOP SECRET</span>
+        <div class="text-xs text-slate-300 leading-relaxed">
+          <p>현재 <strong class="text-red-300 font-bold">기밀·블러 미리보기 모드</strong>입니다. 핵심 지문·도형·도표가 블러 처리되었으며 정답표는 마스킹 상태입니다.</p>
+          <p class="text-[11px] text-slate-400 mt-0.5">상단 암호창(모바일은 하단 '보안' 탭)에 보안 암호 <code class="text-amber-300 font-mono bg-dark-950 px-1 py-0.5 rounded border border-amber-500/30">careful</code>을 입력하시면 <strong>100% 원본 시험지</strong>가 즉시 해제됩니다.</p>
+        </div>
+      </div>
+      <button id="focusPwdBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md shrink-0 transition flex items-center justify-center gap-1.5">
+        <span>암호 입력하여 해제</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+      </button>
+    </div>
+
+    <!-- Pages Container (Supports Touch Swipe on Mobile) -->
+    <div id="pagesViewport" class="w-full flex flex-col items-center gap-5 sm:gap-7 transition-all"></div>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- Mobile Floating Quick-Page Navigator (Thumb-accessible)                   -->
+  <!-- ========================================================================= -->
+  <div class="lg:hidden fixed bottom-16 inset-x-0 z-40 px-3 pointer-events-none flex justify-center">
+    <div class="pointer-events-auto glass-panel px-3 py-1.5 rounded-full border border-slate-700/90 shadow-2xl flex items-center gap-2">
+      <button id="mobileFloatPrevBtn" type="button" class="w-8 h-8 rounded-full bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700 flex items-center justify-center text-xs font-bold active:scale-95 transition">
+        ◀
+      </button>
+      <button id="mobileFloatPageSelectorBtn" type="button" class="px-2.5 py-1 rounded-full text-xs font-mono font-bold text-white bg-dark-950 border border-slate-700">
+        <span id="mobileFloatPageText">1 / 9면</span>
+      </button>
+      <button id="mobileFloatNextBtn" type="button" class="w-8 h-8 rounded-full bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700 flex items-center justify-center text-xs font-bold active:scale-95 transition">
+        ▶
+      </button>
+      <button id="mobileFloatAnsBtn" type="button" class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 active:scale-95 transition">
+        정답표
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- Mobile App-like Bottom Dock Navigation (5-Tabs)                           -->
+  <!-- ========================================================================= -->
+  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 glass-dock safe-bottom">
+    <div class="grid grid-cols-5 h-14">
+      
+      <!-- 1. 과목 선택 -->
+      <button id="dockSubjBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
+        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        <span class="text-[10px] font-medium">과목선택</span>
+      </button>
+
+      <!-- 2. 면수 이동 -->
+      <button id="dockPagesBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
+        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span class="text-[10px] font-medium">페이지</span>
+      </button>
+
+      <!-- 3. 보안 잠금/해제 -->
+      <button id="dockAuthBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
+        <div id="dockLockIconWrap" class="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400">
+          <svg id="dockLockSvg" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        </div>
+        <span id="dockLockLabel" class="text-[10px] font-bold text-amber-300">잠금해제</span>
+      </button>
+
+      <!-- 4. 보기 모드 -->
+      <button id="dockModeBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
+        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+        <span class="text-[10px] font-medium">보기모드</span>
+      </button>
+
+      <!-- 5. PDF 다운로드 -->
+      <button id="dockPdfBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
+        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        <span class="text-[10px] font-medium">PDF다운</span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- ========================================================================= -->
+  <!-- Mobile Bottom Sheet: Subject Picker                                       -->
+  <!-- ========================================================================= -->
+  <div id="sheetSubject" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm bottom-sheet bottom-sheet-closed flex flex-col justify-end">
+    <div class="glass-panel border-t border-slate-700/80 rounded-t-3xl p-5 max-h-[85vh] overflow-y-auto safe-bottom">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div>
+          <h3 class="text-base font-extrabold text-white">시험 과목 선택</h3>
+          <p class="text-xs text-slate-400 mt-0.5">창북중학교 3학년 2학기 기말고사 전 과목 (6종)</p>
+        </div>
+        <button type="button" class="close-sheet-btn p-1.5 text-slate-400 hover:text-white text-base">✕</button>
+      </div>
+      <div id="mobileSubjectList" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- Mobile Bottom Sheet: Page Selector & Jump                                 -->
+  <!-- ========================================================================= -->
+  <div id="sheetPages" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm bottom-sheet bottom-sheet-closed flex flex-col justify-end">
+    <div class="glass-panel border-t border-slate-700/80 rounded-t-3xl p-5 max-h-[80vh] overflow-y-auto safe-bottom">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div>
+          <h3 class="text-base font-extrabold text-white">면(페이지) 바로가기</h3>
+          <p id="sheetPagesSub" class="text-xs text-slate-400 mt-0.5"></p>
+        </div>
+        <button type="button" class="close-sheet-btn p-1.5 text-slate-400 hover:text-white text-base">✕</button>
+      </div>
+      <div id="mobilePageChipsGrid" class="mt-4 grid grid-cols-4 gap-2"></div>
+      <div class="mt-4 pt-3 border-t border-slate-800 flex gap-2">
+        <button id="mobileSheetAnsBtn" type="button" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 text-center">
+          🎯 정답 및 배점표 바로가기
         </button>
-        <div class="inline-flex items-center rounded-lg bg-slate-800 border border-slate-700 p-0.5">
-          <button id="zoomOutBtn" type="button" class="px-2 py-0.5 text-xs font-bold text-slate-300 hover:text-white">-</button>
-          <span id="zoomLabel" class="px-2 text-[11px] font-bold text-slate-200 mono">100%</span>
-          <button id="zoomInBtn" type="button" class="px-2 py-0.5 text-xs font-bold text-slate-300 hover:text-white">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- Mobile Bottom Sheet: Auth / Unlock Modal                                  -->
+  <!-- ========================================================================= -->
+  <div id="sheetAuth" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm bottom-sheet bottom-sheet-closed flex flex-col justify-end">
+    <div class="glass-panel border-t border-slate-700/80 rounded-t-3xl p-5 safe-bottom">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-white">보안 아카이브 잠금 해제</h3>
+            <p class="text-xs text-slate-400">보안 암호 입력 시 원본 시험지 및 정답표가 열람됩니다.</p>
+          </div>
+        </div>
+        <button type="button" class="close-sheet-btn p-1.5 text-slate-400 hover:text-white text-base">✕</button>
+      </div>
+      
+      <div class="mt-4 space-y-3">
+        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 flex items-center gap-2">
+          <input
+            id="mobilePasswordInput"
+            type="password"
+            placeholder="보안 암호 입력..."
+            autocomplete="off"
+            class="flex-1 bg-transparent text-sm text-white placeholder-slate-500 pl-2 py-2 focus:outline-none font-mono"
+          />
+          <button id="mobileTogglePwdBtn" type="button" class="px-2 py-1 rounded bg-slate-800 text-[11px] font-mono text-slate-400">SHOW</button>
+        </div>
+        <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+          <span>암호 힌트:</span>
+          <button id="quickFillPwdBtn" type="button" class="text-amber-400 font-mono font-bold hover:underline">
+            careful 자동입력
+          </button>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button id="mobileUnlockBtn" type="button" class="flex-1 py-3 rounded-xl text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg active:scale-98 transition">
+            잠금 해제 (UNLOCK)
+          </button>
+          <button id="mobileLockBtn" type="button" class="hidden py-3 px-4 rounded-xl text-xs font-bold bg-dark-850 text-red-300 border border-red-800/60 active:scale-98 transition">
+            다시 잠그기
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Main Exam Paper Viewport -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-6 flex flex-col items-center">
-    <!-- Security Notice Callout when Locked -->
-    <div id="lockedCallout" class="w-full max-w-4xl mb-5 p-3.5 rounded-2xl bg-gradient-to-r from-red-950/60 via-slate-900 to-slate-900 border border-red-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-      <div class="flex items-start sm:items-center gap-3">
-        <span class="px-2 py-1 rounded bg-red-600 text-white text-[11px] font-extrabold mono shrink-0">TOP SECRET</span>
-        <p class="text-xs text-slate-300 leading-relaxed">
-          현재 <strong class="text-red-300">기밀·블러 미리보기 모드</strong>입니다. 핵심 지문·기하 도형·도표가 블러 처리되어 있으며, 선지 일부와 공식 정답표가 <span class="mono text-red-300">REDACTED</span> 마스킹되어 있습니다. 상단 암호창에 보안 암호를 입력하면 즉시 <strong class="text-emerald-300">100% 원본 시험지</strong>로 전환됩니다.
-        </p>
-      </div>
-      <button id="focusPwdBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-red-600/30 hover:bg-red-600/50 text-red-100 border border-red-500/40 shrink-0 transition">
-        암호 입력하기
-      </button>
-    </div>
-
-    <!-- Pages Container -->
-    <div id="pagesViewport" class="w-full flex flex-col items-center gap-6"></div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-slate-900/90 border-t border-slate-800 py-4 px-4 text-center text-xs text-slate-400">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div>창북중학교 2025학년도 2학기 기말고사 제3학년 기출 재구성 아카이브 (국어 · 영어 · 수학 · 사회 · 역사 · 과학)</div>
-      <div class="mono text-[11px] text-slate-500">SECURITY CLASSIFICATION: TOP SECRET // ARCHIVE BUILD 2026</div>
-    </div>
-  </footer>
-
-  <!-- Modal 1: Google Drive PDF Links -->
-  <div id="driveModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-5 shadow-2xl">
+  <!-- ========================================================================= -->
+  <!-- Mobile Bottom Sheet: View Mode Selector                                   -->
+  <!-- ========================================================================= -->
+  <div id="sheetMode" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm bottom-sheet bottom-sheet-closed flex flex-col justify-end">
+    <div class="glass-panel border-t border-slate-700/80 rounded-t-3xl p-5 safe-bottom">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div>
-          <h2 class="text-base font-bold text-white">구글 드라이브 기출 폴더 및 과목별 PDF 열람</h2>
-          <p id="driveModalSub" class="text-xs text-slate-400 mt-0.5"></p>
+          <h3 class="text-base font-extrabold text-white">시험지 보기 모드</h3>
+          <p class="text-xs text-slate-400 mt-0.5">상황에 맞는 열람 모드를 선택하세요.</p>
         </div>
-        <button id="closeDriveModalBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300">닫기</button>
+        <button type="button" class="close-sheet-btn p-1.5 text-slate-400 hover:text-white text-base">✕</button>
       </div>
-      <div class="mt-4">
+      <div class="mt-4 space-y-2">
+        <button data-mode="orig" type="button" class="mobile-mode-opt w-full p-3 rounded-xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 flex items-center justify-between text-left transition">
+          <div>
+            <div class="text-xs font-bold text-white flex items-center gap-1.5">
+              <span>원본 클린 (Original)</span>
+              <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-mono">권장</span>
+            </div>
+            <div class="text-[11px] text-slate-400 mt-0.5">워터마크 없이 깨끗한 100% 원본 시험지 및 정답표</div>
+          </div>
+          <span class="check-icon text-emerald-400 hidden">✓</span>
+        </button>
+
+        <button data-mode="ts_orig" type="button" class="mobile-mode-opt w-full p-3 rounded-xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 flex items-center justify-between text-left transition">
+          <div>
+            <div class="text-xs font-bold text-white">TOP SECRET 워터마크 원본</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">기밀 도장이 각인된 원본 시험지</div>
+          </div>
+          <span class="check-icon text-emerald-400 hidden">✓</span>
+        </button>
+
+        <button data-mode="redacted" type="button" class="mobile-mode-opt w-full p-3 rounded-xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 flex items-center justify-between text-left transition">
+          <div>
+            <div class="text-xs font-bold text-white">기밀·블러 미리보기본</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">지문·도형 블러 및 정답표 REDACTED 마스킹</div>
+          </div>
+          <span class="check-icon text-emerald-400 hidden">✓</span>
+        </button>
+
+        <button data-mode="split" type="button" class="mobile-mode-opt w-full p-3 rounded-xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 flex items-center justify-between text-left transition">
+          <div>
+            <div class="text-xs font-bold text-white">기밀본 vs 원본 대조 비교</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">블러 처리된 기밀본과 원본을 직접 대조</div>
+          </div>
+          <span class="check-icon text-emerald-400 hidden">✓</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- Modal 1: PDF Download & Google Drive Center                               -->
+  <!-- ========================================================================= -->
+  <div id="driveModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-5">
+    <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-800 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          </div>
+          <div>
+            <h2 class="text-sm sm:text-base font-extrabold text-white">PDF 기출 다운로드 &amp; 열람 센터</h2>
+            <p id="driveModalSub" class="text-[11px] sm:text-xs text-slate-400 mt-0.5"></p>
+          </div>
+        </div>
+        <button id="closeDriveModalBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 flex items-center justify-center text-sm font-bold">✕</button>
+      </div>
+
+      <div class="mt-4 overflow-y-auto flex-1 space-y-3 pr-1">
+        <!-- Direct Google Drive Folder Link -->
         <a
           href="https://drive.google.com/drive/folders/1oD6mmW7ca7W-viXCBmy9fgAhzH14lbOk"
           target="_blank"
           rel="noopener noreferrer"
-          class="w-full mb-4 p-3 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-between text-xs font-bold text-indigo-200 transition"
+          class="w-full p-3 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-between text-xs font-bold text-indigo-200 transition shadow-sm"
         >
-          <span>📁 Google Drive '기출' 전체 폴더 열기 (전 과목 18종 PDF 수록)</span>
-          <span class="mono">OPEN DRIVE ↗</span>
+          <span class="flex items-center gap-2">
+            <span>📁 Google Drive 전체 폴더 열기 (전 과목 18종 PDF)</span>
+          </span>
+          <span class="font-mono text-[11px] bg-indigo-500/30 px-2 py-0.5 rounded">OPEN ↗</span>
         </a>
-        <div id="driveLinksTableWrap" class="max-h-80 overflow-y-auto space-y-2"></div>
+
+        <!-- Local Direct PDF & Drive Links Table -->
+        <div id="driveLinksTableWrap" class="space-y-2"></div>
       </div>
     </div>
   </div>
 
-  <!-- Modal 2: GitHub Pages Hosting Guide -->
-  <div id="githubModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-5 shadow-2xl">
+  <!-- ========================================================================= -->
+  <!-- Modal 2: GitHub Pages Guide Modal                                         -->
+  <!-- ========================================================================= -->
+  <div id="githubModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-5">
+    <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-xl w-full p-5 shadow-2xl max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-        <div>
-          <h2 class="text-base font-bold text-white">GitHub Pages 무료 웹 호스팅 배포 가이드</h2>
-          <p class="text-xs text-slate-400 mt-0.5">단일 index.html 또는 ZIP 패키지로 즉시 호스팅할 수 있습니다.</p>
+        <div class="flex items-center gap-2">
+          <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          <h2 class="text-base font-extrabold text-white">GitHub 호스팅 배포 안내</h2>
         </div>
-        <button id="closeGithubModalBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300">닫기</button>
+        <button id="closeGithubModalBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 flex items-center justify-center text-sm font-bold">✕</button>
       </div>
       <div class="mt-4 space-y-3 text-xs text-slate-300 leading-relaxed">
-        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
-          <div class="font-bold text-amber-300 mb-1">1단계: GitHub 저장소(Repository) 생성</div>
-          GitHub에 로그인한 뒤 <span class="mono text-slate-100">New repository</span>를 눌러 새 저장소(예: <span class="mono text-emerald-300">changbuk-exam-archive</span>)를 Public으로 생성합니다.
+        <div class="p-3 rounded-xl bg-dark-950 border border-slate-800">
+          <div class="font-bold text-emerald-300 mb-1">현재 배포 저장소:</div>
+          <a href="https://github.com/Jump2540/changbuk-exam-archive" target="_blank" class="font-mono text-indigo-300 hover:underline break-all">
+            https://github.com/Jump2540/changbuk-exam-archive
+          </a>
         </div>
-        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
-          <div class="font-bold text-amber-300 mb-1">2단계: 파일 업로드 (Add file &rarr; Upload files)</div>
-          함께 제공된 <span class="mono text-emerald-300">changbuk-exam-github-pages.zip</span> 압축을 풀어 <span class="mono text-slate-100">index.html</span>(또는 본 웹앱 파일을 <span class="mono text-slate-100">index.html</span>로 이름 변경)을 업로드하고 <span class="mono text-slate-100">Commit changes</span>를 클릭합니다.
+        <div class="p-3 rounded-xl bg-dark-950 border border-slate-800">
+          <div class="font-bold text-amber-300 mb-1">공식 웹사이트 주소:</div>
+          <a href="https://jump2540.github.io/changbuk-exam-archive/" target="_blank" class="font-mono text-emerald-300 hover:underline break-all">
+            https://jump2540.github.io/changbuk-exam-archive/
+          </a>
         </div>
-        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
-          <div class="font-bold text-amber-300 mb-1">3단계: GitHub Pages 활성화</div>
-          저장소 상단 <span class="mono text-slate-100">Settings &rarr; Pages</span> 메뉴로 이동하여 <span class="mono text-slate-100">Branch</span>를 <span class="mono text-emerald-300">main / (root)</span>로 선택 후 <span class="mono text-slate-100">Save</span>를 누르면 약 30초 뒤 <span class="mono text-indigo-300">https://[아이디].github.io/changbuk-exam-archive/</span> 주소로 접속됩니다.
-        </div>
-        <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-700/50 text-emerald-200">
-          <strong>동작 방식 요약:</strong> 접속 시 기본 상태는 전 과목 <strong class="text-red-300">TOP SECRET 기밀·블러 미리보기</strong>로 표시되며, 상단 암호 입력창에 지정된 비밀번호를 입력하면 즉시 <strong class="text-white">전 과목 원본 시험지 및 정답표</strong>가 잠금 해제됩니다.
+        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
+          본 사이트는 GitHub Pages 정적 호스팅을 통해 24시간 실시간 배포되고 있으며, 모바일 및 데스크톱 브라우저에서 모두 완벽히 반응형으로 동작합니다.
         </div>
       </div>
     </div>
   </div>
 
+  <!-- ========================================================================= -->
+  <!-- Footer                                                                    -->
+  <!-- ========================================================================= -->
+  <footer class="bg-dark-950 border-t border-slate-800/80 py-4 px-4 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>창북중학교 2025학년도 2학기 기말고사 제3학년 기출 보안 아카이브 (국어 · 영어 · 수학 · 사회 · 역사 · 과학)</div>
+      <div class="font-mono text-[11px] text-slate-600">SECURITY CLASSIFICATION: LEVEL 1 // MOBILE DYNAMIC ENGINE 2.0</div>
+    </div>
+  </footer>
+
   <script>
-    // =========================================================================
-    // Exam Archive Dataset (6 Subjects, 42 Original + 42 Redacted Pages)
-    // =========================================================================
+
     const SUBJECT_DATA = [
       {
         id: 'kor',
@@ -457,17 +830,57 @@
       }
     ];
 
-    // App State
+    // =========================================================================
+    // Local PDF File Mappings
+    // =========================================================================
+    const LOCAL_PDFS = {
+      kor: {
+        orig: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_국어_재구성.pdf',
+        ts: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_국어_TOP_SECRET.pdf',
+        red: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_국어_기밀블러처리.pdf'
+      },
+      eng: {
+        orig: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_영어_재구성.pdf',
+        ts: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_영어_TOP_SECRET.pdf',
+        red: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_영어_기밀블러처리.pdf'
+      },
+      math: {
+        orig: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_수학_재구성.pdf',
+        ts: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_수학_TOP_SECRET.pdf',
+        red: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_수학_기밀블러처리.pdf'
+      },
+      soc: {
+        orig: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_사회_재구성.pdf',
+        ts: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_사회_TOP_SECRET.pdf',
+        red: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_사회_기밀블러처리.pdf'
+      },
+      his: {
+        orig: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_역사_재구성.pdf',
+        ts: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_역사_TOP_SECRET.pdf',
+        red: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_역사_기밀블러처리.pdf'
+      },
+      sci: {
+        orig: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_과학_재구성.pdf',
+        ts: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_과학_TOP_SECRET.pdf',
+        red: 'pdfs/창북중학교_2025학년도_2학기_기말고사_3학년_과학_기밀블러처리.pdf'
+      }
+    };
+
+    // =========================================================================
+    // Application State
+    // =========================================================================
     const ACCESS_CODE = 'careful';
     let isUnlocked = false;
     let viewMode = 'redacted'; // 'orig' | 'ts_orig' | 'redacted' | 'split'
     let activeSubjIdx = 0;
-    let activePageIdx = 0; // 0-based
+    let activePageIdx = 0;
     let scrollAllPages = false;
     let zoomPercent = 100;
+    let mobileSplitFlip = 'redacted'; // For mobile quick flip in split mode: 'redacted' | 'orig'
 
-    // DOM Elements
+    // DOM Elements Cache
     const securityRibbon = document.getElementById('securityRibbon');
+    const ribbonText = document.getElementById('ribbonText');
     const statusIconBox = document.getElementById('statusIconBox');
     const clearanceBadge = document.getElementById('clearanceBadge');
     const headerSubtext = document.getElementById('headerSubtext');
@@ -486,7 +899,7 @@
     const toastText = document.getElementById('toastText');
     const closeToastBtn = document.getElementById('closeToastBtn');
     const subjectTabs = document.getElementById('subjectTabs');
-    const activeSubjBadge = document.getElementById('activeSubjBadge');
+    const activeSubjBadgeText = document.getElementById('activeSubjBadgeText');
     const activeSubjMeta = document.getElementById('activeSubjMeta');
     const prevPageBtn = document.getElementById('prevPageBtn');
     const nextPageBtn = document.getElementById('nextPageBtn');
@@ -495,6 +908,7 @@
     const toggleScrollModeBtn = document.getElementById('toggleScrollModeBtn');
     const zoomOutBtn = document.getElementById('zoomOutBtn');
     const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomFitBtn = document.getElementById('zoomFitBtn');
     const zoomLabel = document.getElementById('zoomLabel');
     const lockedCallout = document.getElementById('lockedCallout');
     const focusPwdBtn = document.getElementById('focusPwdBtn');
@@ -508,68 +922,159 @@
     const closeGithubModalBtn = document.getElementById('closeGithubModalBtn');
     const githubModal = document.getElementById('githubModal');
 
-    function showToast(msg, type) {
+    // Mobile Elements
+    const mobileSubjQuickName = document.getElementById('mobileSubjQuickName');
+    const mobileAuthQuickBtn = document.getElementById('mobileAuthQuickBtn');
+    const mobileAuthQuickLabel = document.getElementById('mobileAuthQuickLabel');
+    const mobileSubjectQuickBtn = document.getElementById('mobileSubjectQuickBtn');
+    const mobileFloatPrevBtn = document.getElementById('mobileFloatPrevBtn');
+    const mobileFloatNextBtn = document.getElementById('mobileFloatNextBtn');
+    const mobileFloatPageText = document.getElementById('mobileFloatPageText');
+    const mobileFloatPageSelectorBtn = document.getElementById('mobileFloatPageSelectorBtn');
+    const mobileFloatAnsBtn = document.getElementById('mobileFloatAnsBtn');
+
+    // Dock Buttons
+    const dockSubjBtn = document.getElementById('dockSubjBtn');
+    const dockPagesBtn = document.getElementById('dockPagesBtn');
+    const dockAuthBtn = document.getElementById('dockAuthBtn');
+    const dockModeBtn = document.getElementById('dockModeBtn');
+    const dockPdfBtn = document.getElementById('dockPdfBtn');
+    const dockLockSvg = document.getElementById('dockLockSvg');
+    const dockLockLabel = document.getElementById('dockLockLabel');
+    const dockLockIconWrap = document.getElementById('dockLockIconWrap');
+
+    // Sheets
+    const sheetSubject = document.getElementById('sheetSubject');
+    const sheetPages = document.getElementById('sheetPages');
+    const sheetAuth = document.getElementById('sheetAuth');
+    const sheetMode = document.getElementById('sheetMode');
+    const mobileSubjectList = document.getElementById('mobileSubjectList');
+    const mobilePageChipsGrid = document.getElementById('mobilePageChipsGrid');
+    const sheetPagesSub = document.getElementById('sheetPagesSub');
+    const mobileSheetAnsBtn = document.getElementById('mobileSheetAnsBtn');
+    const mobilePasswordInput = document.getElementById('mobilePasswordInput');
+    const mobileTogglePwdBtn = document.getElementById('mobileTogglePwdBtn');
+    const mobileUnlockBtn = document.getElementById('mobileUnlockBtn');
+    const mobileLockBtn = document.getElementById('mobileLockBtn');
+    const quickFillPwdBtn = document.getElementById('quickFillPwdBtn');
+
+    // Toast Functionality
+    function showToast(msg, type = 'info') {
       toastBanner.classList.remove('hidden');
       toastText.textContent = msg;
       if (type === 'success') {
-        toastInner.className = 'px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border bg-emerald-950/90 border-emerald-600/60 text-emerald-200';
+        toastInner.className = 'px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border bg-emerald-950/90 border-emerald-500/60 text-emerald-200 shadow-emerald-900/30 shadow-lg';
       } else if (type === 'error') {
-        toastInner.className = 'px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border bg-red-950/90 border-red-600/60 text-red-200';
+        toastInner.className = 'px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border bg-red-950/90 border-red-500/60 text-red-200 shadow-red-900/30 shadow-lg';
       } else {
-        toastInner.className = 'px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border bg-slate-800 border-slate-700 text-slate-200';
+        toastInner.className = 'px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border bg-dark-850/95 border-slate-700 text-slate-200 shadow-xl';
       }
+      setTimeout(() => {
+        toastBanner.classList.add('hidden');
+      }, 5000);
     }
 
-    function attemptUnlock() {
-      const val = passwordInput.value.trim();
-      if (val === ACCESS_CODE) {
+    // Sheet Controls
+    function openSheet(el) {
+      el.classList.remove('bottom-sheet-closed');
+      el.classList.add('bottom-sheet-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSheet(el) {
+      el.classList.remove('bottom-sheet-open');
+      el.classList.add('bottom-sheet-closed');
+      document.body.style.overflow = '';
+    }
+    function closeAllSheets() {
+      [sheetSubject, sheetPages, sheetAuth, sheetMode].forEach(closeSheet);
+    }
+
+    document.querySelectorAll('.close-sheet-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const sheet = e.target.closest('.bottom-sheet');
+        if (sheet) closeSheet(sheet);
+      });
+    });
+
+    [sheetSubject, sheetPages, sheetAuth, sheetMode].forEach(sheet => {
+      sheet.addEventListener('click', (e) => {
+        if (e.target === sheet) closeSheet(sheet);
+      });
+    });
+
+    // Unlock & Lock Functions
+    function attemptUnlockWith(val) {
+      if (val.trim() === ACCESS_CODE) {
         isUnlocked = true;
         viewMode = 'orig';
         passwordInput.value = '';
-        showToast('보안 인증 성공 (ACCESS GRANTED): 전 과목 원본 시험지 및 정답/배점표 잠금이 해제되었습니다.', 'success');
+        mobilePasswordInput.value = '';
+        closeAllSheets();
+        showToast('ACCESS GRANTED: 보안 인증 성공! 전 과목 원본 시험지 및 정답/배점표가 잠금 해제되었습니다.', 'success');
         renderAll();
       } else {
         unlockFormWrap.classList.remove('shake-anim');
         void unlockFormWrap.offsetWidth;
         unlockFormWrap.classList.add('shake-anim');
-        showToast('보안 암호가 일치하지 않습니다. 현재 TOP SECRET 기밀·블러 미리보기 모드가 유지됩니다.', 'error');
+        showToast('보안 암호가 올바르지 않습니다. (힌트: careful)', 'error');
       }
     }
 
     function lockArchive() {
       isUnlocked = false;
       viewMode = 'redacted';
-      showToast('보안 아카이브가 다시 잠겼습니다. TOP SECRET 기밀·블러 미리보기 모드로 전환됩니다.', 'info');
+      closeAllSheets();
+      showToast('보안 아카이브가 다시 잠겼습니다. (TOP SECRET 기밀·블러 미리보기 모드)', 'info');
       renderAll();
     }
 
-    function getWatermarkSvgHtml() {
+    // Watermark Stamp Template
+    function getWatermarkStamp() {
       return `
         <div class="ts-stamp-overlay absolute inset-0 flex items-center justify-center overflow-hidden">
-          <div class="border-4 border-red-600/25 px-6 py-3 rounded-sm transform -rotate-32 text-center">
-            <div class="text-[10px] font-extrabold tracking-widest text-red-600/30 mono">★ SECURITY LEVEL 1 : CHANG-BUK M.S. ARCHIVE ★</div>
-            <div class="text-4xl sm:text-6xl font-black tracking-wider text-red-600/25 mono my-0.5">TOP SECRET</div>
-            <div class="text-[10px] font-bold tracking-widest text-red-600/30 mono">CONFIDENTIAL // AUTHORIZED PERSONNEL ONLY</div>
+          <div class="border-[3px] border-red-600/30 px-6 py-3 rounded-md transform -rotate-[28deg] text-center bg-red-950/5 backdrop-blur-[0.5px]">
+            <div class="text-[9px] sm:text-[10px] font-mono font-black tracking-widest text-red-600/40 uppercase">★ LEVEL 1 ARCHIVE : CHANG-BUK M.S. ★</div>
+            <div class="text-4xl sm:text-6xl font-mono font-black tracking-widest text-red-600/30 my-0.5 select-none">TOP SECRET</div>
+            <div class="text-[8px] sm:text-[10px] font-mono font-bold tracking-widest text-red-600/35">CONFIDENTIAL // AUTHORIZED PERSONNEL ONLY</div>
           </div>
         </div>
       `;
     }
 
+    // Render Header & Lock State
     function renderHeaderState() {
+      const subj = SUBJECT_DATA[activeSubjIdx];
+      mobileSubjQuickName.textContent = subj.name;
+
       if (isUnlocked) {
-        securityRibbon.className = 'w-full py-1.5 px-4 text-center text-xs font-bold tracking-widest uppercase transition-colors duration-300 bg-emerald-900/90 text-emerald-100 border-b border-emerald-700/60 mono';
-        securityRibbon.textContent = 'ACCESS GRANTED // LEVEL 1 CLEARANCE VERIFIED // ORIGINAL EXAM ARCHIVE UNLOCKED';
-        statusIconBox.className = 'w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 shrink-0 transition-colors duration-300';
-        statusIconBox.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>`;
-        clearanceBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 mono';
+        securityRibbon.className = 'w-full py-1.5 px-3 sm:px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-300 bg-emerald-950/90 text-emerald-200 border-b border-emerald-700/60 font-mono flex items-center justify-center gap-2 safe-top';
+        ribbonText.textContent = 'ACCESS GRANTED // 1급 보안 인가 승인 // 100% 원본 시험지 및 정답/배점표 잠금 해제됨';
+        
+        statusIconBox.className = 'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 shrink-0 transition-all duration-300';
+        statusIconBox.innerHTML = `<svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>`;
+        
+        clearanceBadge.className = 'px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono';
         clearanceBadge.textContent = 'ORIGINAL UNLOCKED';
-        headerSubtext.textContent = '보안 인증이 완료되어 창북중학교 3학년 2학기 기말고사 전 과목(국어·영어·수학·사회·역사·과학) 원본을 열람 중입니다.';
+        
+        headerSubtext.textContent = '보안 인증 완료: 창북중 3학년 2학기 기말고사 전 과목(국어·영어·수학·사회·역사·과학) 100% 원본 열람 중';
+
         unlockFormWrap.classList.add('hidden');
         unlockedControlsWrap.classList.remove('hidden');
         unlockedControlsWrap.classList.add('flex');
         lockedCallout.classList.add('hidden');
 
-        // Highlight active viewMode button
+        // Mobile header button
+        mobileAuthQuickBtn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1';
+        mobileAuthQuickLabel.textContent = '잠김해제됨';
+
+        // Dock Lock Icon
+        dockLockIconWrap.className = 'w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400';
+        dockLockSvg.innerHTML = `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path>`;
+        dockLockLabel.textContent = '해제됨';
+        dockLockLabel.className = 'text-[10px] font-bold text-emerald-300';
+        mobileLockBtn.classList.remove('hidden');
+
+        // Mode buttons styling
         const modeBtns = [
           [modeOrigBtn, 'orig'],
           [modeTsOrigBtn, 'ts_orig'],
@@ -578,39 +1083,71 @@
         ];
         modeBtns.forEach(([btn, m]) => {
           if (viewMode === m) {
-            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition';
+            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition shadow-sm';
           } else {
             btn.className = 'px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition';
           }
         });
       } else {
-        securityRibbon.className = 'w-full py-1.5 px-4 text-center text-xs font-bold tracking-widest uppercase transition-colors duration-300 bg-red-900/90 text-red-100 border-b border-red-700/60 mono';
-        securityRibbon.textContent = 'TOP SECRET // CHANG-BUK M.S. EXAM ARCHIVE // PREVIEW MODE (KEY SECTIONS BLURRED & REDACTED)';
-        statusIconBox.className = 'w-10 h-10 rounded-xl flex items-center justify-center bg-red-500/15 border border-red-500/40 text-red-400 shrink-0 transition-colors duration-300';
-        statusIconBox.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
-        clearanceBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-red-500/20 text-red-300 border border-red-500/40 mono';
-        clearanceBadge.textContent = 'TOP SECRET PREVIEW';
-        headerSubtext.textContent = '현재 주요 지문·도형 블러 및 정답 기밀처리(REDACTED) 미리보기 상태입니다. 원본 열람은 보안 암호를 입력하세요.';
+        securityRibbon.className = 'w-full py-1.5 px-3 sm:px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-300 bg-red-950/90 text-red-200 border-b border-red-800/60 font-mono flex items-center justify-center gap-2 safe-top';
+        ribbonText.textContent = 'TOP SECRET // 기밀 보안 1등급 // 미리보기 모드 (핵심 지문·정답 블러 및 마스킹)';
+
+        statusIconBox.className = 'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center bg-red-500/15 border border-red-500/35 text-red-400 shrink-0 transition-all duration-300';
+        statusIconBox.innerHTML = `<svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
+
+        clearanceBadge.className = 'px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-red-500/20 text-red-300 border border-red-500/40 font-mono';
+        clearanceBadge.textContent = 'TOP SECRET';
+
+        headerSubtext.textContent = '전 과목(국어·영어·수학·사회·역사·과학) 기출 시험지 & 공식 NEIS 정답표 아카이브';
+
         unlockFormWrap.classList.remove('hidden');
         unlockedControlsWrap.classList.add('hidden');
         unlockedControlsWrap.classList.remove('flex');
         lockedCallout.classList.remove('hidden');
+
+        // Mobile header button
+        mobileAuthQuickBtn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1';
+        mobileAuthQuickLabel.textContent = '해제';
+
+        // Dock Lock Icon
+        dockLockIconWrap.className = 'w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400';
+        dockLockSvg.innerHTML = `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>`;
+        dockLockLabel.textContent = '잠금해제';
+        dockLockLabel.className = 'text-[10px] font-bold text-amber-300';
+        mobileLockBtn.classList.add('hidden');
       }
+
+      // Sync active state in mobile view mode sheet
+      document.querySelectorAll('.mobile-mode-opt').forEach(btn => {
+        const m = btn.getAttribute('data-mode');
+        const check = btn.querySelector('.check-icon');
+        if (m === viewMode) {
+          btn.classList.add('border-emerald-500', 'bg-emerald-950/20');
+          if (check) check.classList.remove('hidden');
+        } else {
+          btn.classList.remove('border-emerald-500', 'bg-emerald-950/20');
+          if (check) check.classList.add('hidden');
+        }
+      });
     }
 
-    function renderSubjectTabs() {
+    // Render Subject Selector Tabs (Desktop) & Sheet Cards (Mobile)
+    function renderSubjects() {
+      // 1. Desktop Tabs
       subjectTabs.innerHTML = '';
       SUBJECT_DATA.forEach((subj, idx) => {
         const isAct = idx === activeSubjIdx;
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = isAct
-          ? 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-950 shadow-sm flex items-center gap-2 transition shrink-0'
-          : 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 flex items-center gap-2 transition shrink-0';
+          ? 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-dark-950 shadow-md flex items-center gap-2 transition shrink-0 transform scale-[1.02]'
+          : 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-dark-850 hover:bg-dark-800 text-slate-300 border border-slate-700/80 flex items-center gap-2 transition shrink-0';
+        
         const statusDot = isUnlocked
-          ? '<span class="w-2 h-2 rounded-full bg-emerald-500"></span>'
-          : '<span class="w-2 h-2 rounded-full bg-red-500"></span>';
-        btn.innerHTML = `${statusDot}<span>${subj.name}</span><span class="text-[10px] opacity-70 mono">[${subj.code}] · ${subj.qCount}문항</span>`;
+          ? '<span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>'
+          : '<span class="w-2 h-2 rounded-full bg-red-500 shrink-0"></span>';
+
+        btn.innerHTML = `${statusDot}<span class="font-bold">${subj.name}</span><span class="text-[10px] opacity-75 font-mono">[${subj.code}] · ${subj.qCount}문항</span>`;
         btn.addEventListener('click', () => {
           activeSubjIdx = idx;
           activePageIdx = 0;
@@ -618,17 +1155,51 @@
         });
         subjectTabs.appendChild(btn);
       });
+
+      // 2. Mobile Sheet Cards
+      mobileSubjectList.innerHTML = '';
+      SUBJECT_DATA.forEach((subj, idx) => {
+        const isAct = idx === activeSubjIdx;
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = isAct
+          ? 'p-3 rounded-2xl bg-indigo-950/40 border-2 border-indigo-500 text-left flex items-center justify-between shadow-lg'
+          : 'p-3 rounded-2xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 text-left flex items-center justify-between transition';
+        
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-extrabold text-white">${subj.name}</span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300">[${subj.code}]</span>
+              ${isUnlocked ? '<span class="text-[10px] text-emerald-400 font-bold">● 원본열람가능</span>' : '<span class="text-[10px] text-red-400 font-bold">● 기밀블러본</span>'}
+            </div>
+            <div class="text-xs text-slate-400 mt-1">
+              ${subj.date} · 총 ${subj.qCount}문항 · ${subj.pageCount}면
+            </div>
+          </div>
+          <span class="text-xs font-bold ${isAct ? 'text-indigo-400 font-mono text-base' : 'text-slate-500'}">${isAct ? '선택됨' : '열기 →'}</span>
+        `;
+        card.addEventListener('click', () => {
+          activeSubjIdx = idx;
+          activePageIdx = 0;
+          closeSheet(sheetSubject);
+          renderAll();
+        });
+        mobileSubjectList.appendChild(card);
+      });
     }
 
+    // Render Secondary Toolbar & Page Chips
     function renderToolbar() {
       const subj = SUBJECT_DATA[activeSubjIdx];
       const modeLabel = !isUnlocked
         ? 'TOP SECRET 기밀·블러본'
-        : (viewMode === 'orig' ? '원본 시험지' : viewMode === 'ts_orig' ? 'TOP SECRET 워터마크 원본' : viewMode === 'redacted' ? '기밀·블러본' : '기밀본 vs 원본 비교');
-      activeSubjBadge.textContent = `${subj.name} (과목코드 [${subj.code}]) — ${modeLabel}`;
+        : (viewMode === 'orig' ? '원본 시험지' : viewMode === 'ts_orig' ? 'TOP SECRET 원본' : viewMode === 'redacted' ? '기밀·블러본' : '대조 비교');
+
+      activeSubjBadgeText.textContent = `${subj.name} [코드 ${subj.code}] — ${modeLabel}`;
       activeSubjMeta.textContent = `${subj.date} 실시 · 총 ${subj.qCount}문항 (100점 만점) · 총 ${subj.pageCount}면`;
 
-      // Page chips
+      // Desktop Page Chips
       pageChipsWrap.innerHTML = '';
       for (let i = 0; i < subj.pageCount; i++) {
         const isLast = i === subj.pageCount - 1;
@@ -636,14 +1207,14 @@
         chip.type = 'button';
         const isCurrent = !scrollAllPages && i === activePageIdx;
         chip.className = isCurrent
-          ? 'px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-500 text-white shadow-sm transition'
-          : 'px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800/90 hover:bg-slate-700 text-slate-300 border border-slate-700 transition';
+          ? 'px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-500 text-white shadow-md transition'
+          : 'px-2.5 py-1 rounded-lg text-xs font-medium bg-dark-850 hover:bg-dark-800 text-slate-300 border border-slate-700/80 transition';
         chip.textContent = isLast ? `정답표(${i + 1}면)` : `${i + 1}면`;
         chip.addEventListener('click', () => {
           activePageIdx = i;
           if (scrollAllPages) {
-            const targetEl = document.getElementById(`exam-page-card-${i}`);
-            if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const el = document.getElementById(`exam-page-card-${i}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
           } else {
             renderAll();
           }
@@ -651,194 +1222,352 @@
         pageChipsWrap.appendChild(chip);
       }
 
+      // Mobile Bottom Sheet Page Chips Grid
+      sheetPagesSub.textContent = `${subj.name} 총 ${subj.pageCount}면 중 이동할 페이지를 선택하세요.`;
+      mobilePageChipsGrid.innerHTML = '';
+      for (let i = 0; i < subj.pageCount; i++) {
+        const isLast = i === subj.pageCount - 1;
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        const isCurrent = i === activePageIdx;
+        chip.className = isCurrent
+          ? 'py-3 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md'
+          : 'py-3 rounded-xl text-xs font-bold bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700';
+        chip.innerHTML = isLast ? `🎯 정답표<br><span class="text-[10px] font-normal opacity-80">${i + 1}면</span>` : `${i + 1}면`;
+        chip.addEventListener('click', () => {
+          activePageIdx = i;
+          closeSheet(sheetPages);
+          renderAll();
+          window.scrollTo({ top: 120, behavior: 'smooth' });
+        });
+        mobilePageChipsGrid.appendChild(chip);
+      }
+
+      // Mobile floating pill text
+      mobileFloatPageText.textContent = `${activePageIdx + 1} / ${subj.pageCount}면`;
+
       prevPageBtn.disabled = scrollAllPages || activePageIdx <= 0;
       nextPageBtn.disabled = scrollAllPages || activePageIdx >= subj.pageCount - 1;
-      toggleScrollModeBtn.textContent = scrollAllPages ? '1면씩 보기' : '전 페이지 연속 보기';
+      toggleScrollModeBtn.textContent = scrollAllPages ? '1면씩 넘겨보기' : '전체 연속 보기';
       zoomLabel.textContent = `${zoomPercent}%`;
     }
 
-    function buildSinglePageCard(subj, pageIdx) {
+    // Build Single Page Card
+    function buildPageCard(subj, pageIdx) {
       const isLast = pageIdx === subj.pageCount - 1;
       const pageTitle = isLast
         ? `${subj.name} — 공식 NEIS 지필평가 정답/배점표 (${pageIdx + 1}/${subj.pageCount}면)`
-        : `${subj.name} — 문제지 ${pageIdx + 1}면 (${pageIdx + 1}/${subj.pageCount - 1})`;
+        : `${subj.name} — 문제지 ${pageIdx + 1}면 (${pageIdx + 1}/${subj.pageCount - 1}면)`;
 
-      const baseWidthPx = Math.round(780 * (zoomPercent / 100));
       const wrapper = document.createElement('div');
       wrapper.id = `exam-page-card-${pageIdx}`;
-      wrapper.className = 'w-full flex flex-col items-center';
+      wrapper.className = 'w-full flex flex-col items-center select-none';
 
-      // Side-by-side Split Comparison Mode (when unlocked and viewMode === 'split')
+      // 1. Split Comparison Mode
       if (isUnlocked && viewMode === 'split') {
         wrapper.innerHTML = `
           <div class="w-full max-w-6xl mb-2 flex items-center justify-between px-2">
-            <span class="text-xs font-bold text-slate-300">${pageTitle}</span>
-            <span class="text-[11px] font-semibold text-emerald-400 mono">SPLIT COMPARISON: REDACTED vs ORIGINAL</span>
+            <span class="text-xs sm:text-sm font-bold text-slate-200">${pageTitle}</span>
+            <span class="text-[11px] font-bold text-emerald-400 font-mono">대조 비교: 기밀본 vs 원본</span>
           </div>
+          
+          <!-- Mobile Flip Toggle Bar for Split Mode (on small screens) -->
+          <div class="w-full max-w-6xl lg:hidden mb-2 p-1.5 rounded-xl bg-dark-850 border border-slate-700 flex items-center justify-center gap-2">
+            <button id="mobileFlipRedBtn-${pageIdx}" type="button" class="flex-1 py-1.5 rounded-lg text-xs font-bold ${mobileSplitFlip === 'redacted' ? 'bg-red-600 text-white' : 'text-slate-400 hover:text-white'} transition">
+              🔒 기밀·블러본 보기
+            </button>
+            <button id="mobileFlipOrigBtn-${pageIdx}" type="button" class="flex-1 py-1.5 rounded-lg text-xs font-bold ${mobileSplitFlip === 'orig' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white'} transition">
+              🔓 잠금해제 원본 보기
+            </button>
+          </div>
+
+          <!-- Desktop Side by Side & Mobile Swappable Image -->
           <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div class="bg-slate-900 p-2.5 rounded-2xl border border-red-800/50 flex flex-col items-center">
+            
+            <!-- Redacted Column -->
+            <div class="${mobileSplitFlip === 'orig' ? 'hidden lg:flex' : 'flex'} bg-dark-900 p-2 sm:p-3 rounded-2xl border border-red-800/50 flex-col items-center">
               <div class="w-full flex items-center justify-between px-2 pb-2 mb-2 border-b border-slate-800 text-xs">
                 <span class="font-bold text-red-300">🔒 TOP SECRET 기밀·블러 미리보기본</span>
-                <span class="mono text-[10px] text-red-400">CLASSIFIED // BLURRED</span>
+                <span class="font-mono text-[10px] text-red-400 bg-red-950/60 px-2 py-0.5 rounded border border-red-800/40">BLURRED</span>
               </div>
-              <img src="${subj.redPages[pageIdx]}" alt="${pageTitle} 기밀본" class="w-full h-auto rounded-lg paper-shadow bg-white" />
+              <div class="relative w-full rounded-xl overflow-hidden bg-white paper-shadow">
+                <img src="${subj.redPages[pageIdx]}" alt="${pageTitle} 기밀본" class="w-full h-auto block" loading="lazy" />
+              </div>
             </div>
-            <div class="bg-slate-900 p-2.5 rounded-2xl border border-emerald-700/50 flex flex-col items-center">
+
+            <!-- Original Column -->
+            <div class="${mobileSplitFlip === 'redacted' ? 'hidden lg:flex' : 'flex'} bg-dark-900 p-2 sm:p-3 rounded-2xl border border-emerald-700/50 flex-col items-center">
               <div class="w-full flex items-center justify-between px-2 pb-2 mb-2 border-b border-slate-800 text-xs">
                 <span class="font-bold text-emerald-300">🔓 잠금 해제된 100% 원본 시험지</span>
-                <span class="mono text-[10px] text-emerald-400">ORIGINAL // UNREDACTED</span>
+                <span class="font-mono text-[10px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">ORIGINAL</span>
               </div>
-              <img src="${subj.origPages[pageIdx]}" alt="${pageTitle} 원본" class="w-full h-auto rounded-lg paper-shadow bg-white" />
+              <div class="relative w-full rounded-xl overflow-hidden bg-white paper-shadow">
+                <img src="${subj.origPages[pageIdx]}" alt="${pageTitle} 원본" class="w-full h-auto block" loading="lazy" />
+              </div>
             </div>
+
           </div>
         `;
+
+        setTimeout(() => {
+          const redBtn = document.getElementById(`mobileFlipRedBtn-${pageIdx}`);
+          const origBtn = document.getElementById(`mobileFlipOrigBtn-${pageIdx}`);
+          if (redBtn && origBtn) {
+            redBtn.addEventListener('click', () => {
+              mobileSplitFlip = 'redacted';
+              renderViewport();
+            });
+            origBtn.addEventListener('click', () => {
+              mobileSplitFlip = 'orig';
+              renderViewport();
+            });
+          }
+        }, 10);
+
         return wrapper;
       }
 
-      // Single Page Display (Locked -> Redacted; Unlocked -> Orig / TS_Orig / Redacted)
+      // 2. Standard Single View (Locked -> Redacted; Unlocked -> Orig / TS_Orig / Redacted)
       const showOrig = isUnlocked && (viewMode === 'orig' || viewMode === 'ts_orig');
       const imgSrc = showOrig ? subj.origPages[pageIdx] : subj.redPages[pageIdx];
       const badgeHtml = showOrig
-        ? `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold mono">${viewMode === 'ts_orig' ? 'TOP SECRET WATERMARKED ORIGINAL' : 'ORIGINAL UNREDACTED'}</span>`
-        : `<span class="px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40 text-[11px] font-bold mono">TOP SECRET // BLURRED &amp; REDACTED</span>`;
+        ? `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] sm:text-[11px] font-bold font-mono">${viewMode === 'ts_orig' ? 'TOP SECRET WATERMARKED' : 'ORIGINAL UNREDACTED'}</span>`
+        : `<span class="px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40 text-[10px] sm:text-[11px] font-bold font-mono">TOP SECRET BLURRED</span>`;
 
-      const tsOverlay = (isUnlocked && viewMode === 'ts_orig') ? getWatermarkSvgHtml() : '';
+      const tsStamp = (isUnlocked && viewMode === 'ts_orig') ? getWatermarkStamp() : '';
+      const baseWidthPx = Math.round(820 * (zoomPercent / 100));
 
       wrapper.innerHTML = `
-        <div class="w-full flex items-center justify-between mb-2 px-1" style="max-width: ${baseWidthPx}px;">
-          <span class="text-xs font-bold text-slate-300">${pageTitle}</span>
+        <div class="w-full flex items-center justify-between mb-2 px-1 text-xs" style="max-width: ${baseWidthPx}px;">
+          <span class="font-bold text-slate-300">${pageTitle}</span>
           ${badgeHtml}
         </div>
-        <div class="relative bg-white rounded-xl overflow-hidden paper-shadow transition-all duration-200" style="width: 100%; max-width: ${baseWidthPx}px;">
-          <img src="${imgSrc}" alt="${pageTitle}" class="w-full h-auto block select-none" />
-          ${tsOverlay}
+        <div class="relative bg-white rounded-xl sm:rounded-2xl overflow-hidden paper-shadow transition-all duration-150" style="width: 100%; max-width: ${baseWidthPx}px;">
+          <img src="${imgSrc}" alt="${pageTitle}" class="w-full h-auto block" loading="${pageIdx === 0 ? 'eager' : 'lazy'}" />
+          ${tsStamp}
         </div>
       `;
       return wrapper;
     }
 
+    // Render Viewport
     function renderViewport() {
       const subj = SUBJECT_DATA[activeSubjIdx];
       pagesViewport.innerHTML = '';
       if (scrollAllPages) {
         for (let i = 0; i < subj.pageCount; i++) {
-          pagesViewport.appendChild(buildSinglePageCard(subj, i));
+          pagesViewport.appendChild(buildPageCard(subj, i));
         }
       } else {
-        pagesViewport.appendChild(buildSinglePageCard(subj, activePageIdx));
+        pagesViewport.appendChild(buildPageCard(subj, activePageIdx));
       }
     }
 
+    // Render PDF Download Modal Links
     function renderDriveModalContent() {
       driveModalSub.textContent = isUnlocked
-        ? '보안 인증이 완료되어 원본 재구성 PDF, TOP SECRET 워터마크 PDF, 기밀·블러처리 PDF를 모두 열람하실 수 있습니다.'
-        : '현재 잠금 상태에서는 기밀·블러처리 PDF만 열람 가능합니다. 원본 PDF는 암호(careful) 입력 후 활성화됩니다.';
+        ? '보안 인증 완료: 원본 재구성본, TOP SECRET 워터마크본, 기밀블러본 PDF를 모두 다운로드할 수 있습니다.'
+        : '잠금 상태에서는 기밀·블러처리 PDF만 다운로드 가능합니다. 원본 PDF는 암호(careful) 입력 후 활성화됩니다.';
 
       driveLinksTableWrap.innerHTML = '';
       SUBJECT_DATA.forEach((subj) => {
+        const local = LOCAL_PDFS[subj.id] || {};
         const row = document.createElement('div');
-        row.className = 'p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2';
-        const origActionHtml = isUnlocked
-          ? `<a href="${subj.driveOrig}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition">원본 PDF ↗</a>
-             <a href="${subj.driveTs}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition">TOP SECRET 원본 ↗</a>`
-          : `<button type="button" data-lock-Jump="1" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700 hover:text-slate-200">🔒 원본 PDF (암호 필요)</button>`;
+        row.className = 'p-3 rounded-2xl bg-dark-900 border border-slate-700/80 flex flex-col md:flex-row md:items-center justify-between gap-3';
+        
+        const origButtons = isUnlocked
+          ? `
+            <a href="${local.orig}" download class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition flex items-center gap-1 shadow-sm">
+              <span>⬇ 원본 PDF</span>
+            </a>
+            <a href="${local.ts}" download class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition">
+              TOP SECRET본
+            </a>
+          `
+          : `
+            <button type="button" data-require-lock="1" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-dark-800 text-slate-400 border border-slate-700 hover:text-slate-200 transition">
+              🔒 원본 (암호 필요)
+            </button>
+          `;
 
         row.innerHTML = `
           <div>
-            <div class="text-xs font-bold text-white">${subj.name} <span class="text-slate-400 font-normal">· 과목코드 [${subj.code}] · ${subj.qCount}문항</span></div>
-            <div class="text-[11px] text-slate-500">${subj.date} 실시 (${subj.pageCount}면)</div>
+            <div class="text-xs font-bold text-white flex items-center gap-1.5">
+              <span>${subj.name}</span>
+              <span class="text-slate-400 font-normal font-mono">[과목코드 ${subj.code}]</span>
+              <span class="text-slate-500 text-[11px]">· ${subj.qCount}문항 · ${subj.pageCount}면</span>
+            </div>
+            <div class="text-[11px] text-slate-400 mt-0.5">${subj.date} 실시</div>
           </div>
           <div class="flex items-center gap-1.5 flex-wrap">
-            ${origActionHtml}
-            <a href="${subj.driveRed}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-red-600/25 hover:bg-red-600/40 text-red-200 border border-red-500/40 transition">기밀·블러 PDF ↗</a>
+            ${origButtons}
+            <a href="${local.red}" download class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-600/20 hover:bg-red-600/30 text-red-200 border border-red-500/40 transition">
+              기밀블러 PDF
+            </a>
           </div>
         `;
         driveLinksTableWrap.appendChild(row);
       });
 
-      driveLinksTableWrap.querySelectorAll('[data-lock-jump="1"]').forEach((btn) => {
+      driveLinksTableWrap.querySelectorAll('[data-require-lock="1"]').forEach(btn => {
         btn.addEventListener('click', () => {
           driveModal.classList.add('hidden');
           driveModal.classList.remove('flex');
-          passwordInput.focus();
-          showToast('상단 암호 입력창에 보안 암호를 입력하시면 원본 PDF 링크가 잠금 해제됩니다.', 'info');
+          if (window.innerWidth < 1024) {
+            openSheet(sheetAuth);
+            mobilePasswordInput.focus();
+          } else {
+            passwordInput.focus();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+          showToast('보안 암호(careful)를 입력하시면 원본 PDF 다운로드가 즉시 활성화됩니다.', 'info');
         });
       });
     }
 
+    // Touch Swipe Detection for Mobile (Natural Page Flipping)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    pagesViewport.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    pagesViewport.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      if (scrollAllPages) return; // Continuous scroll doesn't need horizontal swipe
+      const dx = touchEndX - touchStartX;
+      const dy = touchEndY - touchStartY;
+      
+      // Horizontal swipe threshold: > 60px and horizontal movement exceeds vertical
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        const subj = SUBJECT_DATA[activeSubjIdx];
+        if (dx < 0 && activePageIdx < subj.pageCount - 1) {
+          // Swipe Left -> Next Page
+          activePageIdx++;
+          renderAll();
+          window.scrollTo({ top: 110, behavior: 'smooth' });
+          showToast(`${activePageIdx + 1}면으로 이동하였습니다.`);
+        } else if (dx > 0 && activePageIdx > 0) {
+          // Swipe Right -> Prev Page
+          activePageIdx--;
+          renderAll();
+          window.scrollTo({ top: 110, behavior: 'smooth' });
+          showToast(`${activePageIdx + 1}면으로 이동하였습니다.`);
+        }
+      }
+    }
+
+    // Master Render Function
     function renderAll() {
       renderHeaderState();
-      renderSubjectTabs();
+      renderSubjects();
       renderToolbar();
       renderViewport();
       renderDriveModalContent();
     }
 
-    // Event Listeners
-    unlockBtn.addEventListener('click', attemptUnlock);
+    // =========================================================================
+    // Event Listeners Wiring
+    // =========================================================================
+
+    // Desktop Unlock
+    unlockBtn.addEventListener('click', () => attemptUnlockWith(passwordInput.value));
     passwordInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        attemptUnlock();
+        attemptUnlockWith(passwordInput.value);
       }
     });
 
     togglePwdBtn.addEventListener('click', () => {
       if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        togglePwdBtn.textContent = '숨김';
+        togglePwdBtn.textContent = 'HIDE';
       } else {
         passwordInput.type = 'password';
-        togglePwdBtn.textContent = '보기';
+        togglePwdBtn.textContent = 'SHOW';
       }
     });
 
+    // Mobile Unlock
+    mobileUnlockBtn.addEventListener('click', () => attemptUnlockWith(mobilePasswordInput.value));
+    mobilePasswordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        attemptUnlockWith(mobilePasswordInput.value);
+      }
+    });
+    mobileTogglePwdBtn.addEventListener('click', () => {
+      if (mobilePasswordInput.type === 'password') {
+        mobilePasswordInput.type = 'text';
+        mobileTogglePwdBtn.textContent = 'HIDE';
+      } else {
+        mobilePasswordInput.type = 'password';
+        mobileTogglePwdBtn.textContent = 'SHOW';
+      }
+    });
+    quickFillPwdBtn.addEventListener('click', () => {
+      mobilePasswordInput.value = 'careful';
+      attemptUnlockWith('careful');
+    });
+
+    // Lock Buttons
     lockBtn.addEventListener('click', lockArchive);
+    mobileLockBtn.addEventListener('click', lockArchive);
 
-    modeOrigBtn.addEventListener('click', () => {
-      viewMode = 'orig';
-      renderAll();
-    });
-    modeTsOrigBtn.addEventListener('click', () => {
-      viewMode = 'ts_orig';
-      renderAll();
-    });
-    modeRedactedBtn.addEventListener('click', () => {
-      viewMode = 'redacted';
-      renderAll();
-    });
-    modeSplitBtn.addEventListener('click', () => {
-      viewMode = 'split';
-      renderAll();
-    });
-
-    closeToastBtn.addEventListener('click', () => {
-      toastBanner.classList.add('hidden');
-    });
-
+    // Focus Password Triggers
     focusPwdBtn.addEventListener('click', () => {
-      passwordInput.focus();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    prevPageBtn.addEventListener('click', () => {
-      if (activePageIdx > 0) {
-        activePageIdx--;
-        renderAll();
+      if (window.innerWidth < 1024) {
+        openSheet(sheetAuth);
+        mobilePasswordInput.focus();
+      } else {
+        passwordInput.focus();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
 
-    nextPageBtn.addEventListener('click', () => {
+    // Desktop View Mode Switchers
+    modeOrigBtn.addEventListener('click', () => { viewMode = 'orig'; renderAll(); });
+    modeTsOrigBtn.addEventListener('click', () => { viewMode = 'ts_orig'; renderAll(); });
+    modeRedactedBtn.addEventListener('click', () => { viewMode = 'redacted'; renderAll(); });
+    modeSplitBtn.addEventListener('click', () => { viewMode = 'split'; renderAll(); });
+
+    // Mobile Sheet View Mode Switchers
+    document.querySelectorAll('.mobile-mode-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        viewMode = btn.getAttribute('data-mode');
+        closeSheet(sheetMode);
+        renderAll();
+        showToast(`보기 모드가 변경되었습니다: ${btn.querySelector('.text-xs').textContent.trim()}`);
+      });
+    });
+
+    // Navigation Page Controls
+    function goPrev() {
+      if (activePageIdx > 0) {
+        activePageIdx--;
+        renderAll();
+        window.scrollTo({ top: 110, behavior: 'smooth' });
+      }
+    }
+    function goNext() {
       const subj = SUBJECT_DATA[activeSubjIdx];
       if (activePageIdx < subj.pageCount - 1) {
         activePageIdx++;
         renderAll();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 110, behavior: 'smooth' });
       }
-    });
-
-    jumpAnsBtn.addEventListener('click', () => {
+    }
+    function jumpToAnswer() {
       const subj = SUBJECT_DATA[activeSubjIdx];
       activePageIdx = subj.pageCount - 1;
       if (scrollAllPages) {
@@ -846,36 +1575,75 @@
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
         renderAll();
+        window.scrollTo({ top: 110, behavior: 'smooth' });
       }
+      showToast('공식 NEIS 정답 및 배점표 면으로 이동했습니다.', 'success');
+    }
+
+    prevPageBtn.addEventListener('click', goPrev);
+    nextPageBtn.addEventListener('click', goNext);
+    jumpAnsBtn.addEventListener('click', jumpToAnswer);
+
+    // Mobile Floating Buttons
+    mobileFloatPrevBtn.addEventListener('click', goPrev);
+    mobileFloatNextBtn.addEventListener('click', goNext);
+    mobileFloatAnsBtn.addEventListener('click', jumpToAnswer);
+    mobileFloatPageSelectorBtn.addEventListener('click', () => openSheet(sheetPages));
+    mobileSheetAnsBtn.addEventListener('click', () => {
+      closeSheet(sheetPages);
+      jumpToAnswer();
     });
 
-    toggleScrollModeBtn.addEventListener('click', () => {
-      scrollAllPages = !scrollAllPages;
-      renderAll();
-    });
+    // Mobile Header Quick Triggers
+    mobileSubjectQuickBtn.addEventListener('click', () => openSheet(sheetSubject));
+    mobileAuthQuickBtn.addEventListener('click', () => openSheet(sheetAuth));
 
-    zoomOutBtn.addEventListener('click', () => {
-      if (zoomPercent > 70) {
-        zoomPercent -= 15;
-        renderToolbar();
-        renderViewport();
-      }
-    });
-
-    zoomInBtn.addEventListener('click', () => {
-      if (zoomPercent < 145) {
-        zoomPercent += 15;
-        renderToolbar();
-        renderViewport();
-      }
-    });
-
-    openDriveModalBtn.addEventListener('click', () => {
+    // Mobile Dock Triggers
+    dockSubjBtn.addEventListener('click', () => openSheet(sheetSubject));
+    dockPagesBtn.addEventListener('click', () => openSheet(sheetPages));
+    dockAuthBtn.addEventListener('click', () => openSheet(sheetAuth));
+    dockModeBtn.addEventListener('click', () => openSheet(sheetMode));
+    dockPdfBtn.addEventListener('click', () => {
       renderDriveModalContent();
       driveModal.classList.remove('hidden');
       driveModal.classList.add('flex');
     });
 
+    // Toggle Continuous Scroll Mode
+    toggleScrollModeBtn.addEventListener('click', () => {
+      scrollAllPages = !scrollAllPages;
+      renderAll();
+      showToast(scrollAllPages ? '전 페이지 연속 스크롤 모드로 전환되었습니다.' : '1면씩 넘겨보기 모드로 전환되었습니다.');
+    });
+
+    // Zoom Controls
+    zoomOutBtn.addEventListener('click', () => {
+      if (zoomPercent > 65) {
+        zoomPercent -= 15;
+        renderToolbar();
+        renderViewport();
+      }
+    });
+    zoomInBtn.addEventListener('click', () => {
+      if (zoomPercent < 155) {
+        zoomPercent += 15;
+        renderToolbar();
+        renderViewport();
+      }
+    });
+    zoomFitBtn.addEventListener('click', () => {
+      zoomPercent = 100;
+      renderToolbar();
+      renderViewport();
+      showToast('화면 크기에 맞게 100% 비율로 초기화되었습니다.');
+    });
+
+    // Modal Events
+    openDriveModalBtn.addEventListener('click', () => {
+      renderDriveModalContent();
+      driveModal.classList.remove('hidden');
+      driveModal.classList.add('flex');
+    });
     closeDriveModalBtn.addEventListener('click', () => {
       driveModal.classList.add('hidden');
       driveModal.classList.remove('flex');
@@ -885,13 +1653,28 @@
       githubModal.classList.remove('hidden');
       githubModal.classList.add('flex');
     });
-
     closeGithubModalBtn.addEventListener('click', () => {
       githubModal.classList.add('hidden');
       githubModal.classList.remove('flex');
     });
 
-    // Initial render
+    closeToastBtn.addEventListener('click', () => {
+      toastBanner.classList.add('hidden');
+    });
+
+    // Close Modals on Outer Click
+    window.addEventListener('click', (e) => {
+      if (e.target === driveModal) {
+        driveModal.classList.add('hidden');
+        driveModal.classList.remove('flex');
+      }
+      if (e.target === githubModal) {
+        githubModal.classList.add('hidden');
+        githubModal.classList.remove('flex');
+      }
+    });
+
+    // Initial Render
     renderAll();
   </script>
 </body>
