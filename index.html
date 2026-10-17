@@ -607,13 +607,13 @@
             <div class="flex items-center gap-2">
               <h3 class="text-xs sm:text-base font-black text-white tracking-wide flex items-center gap-1.5">
                 <span>CYBER INFILTRATOR</span>
-                <span class="text-cyan-400 font-mono text-[11px] sm:text-xs">v2.5</span>
+                <span class="text-cyan-400 font-mono text-[11px] sm:text-xs">v3.0</span>
               </h3>
               <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 animate-pulse">
-                ARCADE MISSION
+                DYNAMIC PROTOCOL
               </span>
             </div>
-            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">암호화된 7개 코어를 가로채어 마스터 패스워드를 해독하세요!</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">암호화된 코어를 탈취하여 실시간 보안 마스터 키를 해독하세요!</p>
           </div>
         </div>
         <div class="flex items-center gap-1.5">
@@ -642,9 +642,9 @@
 
             <!-- Letter Progress HUD -->
             <div class="flex items-center gap-1 font-mono text-xs">
-              <span class="text-slate-400 text-[9px] sm:text-[10px]">DECRYPTED:</span>
+              <span class="text-slate-400 text-[9px] sm:text-[10px]">CORES:</span>
               <span id="gameCoreProgress" class="font-bold text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/40 text-[11px] sm:text-xs">
-                0 / 7
+                0 / ?
               </span>
             </div>
 
@@ -657,9 +657,9 @@
 
           <!-- Harvested Cores Live Inventory Preview -->
           <div class="p-2 sm:p-2.5 rounded-xl bg-dark-950 border border-slate-800/80 flex items-center justify-between gap-1.5">
-            <span class="text-[10px] sm:text-[11px] text-slate-400 font-mono shrink-0">해독된 알파벳 보관함:</span>
+            <span class="text-[10px] sm:text-[11px] text-slate-400 font-mono shrink-0">탈취된 암호 코어:</span>
             <div id="harvestedCoreSlots" class="flex items-center gap-1 sm:gap-1.5 flex-1 justify-end">
-              <!-- 7 core slots -->
+              <!-- dynamic core slots -->
             </div>
           </div>
 
@@ -672,7 +672,7 @@
               <div id="overlayIcon" class="text-3xl sm:text-4xl mb-2">⚡</div>
               <h4 id="overlayTitle" class="text-sm sm:text-lg font-black text-white font-mono tracking-wide">SYSTEM READY</h4>
               <p id="overlaySubtext" class="text-[11px] sm:text-xs text-slate-300 mt-1 max-w-xs leading-relaxed">
-                터치 드래그 또는 조작 버튼으로 사이버 프로브를 조종하세요.
+                화면 직접 터치 드래그 또는 하단 버튼으로 사이버 프로브를 조종하세요.
               </p>
               <button id="overlayActionBtn" type="button" class="mt-3 sm:mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg font-mono tracking-wider active:scale-95 transition">
                 START MISSION
@@ -716,19 +716,19 @@
               </span>
             </div>
             <p class="text-xs text-slate-300 leading-relaxed">
-              탈취한 7개의 알파벳 코어가 확보되었습니다. 올바른 순서로 7글자 마스터 키워드를 조합하여 방화벽을 영구 해제하세요!
+              탈취한 알파벳 코어가 확보되었습니다. 올바른 순서로 마스터 키워드를 조합하여 방화벽을 영구 해제하세요! (오답 시 암호가 즉시 교체됩니다)
             </p>
             <!-- Cryptic Clue (No answer spoiler!) -->
             <div class="mt-2 p-2 rounded-xl bg-amber-950/30 border border-amber-500/30 text-amber-200 text-[11px] flex items-start gap-2">
               <span class="shrink-0 text-sm">💡</span>
               <div class="leading-relaxed">
                 <strong class="text-amber-300">해킹 브리핑 힌트:</strong>
-                <span class="text-slate-300">"위험한 보안 시스템일수록 가장 필요한 미덕... '돌다리도 두드려보고 건너듯 매사에 조심스럽고 주의 깊은' 성격의 7글자 영단어"</span>
+                <span id="decoderHintText" class="text-slate-300">"위험한 보안 시스템일수록 가장 필요한 미덕..."</span>
               </div>
             </div>
           </div>
 
-          <!-- Word Slots (7 Slots with 3D Flip style) -->
+          <!-- Word Slots (Dynamic length with 3D Flip style) -->
           <div>
             <div class="flex items-center justify-between text-xs text-slate-400 mb-1.5">
               <span class="font-medium text-slate-300">조합 슬롯:</span>
@@ -738,12 +738,12 @@
             </div>
             
             <div id="decoderSlotsContainer" class="flex items-center justify-center gap-1.5 sm:gap-2.5 py-3.5 px-1 bg-dark-950 rounded-2xl border border-cyan-500/30 shadow-inner">
-              <!-- 7 interactive slots data-slot="0" .. "6" -->
+              <!-- Dynamic interactive slots -->
             </div>
 
             <!-- Feedback Guide -->
             <div id="decoderFeedback" class="mt-2 text-center text-xs font-mono min-h-[20px] text-slate-400">
-              알파벳 타일을 터치하여 7개 슬롯을 채우세요.
+              알파벳 타일을 터치하여 슬롯을 채우세요.
             </div>
           </div>
 
@@ -1090,7 +1090,32 @@
     // =========================================================================
     // Application State
     // =========================================================================
-    const ACCESS_CODE = 'careful';
+    // =========================================================================
+    // Dynamic Security Master Cipher System ("조심해" 테마 단어 풀)
+    // =========================================================================
+    const CAREFUL_WORDS = [
+      { word: 'CAREFUL', hint: '돌다리도 두드려보고 건너는 신중하고 조심스러운 성격' },
+      { word: 'CAUTION', hint: '위험을 방지하기 위해 각별히 기울이는 주의와 조심' },
+      { word: 'BEWARE',  hint: '다가오는 위험이나 맹수를 "조심하라!"고 알리는 경고' },
+      { word: 'PRUDENT', hint: '경솔하지 않고 매사에 빈틈없이 사려 깊고 신중한 태도' },
+      { word: 'MINDFUL', hint: '방심하지 않고 위험을 늘 마음에 유념하며 조심하는 상태' },
+      { word: 'HEEDFUL', hint: '경고나 충고에 귀를 기울이며 각별히 주의하고 조심하는' },
+      { word: 'WATCH',   hint: '발밑과 주변 위험을 시선 떼지 않고 주의 깊게 살피며 조심하다' },
+      { word: 'ALERT',   hint: '어떤 비상 상황에도 즉시 대응할 수 있도록 팽팽히 경계하는' },
+      { word: 'GUARD',   hint: '방심하지 않고 방어선을 지키며 빈틈없이 경계하고 조심하다' },
+      { word: 'WARILY',  hint: '의심과 경계를 늦추지 않고 살금살금 조심스럽게' }
+    ];
+
+    let currentWordObj = CAREFUL_WORDS[Math.floor(Math.random() * CAREFUL_WORDS.length)];
+    let currentAccessCode = currentWordObj.word;
+
+    function randomizeAccessCode(reason = '') {
+      const candidates = CAREFUL_WORDS.filter(w => w.word !== currentAccessCode);
+      currentWordObj = candidates[Math.floor(Math.random() * candidates.length)];
+      currentAccessCode = currentWordObj.word;
+      console.log(`[SECURITY ROTATION] Cipher changed to ${currentAccessCode.length}-letter word (${reason})`);
+      return currentWordObj;
+    }
     let isUnlocked = false;
     let viewMode = 'redacted'; // 'orig' | 'ts_orig' | 'redacted' | 'split'
     let activeSubjIdx = 0;
@@ -1205,6 +1230,7 @@
     const decoderSlotsContainer = document.getElementById('decoderSlotsContainer');
     const decoderLetterTray = document.getElementById('decoderLetterTray');
     const decoderFeedback = document.getElementById('decoderFeedback');
+    const decoderHintText = document.getElementById('decoderHintText');
     const clearSlotsBtn = document.getElementById('clearSlotsBtn');
     const executeDecryptBtn = document.getElementById('executeDecryptBtn');
     const gameEnterArchiveBtn = document.getElementById('gameEnterArchiveBtn');
@@ -1288,12 +1314,6 @@
     // =========================================================================
     // CYBER INFILTRATOR: 60FPS ARCADE & CIPHER DECRYPTION ENGINE
     // =========================================================================
-    const TARGET_SECRET = 'CAREFUL';
-    const TARGET_LETTERS = ['C', 'A', 'R', 'E', 'F', 'U', 'L'];
-
-    // -------------------------------------------------------------------------
-    // ARCADE RUNNER ENGINE (Stage 1)
-    // -------------------------------------------------------------------------
     let arcadeCtx = null;
     let arcadeAnimId = null;
     let isArcadeRunning = false;
@@ -1316,7 +1336,7 @@
     let buttonInputDir = 0;
     let keyInputDir = 0;
 
-    let harvestedLetters = []; // Target 7 unique letters
+    let harvestedLetters = []; // Letters collected for current word
     let uncollectedLettersPool = [];
     let activeCores = [];
     let activeHazards = [];
@@ -1365,7 +1385,8 @@
       screenShake = 0;
 
       harvestedLetters = [];
-      uncollectedLettersPool = [...TARGET_LETTERS].sort(() => Math.random() - 0.5);
+      // Initialize pool with letters of currentAccessCode!
+      uncollectedLettersPool = [...currentAccessCode.split('')].sort(() => Math.random() - 0.5);
       activeCores = [];
       activeHazards = [];
       activeParticles = [];
@@ -1389,7 +1410,7 @@
 
       // Progress Badge
       if (gameCoreProgress) {
-        gameCoreProgress.textContent = `${harvestedLetters.length} / 7`;
+        gameCoreProgress.textContent = `${harvestedLetters.length} / ${currentAccessCode.length}`;
       }
 
       // Score
@@ -1400,7 +1421,8 @@
       // Core preview slots
       if (harvestedCoreSlots) {
         harvestedCoreSlots.innerHTML = '';
-        TARGET_LETTERS.forEach((l, idx) => {
+        const targetArr = currentAccessCode.split('');
+        targetArr.forEach((l, idx) => {
           const has = harvestedLetters[idx];
           const chip = document.createElement('div');
           if (has) {
@@ -1420,7 +1442,7 @@
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const logicalWidth = arcadeCanvas.width / dpr;
       
-      // Pick next uncollected letter
+      // Pick next uncollected letter from the current word
       const letter = uncollectedLettersPool[Math.floor(Math.random() * uncollectedLettersPool.length)];
       activeCores.push({
         x: 35 + Math.random() * (logicalWidth - 70),
@@ -1515,11 +1537,14 @@
       stopArcadeGame();
       playDamageCrunch();
       
+      // As requested: "한번이라도 죽거나 비번 입력 실패하면 비번 바뀌게해줘"
+      randomizeAccessCode('Arcade death breach');
+
       overlayIcon.textContent = '💥';
-      overlayTitle.textContent = 'SYSTEM BREACH // MISSION FAILED';
+      overlayTitle.textContent = 'SYSTEM BREACH // CIPHER RESET';
       overlayTitle.className = 'text-sm sm:text-lg font-black text-red-400 font-mono tracking-wide';
-      overlaySubtext.textContent = '방화벽에 탐지되어 프로브 쉴드가 모두 소진되었습니다. 다시 도전하여 암호 코어를 탈취하세요!';
-      overlayActionBtn.textContent = 'RETRY MISSION (다시 시도)';
+      overlaySubtext.textContent = '프로브 파괴로 보안 시스템이 암호를 즉시 폐기하고 새로운 "조심해" 단어로 재설정했습니다. 새 암호 코어를 탈취하세요!';
+      overlayActionBtn.textContent = 'RETRY MISSION (새 암호로 재도전)';
       overlayActionBtn.className = 'mt-3 sm:mt-4 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white shadow-lg font-mono tracking-wider active:scale-95 transition';
       
       canvasOverlay.classList.remove('hidden');
@@ -1529,7 +1554,7 @@
     function triggerStage1Clear() {
       stopArcadeGame();
       playFanfareSound();
-      showToast('🎉 모든 7개 암호 코어 탈취 성공! 마스터 키 해독실로 이동합니다.', 'success');
+      showToast(`🎉 모든 ${currentAccessCode.length}개 암호 코어 탈취 성공! 마스터 키 해독실로 이동합니다.`, 'success');
 
       setTimeout(() => {
         gameStage1.classList.add('hidden');
@@ -1555,18 +1580,15 @@
       const inputDir = buttonInputDir !== 0 ? buttonInputDir : keyInputDir;
 
       if (inputDir !== 0) {
-        // Continuous button/key steering
         player.vx += inputDir * ACCEL * dt;
         player.vx = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, player.vx));
         player.x += player.vx * dt;
         player.targetX = player.x;
       } else if (player.isTouchDragging) {
-        // Direct Touch Drag with spring-damper follow
         const diff = player.targetX - player.x;
         player.vx = diff * 18;
         player.x += player.vx * dt;
       } else {
-        // Natural friction deceleration
         player.vx *= Math.pow(FRICTION, dt * 60);
         player.x += player.vx * dt;
         player.targetX = player.x;
@@ -1643,7 +1665,7 @@
           activeCores.splice(i, 1);
           updateArcadeHUD();
 
-          if (harvestedLetters.length >= 7) {
+          if (harvestedLetters.length >= currentAccessCode.length) {
             triggerStage1Clear();
             return;
           }
@@ -1795,7 +1817,6 @@
       activeHazards.forEach(h => {
         arcadeCtx.save();
         if (h.type === 'beam') {
-          // Red Laser Barrier
           arcadeCtx.fillStyle = 'rgba(239, 68, 68, 0.85)';
           arcadeCtx.shadowColor = '#ef4444';
           arcadeCtx.shadowBlur = 10;
@@ -1804,7 +1825,6 @@
           arcadeCtx.fillStyle = '#ffffff';
           arcadeCtx.fillRect(h.x, h.y + 3, h.width, 3);
         } else {
-          // Glitch Mine
           arcadeCtx.translate(h.x, h.y);
           arcadeCtx.rotate(h.rot);
           arcadeCtx.fillStyle = '#dc2626';
@@ -1921,7 +1941,6 @@
     }
 
     if (arcadeCanvas) {
-      // Touch drag events (Smooth direct finger steering)
       arcadeCanvas.addEventListener('touchstart', (e) => {
         if (!isArcadeRunning) return;
         if (e.touches.length > 0) {
@@ -1947,7 +1966,6 @@
         player.isTouchDragging = false;
       });
 
-      // Mouse events
       arcadeCanvas.addEventListener('mousemove', (e) => {
         if (!isArcadeRunning) return;
         setPlayerTargetFromClientX(e.clientX);
@@ -2010,14 +2028,18 @@
     // -------------------------------------------------------------------------
     // MASTERMIND CIPHER CHAMBER (Stage 2)
     // -------------------------------------------------------------------------
-    let decoderSlots = [null, null, null, null, null, null, null];
+    let decoderSlots = [];
     let trayTiles = [];
-    let slotEvaluation = [null, null, null, null, null, null, null];
+    let slotEvaluation = [];
 
     function initDecryptionChamber() {
-      decoderSlots = [null, null, null, null, null, null, null];
-      slotEvaluation = [null, null, null, null, null, null, null];
+      decoderSlots = new Array(currentAccessCode.length).fill(null);
+      slotEvaluation = new Array(currentAccessCode.length).fill(null);
       
+      if (decoderHintText) {
+        decoderHintText.textContent = `"${currentWordObj.hint} (${currentAccessCode.length}글자)"`;
+      }
+
       // Scramble harvested letters into tray
       const shuffled = [...harvestedLetters].sort(() => Math.random() - 0.5);
       trayTiles = shuffled.map((ch, idx) => ({
@@ -2026,7 +2048,7 @@
         used: false
       }));
 
-      decoderFeedback.innerHTML = '<span class="text-slate-400">알파벳 타일을 터치하여 7개 슬롯을 채우세요.</span>';
+      decoderFeedback.innerHTML = `<span class="text-slate-400">알파벳 타일을 터치하여 ${currentAccessCode.length}개 슬롯을 채우세요. (단 1회 오답 시 암호가 즉시 교체됩니다!)</span>`;
       renderDecoderSlots();
       renderDecoderTray();
     }
@@ -2035,9 +2057,9 @@
       if (!decoderSlotsContainer) return;
       decoderSlotsContainer.innerHTML = '';
 
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < currentAccessCode.length; i++) {
         const item = decoderSlots[i];
-        const evalState = slotEvaluation[i]; // 'correct', 'present', 'wrong', null
+        const evalState = slotEvaluation[i];
         
         const slotEl = document.createElement('div');
         let baseClass = 'w-9 h-12 sm:w-12 sm:h-14 rounded-xl flex items-center justify-center text-base sm:text-xl font-mono font-black cursor-pointer transition-all duration-300 shadow-md select-none ';
@@ -2095,7 +2117,7 @@
       }
       tile.used = true;
       decoderSlots[emptyIdx] = tile;
-      slotEvaluation = [null, null, null, null, null, null, null];
+      slotEvaluation = new Array(currentAccessCode.length).fill(null);
       renderDecoderSlots();
       renderDecoderTray();
     }
@@ -2110,14 +2132,14 @@
       }
       item.used = false;
       decoderSlots[idx] = null;
-      slotEvaluation = [null, null, null, null, null, null, null];
+      slotEvaluation = new Array(currentAccessCode.length).fill(null);
       renderDecoderSlots();
       renderDecoderTray();
     }
 
     function clearAllDecoderSlots() {
-      decoderSlots = [null, null, null, null, null, null, null];
-      slotEvaluation = [null, null, null, null, null, null, null];
+      decoderSlots = new Array(currentAccessCode.length).fill(null);
+      slotEvaluation = new Array(currentAccessCode.length).fill(null);
       trayTiles.forEach(t => t.used = false);
       playBeep(350, 'triangle', 0.1);
       renderDecoderSlots();
@@ -2126,23 +2148,22 @@
 
     function executeDecryption() {
       if (decoderSlots.includes(null)) {
-        showToast('7자리 알파벳을 모두 슬롯에 배치한 후 해독을 실행하세요!', 'info');
+        showToast(`${currentAccessCode.length}자리 알파벳을 모두 슬롯에 배치한 후 해독을 실행하세요!`, 'info');
         playBeep(220, 'sawtooth', 0.15);
         return;
       }
 
       const guess = decoderSlots.map(s => s.letter).join('');
-      const targetArr = TARGET_SECRET.split('');
+      const targetArr = currentAccessCode.split('');
       const guessArr = guess.split('');
 
       // Mastermind / Wordle Check
       let correctCount = 0;
       let presentCount = 0;
-      const targetUsed = [false, false, false, false, false, false, false];
-      const guessResult = ['wrong', 'wrong', 'wrong', 'wrong', 'wrong', 'wrong', 'wrong'];
+      const targetUsed = new Array(currentAccessCode.length).fill(false);
+      const guessResult = new Array(currentAccessCode.length).fill('wrong');
 
-      // First pass: exact matches (Green)
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < currentAccessCode.length; i++) {
         if (guessArr[i] === targetArr[i]) {
           guessResult[i] = 'correct';
           targetUsed[i] = true;
@@ -2150,10 +2171,9 @@
         }
       }
 
-      // Second pass: present elsewhere (Yellow)
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < currentAccessCode.length; i++) {
         if (guessResult[i] !== 'correct') {
-          for (let j = 0; j < 7; j++) {
+          for (let j = 0; j < currentAccessCode.length; j++) {
             if (!targetUsed[j] && guessArr[i] === targetArr[j]) {
               guessResult[i] = 'present';
               targetUsed[j] = true;
@@ -2167,11 +2187,10 @@
       slotEvaluation = guessResult;
       renderDecoderSlots();
 
-      // Trigger animation on container
       decoderSlotsContainer.classList.remove('shake-anim');
       void decoderSlotsContainer.offsetWidth;
 
-      if (correctCount === 7) {
+      if (correctCount === currentAccessCode.length) {
         // VICTORY!
         playFanfareSound();
         if (window.navigator && window.navigator.vibrate) {
@@ -2182,7 +2201,7 @@
         setTimeout(() => {
           gameStage2.classList.add('hidden');
           gameStage3.classList.remove('hidden');
-          attemptUnlockWith('careful');
+          attemptUnlockWith(currentAccessCode);
           
           setTimeout(() => {
             closeMiniGameModal();
@@ -2190,13 +2209,31 @@
         }, 800);
 
       } else {
+        // WRONG GUESS -> IMMEDIATE CIPHER ROTATION AND RETURN TO STAGE 1!
         decoderSlotsContainer.classList.add('shake-anim');
         playDamageCrunch();
         if (window.navigator && window.navigator.vibrate) {
           try { window.navigator.vibrate([80, 50, 80]); } catch(e){}
         }
-        decoderFeedback.innerHTML = `<span class="text-amber-300 font-mono font-bold">해독 실패 (일치율: ${correctCount}/7)</span><br/><span class="text-[11px] text-slate-400">🟩 녹색: 정확한 위치 | 🟨 노란색: 위치 다름</span>`;
-        showToast(`암호가 일치하지 않습니다. (🟩 정확: ${correctCount}개 / 🟨 위치 다름: ${presentCount}개)`, 'error');
+
+        // As requested: "한번이라도 비번 입력 실패하면 비번 바뀌게해줘"
+        randomizeAccessCode('Decryption guess failed');
+
+        decoderFeedback.innerHTML = `<span class="text-red-400 font-mono font-bold">⚠️ 해독 실패! 보안 시스템이 암호를 즉시 폐기 및 재설정했습니다.</span><br/><span class="text-[11px] text-slate-400">새로운 "조심해" 암호 코어를 탈취하러 1단계로 강제 복귀합니다.</span>`;
+        showToast('암호 해독 실패! 보안 프로토콜에 의해 암호가 즉시 교체되었습니다.', 'error');
+
+        setTimeout(() => {
+          gameStage2.classList.add('hidden');
+          gameStage1.classList.remove('hidden');
+          initArcadeEngine();
+          overlayIcon.textContent = '🔄';
+          overlayTitle.textContent = 'SECURITY OVERRIDE // CIPHER ROTATED';
+          overlayTitle.className = 'text-sm sm:text-lg font-black text-amber-400 font-mono tracking-wide';
+          overlaySubtext.textContent = '암호 불일치로 마스터 암호가 새로운 "조심해" 단어로 재설정되었습니다. 새 코어를 탈취하세요!';
+          overlayActionBtn.textContent = 'START NEW MISSION (새 암호 탈취 시작)';
+          canvasOverlay.classList.remove('hidden');
+          canvasOverlay.classList.add('flex');
+        }, 1600);
       }
     }
 
@@ -2207,6 +2244,9 @@
       gameStage2.classList.add('hidden');
       gameStage3.classList.add('hidden');
       
+      // As requested: "할때마다 그리고 비번은 다르게하고"
+      randomizeAccessCode('New game session opened');
+
       initArcadeEngine();
       overlayIcon.textContent = '⚡';
       overlayTitle.textContent = 'SYSTEM READY';
@@ -2380,19 +2420,25 @@
 
     // Unlock & Lock Functions
     function attemptUnlockWith(val) {
-      if (val.trim() === ACCESS_CODE) {
+      if (!val) return;
+      const cleanVal = val.trim().toUpperCase();
+      if (cleanVal === currentAccessCode) {
         isUnlocked = true;
         viewMode = 'orig';
         passwordInput.value = '';
         mobilePasswordInput.value = '';
         closeAllSheets();
-        showToast('ACCESS GRANTED: 보안 인증 성공! 전 과목 원본 시험지 및 정답/배점표가 잠금 해제되었습니다.', 'success');
+        playChime([523, 659, 784, 1046]);
+        showToast('🎉 보안 잠금 해제 성공! 전 과목 원본 시험지가 활성화되었습니다.', 'success');
         renderAll();
       } else {
+        // As requested: "한번이라도 죽거나 비번 입력 실패하면 비번 바뀌게해줘"
+        randomizeAccessCode('Wrong password attempt');
+        playBeep(220, 'sawtooth', 0.2);
         unlockFormWrap.classList.remove('shake-anim');
         void unlockFormWrap.offsetWidth;
         unlockFormWrap.classList.add('shake-anim');
-        showToast('암호가 올바르지 않습니다. 미니게임을 통해 암호를 획득해보세요!', 'error');
+        showToast('암호 불일치! 보안 침해로 인해 암호가 즉시 새로운 "조심해" 단어로 재설정되었습니다.', 'error');
       }
     }
 
