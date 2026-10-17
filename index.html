@@ -161,9 +161,19 @@
 <body class="min-h-screen flex flex-col font-sans select-text pb-24 lg:pb-8">
 
   <!-- ========================================================================= -->
-  <!-- Top Header Wrapper (Auto-Hides Smoothly on Mobile Scroll Down)            -->
+  <!-- Fixed Floating Toast Notification (Accessible on both Mobile & Desktop)    -->
   <!-- ========================================================================= -->
-  <div id="topHeaderWrapper" class="sticky top-0 z-40 w-full">
+  <div id="toastBanner" class="fixed top-4 inset-x-0 z-50 hidden px-3 pointer-events-none transition-all">
+    <div id="toastInner" class="max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border shadow-2xl">
+      <span id="toastText"></span>
+      <button id="closeToastBtn" type="button" class="ml-3 text-xs font-bold opacity-75 hover:opacity-100">✕</button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- Desktop-Only Top Header Wrapper (Completely Hidden on Mobile Screens)     -->
+  <!-- ========================================================================= -->
+  <div id="topHeaderWrapper" class="hidden lg:block sticky top-0 z-40 w-full">
     
     <!-- 1. Top Security Status Bar (Classification Ticker) -->
     <div id="securityRibbon" class="w-full py-1.5 px-3 sm:px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-300 bg-red-950/90 text-red-200 border-b border-red-800/60 font-mono flex items-center justify-center gap-2 safe-top">
@@ -173,7 +183,7 @@
 
     <!-- 2. Main Header & Password Control Bar -->
     <header class="glass-panel border-b border-slate-800/80 shadow-xl">
-      <div class="max-w-7xl mx-auto px-3 sm:px-5 py-2 sm:py-3 flex items-center justify-between gap-3">
+      <div class="max-w-7xl mx-auto px-3 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between gap-3">
         
         <!-- Brand & Security Status Badge -->
         <div class="flex items-center gap-2.5 sm:gap-3.5">
@@ -200,8 +210,8 @@
           </div>
         </div>
 
-        <!-- Desktop Unlock Bar & Controls (hidden on mobile, managed in bottom sheet / dock) -->
-        <div class="hidden lg:flex items-center gap-2.5">
+        <!-- Desktop Unlock Bar & Controls -->
+        <div class="flex items-center gap-2.5">
           
           <!-- Locked Mode Input & Mini-Game Trigger -->
           <div id="unlockFormWrap" class="flex items-center gap-1.5 bg-dark-950/90 border border-slate-700/80 rounded-xl p-1 focus-within:border-amber-400/80 transition-all shadow-inner">
@@ -287,45 +297,9 @@
           </button>
         </div>
 
-        <!-- Mobile Top Quick Bar (과목 뱃지 & 잠금 상태 클릭 가능) -->
-        <div class="flex items-center gap-1.5 lg:hidden">
-          <button
-            id="mobileOpenGameHeaderBtn"
-            type="button"
-            class="px-2 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center gap-1 shadow-sm active:scale-95"
-          >
-            <span>🎮</span>
-            <span class="hidden sm:inline">미니게임</span>
-          </button>
-          <button
-            id="mobileSubjectQuickBtn"
-            type="button"
-            class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-dark-850 hover:bg-dark-800 text-slate-100 border border-slate-700/80 flex items-center gap-1.5 shadow-sm"
-          >
-            <span id="mobileSubjQuickName">국어</span>
-            <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-          <button
-            id="mobileAuthQuickBtn"
-            type="button"
-            class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 flex items-center gap-1 shadow-sm"
-          >
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-            <span id="mobileAuthQuickLabel">해제</span>
-          </button>
-        </div>
-
       </div>
 
-      <!-- Toast Notification Banner -->
-      <div id="toastBanner" class="hidden max-w-7xl mx-auto px-3 sm:px-5 pb-2.5 transition-all">
-        <div id="toastInner" class="px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border shadow-lg">
-          <span id="toastText"></span>
-          <button id="closeToastBtn" type="button" class="ml-3 text-xs font-bold opacity-75 hover:opacity-100">✕</button>
-        </div>
-      </div>
-
-      <!-- Subject Tabs (Desktop & Tablet Scrolling Bar) -->
+      <!-- Subject Tabs (Desktop Scrolling Bar) -->
       <div class="bg-dark-950/80 border-t border-slate-800/60">
         <div class="max-w-7xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
           <div id="subjectTabs" class="flex items-center gap-1.5 min-w-max"></div>
@@ -333,7 +307,7 @@
       </div>
     </header>
 
-    <!-- 3. Secondary Control Toolbar -->
+    <!-- 3. Secondary Control Toolbar (Desktop) -->
     <div class="glass-panel-subtle border-b border-slate-800/80 py-2 sm:py-2.5 px-3 sm:px-5 shadow-md">
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-2.5">
         
@@ -390,10 +364,10 @@
   <!-- ========================================================================= -->
   <!-- Main Exam Paper Viewport Container                                        -->
   <!-- ========================================================================= -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 lg:px-6 py-4 sm:py-6 flex flex-col items-center">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-4 lg:py-6 flex flex-col items-center safe-top">
     
     <!-- Security Notice Callout (Shown when Locked) -->
-    <div id="lockedCallout" class="w-full max-w-4xl mb-4 sm:mb-6 p-3 sm:p-4 rounded-2xl bg-gradient-to-r from-red-950/80 via-dark-900 to-dark-900 border border-red-700/60 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-3">
+    <div id="lockedCallout" class="w-full max-w-4xl mb-3 sm:mb-6 p-3 sm:p-4 rounded-2xl bg-gradient-to-r from-red-950/80 via-dark-900 to-dark-900 border border-red-700/60 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-3">
       <div class="flex items-start sm:items-center gap-3">
         <span class="px-2.5 py-1 rounded-md bg-red-600 text-white text-[11px] font-black font-mono shrink-0 shadow-sm">TOP SECRET</span>
         <div class="text-xs text-slate-300 leading-relaxed">
@@ -405,7 +379,7 @@
         <button id="openGameBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/50 shadow-md transition flex items-center justify-center gap-1.5 active:scale-95">
           <span>🎮 미니게임으로 해독</span>
         </button>
-        <button id="focusPwdBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md shrink-0 transition flex items-center justify-center gap-1.5">
+        <button id="focusPwdBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md shrink-0 transition flex items-center justify-center gap-1.5 active:scale-95">
           <span>직접 암호 입력</span>
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
         </button>
@@ -413,7 +387,7 @@
     </div>
 
     <!-- Pages Container (Supports Touch Swipe on Mobile) -->
-    <div id="pagesViewport" class="w-full flex flex-col items-center gap-5 sm:gap-7 transition-all"></div>
+    <div id="pagesViewport" class="w-full flex flex-col items-center gap-4 sm:gap-7 transition-all"></div>
   </main>
 
   <!-- ========================================================================= -->
@@ -1088,11 +1062,6 @@
     const githubModal = document.getElementById('githubModal');
 
     // Mobile Elements
-    const mobileSubjQuickName = document.getElementById('mobileSubjQuickName');
-    const mobileAuthQuickBtn = document.getElementById('mobileAuthQuickBtn');
-    const mobileAuthQuickLabel = document.getElementById('mobileAuthQuickLabel');
-    const mobileSubjectQuickBtn = document.getElementById('mobileSubjectQuickBtn');
-    const mobileOpenGameHeaderBtn = document.getElementById('mobileOpenGameHeaderBtn');
     const mobileFloatPillWrap = document.getElementById('mobileFloatPillWrap');
     const mobileFloatPrevBtn = document.getElementById('mobileFloatPrevBtn');
     const mobileFloatNextBtn = document.getElementById('mobileFloatNextBtn');
@@ -1190,7 +1159,6 @@
     let assembledSlots = [null, null, null, null, null, null, null];
 
     function initMiniGame() {
-      // 12 nodes: 7 letters of CAREFUL + 5 decoy characters
       const baseNodes = [
         { letter: 'C', isTarget: true, hex: '0x43' },
         { letter: 'A', isTarget: true, hex: '0x41' },
@@ -1206,7 +1174,6 @@
         { letter: 'Q', isTarget: false, hex: '0x51' },
       ];
 
-      // Shuffle nodes
       gameNodes = baseNodes.sort(() => Math.random() - 0.5).map((item, idx) => ({
         ...item,
         id: idx,
@@ -1216,7 +1183,6 @@
       foundLetters = [];
       assembledSlots = [null, null, null, null, null, null, null];
 
-      // Reset phase visibility
       gamePhaseHunt.classList.remove('hidden');
       gamePhaseAssemble.classList.add('hidden');
       gamePhaseSuccess.classList.add('hidden');
@@ -1259,17 +1225,16 @@
 
       if (node.isTarget) {
         foundLetters.push(node.letter);
-        playBeep(880, 'sine', 0.12); // pleasant high beep
+        playBeep(880, 'sine', 0.12);
         showToast(`알파벳 [${node.letter}] 획득! (${foundLetters.length}/7)`, 'success');
       } else {
-        playBeep(220, 'sawtooth', 0.15); // error buzz
+        playBeep(220, 'sawtooth', 0.15);
         showToast(`디코이 데이터 [${node.letter}] 감지! 다른 보안 노드를 스캔하세요.`, 'error');
       }
 
       renderGameHuntGrid();
       renderCollectedTray();
 
-      // Check if all 7 target letters collected!
       if (foundLetters.length === 7) {
         playChime([523, 659, 784, 1046]);
         setTimeout(() => {
@@ -1297,7 +1262,6 @@
       gamePhaseHunt.classList.add('hidden');
       gamePhaseAssemble.classList.remove('hidden');
 
-      // Shuffle the 7 collected letters for the tray
       const shuffledLetters = [...foundLetters].sort(() => Math.random() - 0.5);
       renderWordAssemble(shuffledLetters);
     }
@@ -1310,7 +1274,6 @@
         assembledSlots = [null, null, null, null, null, null, null];
       }
 
-      // Render Slots
       const slots = wordSlotsContainer.querySelectorAll('.word-slot');
       slots.forEach((slotEl, idx) => {
         const item = assembledSlots[idx];
@@ -1325,7 +1288,6 @@
         }
       });
 
-      // Render Tray Tiles
       assembleTileTray.innerHTML = '';
       currentTrayLetters.forEach((tile) => {
         const tileBtn = document.createElement('button');
@@ -1345,14 +1307,13 @@
 
     function putLetterIntoNextSlot(tile) {
       const emptyIdx = assembledSlots.indexOf(null);
-      if (emptyIdx === -1) return; // All slots full
+      if (emptyIdx === -1) return;
 
       playBeep(620, 'sine', 0.08);
       tile.used = true;
       assembledSlots[emptyIdx] = tile;
       renderWordAssemble();
 
-      // If just filled the 7th slot, automatically check!
       if (!assembledSlots.includes(null)) {
         setTimeout(verifyAssembledWord, 200);
       }
@@ -1378,12 +1339,10 @@
     function verifyAssembledWord() {
       const formedWord = assembledSlots.map(s => s ? s.letter : '').join('');
       if (formedWord === TARGET_WORD) {
-        // VICTORY!
         playChime([523, 659, 784, 1046], 'triangle');
         gamePhaseAssemble.classList.add('hidden');
         gamePhaseSuccess.classList.remove('hidden');
 
-        // Automatically unlock archive
         setTimeout(() => {
           attemptUnlockWith('careful');
           setTimeout(() => {
@@ -1392,7 +1351,6 @@
           }, 1800);
         }, 600);
       } else {
-        // ERROR
         playBeep(180, 'sawtooth', 0.2);
         wordSlotsContainer.classList.remove('shake-anim');
         void wordSlotsContainer.offsetWidth;
@@ -1414,14 +1372,13 @@
     }
 
     // Modal Triggers
-    openGameBtn.addEventListener('click', openMiniGameModal);
-    desktopOpenGameBtn.addEventListener('click', openMiniGameModal);
-    mobileOpenGameBtn.addEventListener('click', openMiniGameModal);
-    mobileOpenGameHeaderBtn.addEventListener('click', openMiniGameModal);
-    closeGameModalBtn.addEventListener('click', closeMiniGameModal);
-    gameResetSlotsBtn.addEventListener('click', resetAllSlots);
-    submitAssembleBtn.addEventListener('click', verifyAssembledWord);
-    gameDoneBtn.addEventListener('click', closeMiniGameModal);
+    if (openGameBtn) openGameBtn.addEventListener('click', openMiniGameModal);
+    if (desktopOpenGameBtn) desktopOpenGameBtn.addEventListener('click', openMiniGameModal);
+    if (mobileOpenGameBtn) mobileOpenGameBtn.addEventListener('click', openMiniGameModal);
+    if (closeGameModalBtn) closeGameModalBtn.addEventListener('click', closeMiniGameModal);
+    if (gameResetSlotsBtn) gameResetSlotsBtn.addEventListener('click', resetAllSlots);
+    if (submitAssembleBtn) submitAssembleBtn.addEventListener('click', verifyAssembledWord);
+    if (gameDoneBtn) gameDoneBtn.addEventListener('click', closeMiniGameModal);
 
     window.addEventListener('click', (e) => {
       if (e.target === gameModal) {
@@ -1437,14 +1394,9 @@
 
     function hideMobileUI() {
       if (isMobileUIHidden) return;
-      if (window.innerWidth >= 1024) return; // Only trigger on mobile / small screens
+      if (window.innerWidth >= 1024) return;
       isMobileUIHidden = true;
 
-      if (topHeaderWrapper) {
-        topHeaderWrapper.style.transform = 'translateY(-100%)';
-        topHeaderWrapper.style.opacity = '0';
-        topHeaderWrapper.style.pointerEvents = 'none';
-      }
       if (mobileFloatPillWrap) {
         mobileFloatPillWrap.style.transform = 'translateY(220%)';
         mobileFloatPillWrap.style.opacity = '0';
@@ -1461,11 +1413,6 @@
       if (!isMobileUIHidden) return;
       isMobileUIHidden = false;
 
-      if (topHeaderWrapper) {
-        topHeaderWrapper.style.transform = 'translateY(0)';
-        topHeaderWrapper.style.opacity = '1';
-        topHeaderWrapper.style.pointerEvents = 'auto';
-      }
       if (mobileFloatPillWrap) {
         mobileFloatPillWrap.style.transform = 'translateY(0)';
         mobileFloatPillWrap.style.opacity = '1';
@@ -1479,7 +1426,6 @@
     }
 
     window.addEventListener('scroll', () => {
-      // Desktop screens keep persistent header
       if (window.innerWidth >= 1024) {
         showMobileUI();
         return;
@@ -1488,26 +1434,21 @@
       const currentScrollY = window.scrollY;
       const delta = currentScrollY - lastScrollY;
 
-      // At the top of the page, always show UI
       if (currentScrollY <= 40) {
         showMobileUI();
         lastScrollY = currentScrollY;
         return;
       }
 
-      // Scrolling Down past threshold -> HIDE UI
       if (delta > 8 && currentScrollY > 70) {
         hideMobileUI();
-      }
-      // Scrolling Up past threshold -> SHOW UI
-      else if (delta < -8) {
+      } else if (delta < -8) {
         showMobileUI();
       }
 
       lastScrollY = currentScrollY;
     }, { passive: true });
 
-    // When UI is hidden, tapping on the page margin or paper brings UI back
     pagesViewport.addEventListener('click', () => {
       if (window.innerWidth < 1024 && isMobileUIHidden) {
         showMobileUI();
@@ -1525,11 +1466,11 @@
       toastBanner.classList.remove('hidden');
       toastText.textContent = msg;
       if (type === 'success') {
-        toastInner.className = 'px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border bg-emerald-950/90 border-emerald-500/60 text-emerald-200 shadow-emerald-900/30 shadow-lg';
+        toastInner.className = 'max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border bg-emerald-950/95 border-emerald-500/60 text-emerald-200 shadow-emerald-900/30 shadow-2xl';
       } else if (type === 'error') {
-        toastInner.className = 'px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border bg-red-950/90 border-red-500/60 text-red-200 shadow-red-900/30 shadow-lg';
+        toastInner.className = 'max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border bg-red-950/95 border-red-500/60 text-red-200 shadow-red-900/30 shadow-2xl';
       } else {
-        toastInner.className = 'px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between border bg-dark-850/95 border-slate-700 text-slate-200 shadow-xl';
+        toastInner.className = 'max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border bg-dark-850/95 border-slate-700 text-slate-200 shadow-2xl';
       }
       setTimeout(() => {
         toastBanner.classList.add('hidden');
@@ -1538,7 +1479,7 @@
 
     // Sheet Controls
     function openSheet(el) {
-      showMobileUI(); // Ensure UI is shown when sheet opens
+      showMobileUI();
       el.classList.remove('bottom-sheet-closed');
       el.classList.add('bottom-sheet-open');
       document.body.style.overflow = 'hidden';
@@ -1606,36 +1547,41 @@
 
     // Render Header & Lock State
     function renderHeaderState() {
-      const subj = SUBJECT_DATA[activeSubjIdx];
-      mobileSubjQuickName.textContent = subj.name;
-
       if (isUnlocked) {
-        securityRibbon.className = 'w-full py-1.5 px-3 sm:px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-300 bg-emerald-950/90 text-emerald-200 border-b border-emerald-700/60 font-mono flex items-center justify-center gap-2 safe-top';
-        ribbonText.textContent = 'ACCESS GRANTED // 1급 보안 인가 승인 // 100% 원본 시험지 및 정답/배점표 잠금 해제됨';
+        if (securityRibbon) {
+          securityRibbon.className = 'w-full py-1.5 px-3 sm:px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-300 bg-emerald-950/90 text-emerald-200 border-b border-emerald-700/60 font-mono flex items-center justify-center gap-2 safe-top';
+          ribbonText.textContent = 'ACCESS GRANTED // 1급 보안 인가 승인 // 100% 원본 시험지 및 정답/배점표 잠금 해제됨';
+        }
         
-        statusIconBox.className = 'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 shrink-0 transition-all duration-300';
-        statusIconBox.innerHTML = `<svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>`;
+        if (statusIconBox) {
+          statusIconBox.className = 'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 shrink-0 transition-all duration-300';
+          statusIconBox.innerHTML = `<svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>`;
+        }
         
-        clearanceBadge.className = 'px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono';
-        clearanceBadge.textContent = 'ORIGINAL UNLOCKED';
+        if (clearanceBadge) {
+          clearanceBadge.className = 'px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono';
+          clearanceBadge.textContent = 'ORIGINAL UNLOCKED';
+        }
         
-        headerSubtext.textContent = '보안 인증 완료: 창북중 3학년 2학기 기말고사 전 과목(국어·영어·수학·사회·역사·과학) 100% 원본 열람 중';
+        if (headerSubtext) {
+          headerSubtext.textContent = '보안 인증 완료: 창북중 3학년 2학기 기말고사 전 과목(국어·영어·수학·사회·역사·과학) 100% 원본 열람 중';
+        }
 
-        unlockFormWrap.classList.add('hidden');
-        unlockedControlsWrap.classList.remove('hidden');
-        unlockedControlsWrap.classList.add('flex');
-        lockedCallout.classList.add('hidden');
-
-        // Mobile header button
-        mobileAuthQuickBtn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1';
-        mobileAuthQuickLabel.textContent = '잠김해제됨';
+        if (unlockFormWrap) unlockFormWrap.classList.add('hidden');
+        if (unlockedControlsWrap) {
+          unlockedControlsWrap.classList.remove('hidden');
+          unlockedControlsWrap.classList.add('flex');
+        }
+        if (lockedCallout) lockedCallout.classList.add('hidden');
 
         // Dock Lock Icon
-        dockLockIconWrap.className = 'w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400';
-        dockLockSvg.innerHTML = `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path>`;
-        dockLockLabel.textContent = '해제됨';
-        dockLockLabel.className = 'text-[10px] font-bold text-emerald-300';
-        mobileLockBtn.classList.remove('hidden');
+        if (dockLockIconWrap) dockLockIconWrap.className = 'w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400';
+        if (dockLockSvg) dockLockSvg.innerHTML = `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path>`;
+        if (dockLockLabel) {
+          dockLockLabel.textContent = '해제됨';
+          dockLockLabel.className = 'text-[10px] font-bold text-emerald-300';
+        }
+        if (mobileLockBtn) mobileLockBtn.classList.remove('hidden');
 
         // Mode buttons styling
         const modeBtns = [
@@ -1645,6 +1591,7 @@
           [modeSplitBtn, 'split']
         ];
         modeBtns.forEach(([btn, m]) => {
+          if (!btn) return;
           if (viewMode === m) {
             btn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition shadow-sm';
           } else {
@@ -1652,35 +1599,42 @@
           }
         });
       } else {
-        securityRibbon.className = 'w-full py-1.5 px-3 sm:px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-300 bg-red-950/90 text-red-200 border-b border-red-800/60 font-mono flex items-center justify-center gap-2 safe-top';
-        ribbonText.textContent = 'TOP SECRET // 기밀 보안 1등급 // 미리보기 모드 (핵심 지문·정답 블러 및 마스킹)';
+        if (securityRibbon) {
+          securityRibbon.className = 'w-full py-1.5 px-3 sm:px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-300 bg-red-950/90 text-red-200 border-b border-red-800/60 font-mono flex items-center justify-center gap-2 safe-top';
+          ribbonText.textContent = 'TOP SECRET // 기밀 보안 1등급 // 미리보기 모드 (핵심 지문·정답 블러 및 마스킹)';
+        }
 
-        statusIconBox.className = 'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center bg-red-500/15 border border-red-500/35 text-red-400 shrink-0 transition-all duration-300';
-        statusIconBox.innerHTML = `<svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
+        if (statusIconBox) {
+          statusIconBox.className = 'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center bg-red-500/15 border border-red-500/35 text-red-400 shrink-0 transition-all duration-300';
+          statusIconBox.innerHTML = `<svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
+        }
 
-        clearanceBadge.className = 'px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-red-500/20 text-red-300 border border-red-500/40 font-mono';
-        clearanceBadge.textContent = 'TOP SECRET';
+        if (clearanceBadge) {
+          clearanceBadge.className = 'px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-red-500/20 text-red-300 border border-red-500/40 font-mono';
+          clearanceBadge.textContent = 'TOP SECRET';
+        }
 
-        headerSubtext.textContent = '전 과목(국어·영어·수학·사회·역사·과학) 기출 시험지 & 공식 NEIS 정답표 아카이브';
+        if (headerSubtext) {
+          headerSubtext.textContent = '전 과목(국어·영어·수학·사회·역사·과학) 기출 시험지 & 공식 NEIS 정답표 아카이브';
+        }
 
-        unlockFormWrap.classList.remove('hidden');
-        unlockedControlsWrap.classList.add('hidden');
-        unlockedControlsWrap.classList.remove('flex');
-        lockedCallout.classList.remove('hidden');
-
-        // Mobile header button
-        mobileAuthQuickBtn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1';
-        mobileAuthQuickLabel.textContent = '해제';
+        if (unlockFormWrap) unlockFormWrap.classList.remove('hidden');
+        if (unlockedControlsWrap) {
+          unlockedControlsWrap.classList.add('hidden');
+          unlockedControlsWrap.classList.remove('flex');
+        }
+        if (lockedCallout) lockedCallout.classList.remove('hidden');
 
         // Dock Lock Icon
-        dockLockIconWrap.className = 'w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400';
-        dockLockSvg.innerHTML = `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>`;
-        dockLockLabel.textContent = '잠금해제';
-        dockLockLabel.className = 'text-[10px] font-bold text-amber-300';
-        mobileLockBtn.classList.add('hidden');
+        if (dockLockIconWrap) dockLockIconWrap.className = 'w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400';
+        if (dockLockSvg) dockLockSvg.innerHTML = `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>`;
+        if (dockLockLabel) {
+          dockLockLabel.textContent = '잠금해제';
+          dockLockLabel.className = 'text-[10px] font-bold text-amber-300';
+        }
+        if (mobileLockBtn) mobileLockBtn.classList.add('hidden');
       }
 
-      // Sync active state in mobile view mode sheet
       document.querySelectorAll('.mobile-mode-opt').forEach(btn => {
         const m = btn.getAttribute('data-mode');
         const check = btn.querySelector('.check-icon');
@@ -1696,60 +1650,63 @@
 
     // Render Subject Selector Tabs (Desktop) & Sheet Cards (Mobile)
     function renderSubjects() {
-      // 1. Desktop Tabs
-      subjectTabs.innerHTML = '';
-      SUBJECT_DATA.forEach((subj, idx) => {
-        const isAct = idx === activeSubjIdx;
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = isAct
-          ? 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-dark-950 shadow-md flex items-center gap-2 transition shrink-0 transform scale-[1.02]'
-          : 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-dark-850 hover:bg-dark-800 text-slate-300 border border-slate-700/80 flex items-center gap-2 transition shrink-0';
-        
-        const statusDot = isUnlocked
-          ? '<span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>'
-          : '<span class="w-2 h-2 rounded-full bg-red-500 shrink-0"></span>';
+      if (subjectTabs) {
+        subjectTabs.innerHTML = '';
+        SUBJECT_DATA.forEach((subj, idx) => {
+          const isAct = idx === activeSubjIdx;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = isAct
+            ? 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-dark-950 shadow-md flex items-center gap-2 transition shrink-0 transform scale-[1.02]'
+            : 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-dark-850 hover:bg-dark-800 text-slate-300 border border-slate-700/80 flex items-center gap-2 transition shrink-0';
+          
+          const statusDot = isUnlocked
+            ? '<span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>'
+            : '<span class="w-2 h-2 rounded-full bg-red-500 shrink-0"></span>';
 
-        btn.innerHTML = `${statusDot}<span class="font-bold">${subj.name}</span><span class="text-[10px] opacity-75 font-mono">[${subj.code}] · ${subj.qCount}문항</span>`;
-        btn.addEventListener('click', () => {
-          activeSubjIdx = idx;
-          activePageIdx = 0;
-          renderAll();
+          btn.innerHTML = `${statusDot}<span class="font-bold">${subj.name}</span><span class="text-[10px] opacity-75 font-mono">[${subj.code}] · ${subj.qCount}문항</span>`;
+          btn.addEventListener('click', () => {
+            activeSubjIdx = idx;
+            activePageIdx = 0;
+            renderAll();
+          });
+          subjectTabs.appendChild(btn);
         });
-        subjectTabs.appendChild(btn);
-      });
+      }
 
-      // 2. Mobile Sheet Cards
-      mobileSubjectList.innerHTML = '';
-      SUBJECT_DATA.forEach((subj, idx) => {
-        const isAct = idx === activeSubjIdx;
-        const card = document.createElement('button');
-        card.type = 'button';
-        card.className = isAct
-          ? 'p-3 rounded-2xl bg-indigo-950/40 border-2 border-indigo-500 text-left flex items-center justify-between shadow-lg'
-          : 'p-3 rounded-2xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 text-left flex items-center justify-between transition';
-        
-        card.innerHTML = `
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="text-sm font-extrabold text-white">${subj.name}</span>
-              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300">[${subj.code}]</span>
-              ${isUnlocked ? '<span class="text-[10px] text-emerald-400 font-bold">● 원본열람가능</span>' : '<span class="text-[10px] text-red-400 font-bold">● 기밀블러본</span>'}
+      // Mobile Sheet Cards
+      if (mobileSubjectList) {
+        mobileSubjectList.innerHTML = '';
+        SUBJECT_DATA.forEach((subj, idx) => {
+          const isAct = idx === activeSubjIdx;
+          const card = document.createElement('button');
+          card.type = 'button';
+          card.className = isAct
+            ? 'p-3 rounded-2xl bg-indigo-950/40 border-2 border-indigo-500 text-left flex items-center justify-between shadow-lg'
+            : 'p-3 rounded-2xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 text-left flex items-center justify-between transition';
+          
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-extrabold text-white">${subj.name}</span>
+                <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300">[${subj.code}]</span>
+                ${isUnlocked ? '<span class="text-[10px] text-emerald-400 font-bold">● 원본열람가능</span>' : '<span class="text-[10px] text-red-400 font-bold">● 기밀블러본</span>'}
+              </div>
+              <div class="text-xs text-slate-400 mt-1">
+                ${subj.date} · 총 ${subj.qCount}문항 · ${subj.pageCount}면
+              </div>
             </div>
-            <div class="text-xs text-slate-400 mt-1">
-              ${subj.date} · 총 ${subj.qCount}문항 · ${subj.pageCount}면
-            </div>
-          </div>
-          <span class="text-xs font-bold ${isAct ? 'text-indigo-400 font-mono text-base' : 'text-slate-500'}">${isAct ? '선택됨' : '열기 →'}</span>
-        `;
-        card.addEventListener('click', () => {
-          activeSubjIdx = idx;
-          activePageIdx = 0;
-          closeSheet(sheetSubject);
-          renderAll();
+            <span class="text-xs font-bold ${isAct ? 'text-indigo-400 font-mono text-base' : 'text-slate-500'}">${isAct ? '선택됨' : '열기 →'}</span>
+          `;
+          card.addEventListener('click', () => {
+            activeSubjIdx = idx;
+            activePageIdx = 0;
+            closeSheet(sheetSubject);
+            renderAll();
+          });
+          mobileSubjectList.appendChild(card);
         });
-        mobileSubjectList.appendChild(card);
-      });
+      }
     }
 
     // Render Secondary Toolbar & Page Chips
@@ -1759,60 +1716,61 @@
         ? 'TOP SECRET 기밀·블러본'
         : (viewMode === 'orig' ? '원본 시험지' : viewMode === 'ts_orig' ? 'TOP SECRET 원본' : viewMode === 'redacted' ? '기밀·블러본' : '대조 비교');
 
-      activeSubjBadgeText.textContent = `${subj.name} [코드 ${subj.code}] — ${modeLabel}`;
-      activeSubjMeta.textContent = `${subj.date} 실시 · 총 ${subj.qCount}문항 (100점 만점) · 총 ${subj.pageCount}면`;
+      if (activeSubjBadgeText) activeSubjBadgeText.textContent = `${subj.name} [코드 ${subj.code}] — ${modeLabel}`;
+      if (activeSubjMeta) activeSubjMeta.textContent = `${subj.date} 실시 · 총 ${subj.qCount}문항 (100점 만점) · 총 ${subj.pageCount}면`;
 
-      // Desktop Page Chips
-      pageChipsWrap.innerHTML = '';
-      for (let i = 0; i < subj.pageCount; i++) {
-        const isLast = i === subj.pageCount - 1;
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        const isCurrent = !scrollAllPages && i === activePageIdx;
-        chip.className = isCurrent
-          ? 'px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-500 text-white shadow-md transition'
-          : 'px-2.5 py-1 rounded-lg text-xs font-medium bg-dark-850 hover:bg-dark-800 text-slate-300 border border-slate-700/80 transition';
-        chip.textContent = isLast ? `정답표(${i + 1}면)` : `${i + 1}면`;
-        chip.addEventListener('click', () => {
-          activePageIdx = i;
-          if (scrollAllPages) {
-            const el = document.getElementById(`exam-page-card-${i}`);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
+      if (pageChipsWrap) {
+        pageChipsWrap.innerHTML = '';
+        for (let i = 0; i < subj.pageCount; i++) {
+          const isLast = i === subj.pageCount - 1;
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          const isCurrent = !scrollAllPages && i === activePageIdx;
+          chip.className = isCurrent
+            ? 'px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-500 text-white shadow-md transition'
+            : 'px-2.5 py-1 rounded-lg text-xs font-medium bg-dark-850 hover:bg-dark-800 text-slate-300 border border-slate-700/80 transition';
+          chip.textContent = isLast ? `정답표(${i + 1}면)` : `${i + 1}면`;
+          chip.addEventListener('click', () => {
+            activePageIdx = i;
+            if (scrollAllPages) {
+              const el = document.getElementById(`exam-page-card-${i}`);
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+              renderAll();
+            }
+          });
+          pageChipsWrap.appendChild(chip);
+        }
+      }
+
+      if (sheetPagesSub) sheetPagesSub.textContent = `${subj.name} 총 ${subj.pageCount}면 중 이동할 페이지를 선택하세요.`;
+      if (mobilePageChipsGrid) {
+        mobilePageChipsGrid.innerHTML = '';
+        for (let i = 0; i < subj.pageCount; i++) {
+          const isLast = i === subj.pageCount - 1;
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          const isCurrent = i === activePageIdx;
+          chip.className = isCurrent
+            ? 'py-3 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md'
+            : 'py-3 rounded-xl text-xs font-bold bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700';
+          chip.innerHTML = isLast ? `🎯 정답표<br><span class="text-[10px] font-normal opacity-80">${i + 1}면</span>` : `${i + 1}면`;
+          chip.addEventListener('click', () => {
+            activePageIdx = i;
+            closeSheet(sheetPages);
             renderAll();
-          }
-        });
-        pageChipsWrap.appendChild(chip);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+          mobilePageChipsGrid.appendChild(chip);
+        }
       }
 
-      // Mobile Bottom Sheet Page Chips Grid
-      sheetPagesSub.textContent = `${subj.name} 총 ${subj.pageCount}면 중 이동할 페이지를 선택하세요.`;
-      mobilePageChipsGrid.innerHTML = '';
-      for (let i = 0; i < subj.pageCount; i++) {
-        const isLast = i === subj.pageCount - 1;
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        const isCurrent = i === activePageIdx;
-        chip.className = isCurrent
-          ? 'py-3 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md'
-          : 'py-3 rounded-xl text-xs font-bold bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700';
-        chip.innerHTML = isLast ? `🎯 정답표<br><span class="text-[10px] font-normal opacity-80">${i + 1}면</span>` : `${i + 1}면`;
-        chip.addEventListener('click', () => {
-          activePageIdx = i;
-          closeSheet(sheetPages);
-          renderAll();
-          window.scrollTo({ top: 120, behavior: 'smooth' });
-        });
-        mobilePageChipsGrid.appendChild(chip);
-      }
+      if (mobileFloatPageText) mobileFloatPageText.textContent = `${activePageIdx + 1} / ${subj.pageCount}면`;
 
-      // Mobile floating pill text
-      mobileFloatPageText.textContent = `${activePageIdx + 1} / ${subj.pageCount}면`;
-
-      prevPageBtn.disabled = scrollAllPages || activePageIdx <= 0;
-      nextPageBtn.disabled = scrollAllPages || activePageIdx >= subj.pageCount - 1;
-      toggleScrollModeBtn.textContent = scrollAllPages ? '1면씩 넘겨보기' : '전체 연속 보기';
-      zoomLabel.textContent = `${zoomPercent}%`;
+      if (prevPageBtn) prevPageBtn.disabled = scrollAllPages || activePageIdx <= 0;
+      if (nextPageBtn) nextPageBtn.disabled = scrollAllPages || activePageIdx >= subj.pageCount - 1;
+      if (toggleScrollModeBtn) toggleScrollModeBtn.textContent = scrollAllPages ? '1면씩 넘겨보기' : '전체 연속 보기';
+      if (zoomLabel) zoomLabel.textContent = `${zoomPercent}%`;
     }
 
     // Build Single Page Card
@@ -1978,7 +1936,7 @@
           driveModal.classList.remove('flex');
           if (window.innerWidth < 1024) {
             openSheet(sheetAuth);
-            mobilePasswordInput.focus();
+            setTimeout(() => mobilePasswordInput.focus(), 150);
           } else {
             passwordInput.focus();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2006,24 +1964,21 @@
     }, { passive: true });
 
     function handleSwipe() {
-      if (scrollAllPages) return; // Continuous scroll doesn't need horizontal swipe
+      if (scrollAllPages) return;
       const dx = touchEndX - touchStartX;
       const dy = touchEndY - touchStartY;
       
-      // Horizontal swipe threshold: > 60px and horizontal movement exceeds vertical
       if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
         const subj = SUBJECT_DATA[activeSubjIdx];
         if (dx < 0 && activePageIdx < subj.pageCount - 1) {
-          // Swipe Left -> Next Page
           activePageIdx++;
           renderAll();
-          window.scrollTo({ top: 110, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
           showToast(`${activePageIdx + 1}면으로 이동하였습니다.`);
         } else if (dx > 0 && activePageIdx > 0) {
-          // Swipe Right -> Prev Page
           activePageIdx--;
           renderAll();
-          window.scrollTo({ top: 110, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
           showToast(`${activePageIdx + 1}면으로 이동하였습니다.`);
         }
       }
@@ -2043,66 +1998,78 @@
     // =========================================================================
 
     // Desktop Unlock
-    unlockBtn.addEventListener('click', () => attemptUnlockWith(passwordInput.value));
-    passwordInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        attemptUnlockWith(passwordInput.value);
-      }
-    });
+    if (unlockBtn) unlockBtn.addEventListener('click', () => attemptUnlockWith(passwordInput.value));
+    if (passwordInput) {
+      passwordInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          attemptUnlockWith(passwordInput.value);
+        }
+      });
+    }
 
-    togglePwdBtn.addEventListener('click', () => {
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        togglePwdBtn.textContent = 'HIDE';
-      } else {
-        passwordInput.type = 'password';
-        togglePwdBtn.textContent = 'SHOW';
-      }
-    });
+    if (togglePwdBtn) {
+      togglePwdBtn.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          togglePwdBtn.textContent = 'HIDE';
+        } else {
+          passwordInput.type = 'password';
+          togglePwdBtn.textContent = 'SHOW';
+        }
+      });
+    }
 
     // Mobile Unlock
-    mobileUnlockBtn.addEventListener('click', () => attemptUnlockWith(mobilePasswordInput.value));
-    mobilePasswordInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        attemptUnlockWith(mobilePasswordInput.value);
-      }
-    });
-    mobileTogglePwdBtn.addEventListener('click', () => {
-      if (mobilePasswordInput.type === 'password') {
-        mobilePasswordInput.type = 'text';
-        mobileTogglePwdBtn.textContent = 'HIDE';
-      } else {
-        mobilePasswordInput.type = 'password';
-        mobileTogglePwdBtn.textContent = 'SHOW';
-      }
-    });
-    quickFillPwdBtn.addEventListener('click', () => {
-      mobilePasswordInput.value = 'careful';
-      attemptUnlockWith('careful');
-    });
+    if (mobileUnlockBtn) mobileUnlockBtn.addEventListener('click', () => attemptUnlockWith(mobilePasswordInput.value));
+    if (mobilePasswordInput) {
+      mobilePasswordInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          attemptUnlockWith(mobilePasswordInput.value);
+        }
+      });
+    }
+    if (mobileTogglePwdBtn) {
+      mobileTogglePwdBtn.addEventListener('click', () => {
+        if (mobilePasswordInput.type === 'password') {
+          mobilePasswordInput.type = 'text';
+          mobileTogglePwdBtn.textContent = 'HIDE';
+        } else {
+          mobilePasswordInput.type = 'password';
+          mobileTogglePwdBtn.textContent = 'SHOW';
+        }
+      });
+    }
+    if (quickFillPwdBtn) {
+      quickFillPwdBtn.addEventListener('click', () => {
+        mobilePasswordInput.value = 'careful';
+        attemptUnlockWith('careful');
+      });
+    }
 
     // Lock Buttons
-    lockBtn.addEventListener('click', lockArchive);
-    mobileLockBtn.addEventListener('click', lockArchive);
+    if (lockBtn) lockBtn.addEventListener('click', lockArchive);
+    if (mobileLockBtn) mobileLockBtn.addEventListener('click', lockArchive);
 
     // Focus Password Triggers
-    focusPwdBtn.addEventListener('click', () => {
-      if (window.innerWidth < 1024) {
-        openSheet(sheetAuth);
-        mobilePasswordInput.focus();
-      } else {
-        passwordInput.focus();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
+    if (focusPwdBtn) {
+      focusPwdBtn.addEventListener('click', () => {
+        if (window.innerWidth < 1024) {
+          openSheet(sheetAuth);
+          setTimeout(() => mobilePasswordInput.focus(), 150);
+        } else {
+          passwordInput.focus();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
 
     // Desktop View Mode Switchers
-    modeOrigBtn.addEventListener('click', () => { viewMode = 'orig'; renderAll(); });
-    modeTsOrigBtn.addEventListener('click', () => { viewMode = 'ts_orig'; renderAll(); });
-    modeRedactedBtn.addEventListener('click', () => { viewMode = 'redacted'; renderAll(); });
-    modeSplitBtn.addEventListener('click', () => { viewMode = 'split'; renderAll(); });
+    if (modeOrigBtn) modeOrigBtn.addEventListener('click', () => { viewMode = 'orig'; renderAll(); });
+    if (modeTsOrigBtn) modeTsOrigBtn.addEventListener('click', () => { viewMode = 'ts_orig'; renderAll(); });
+    if (modeRedactedBtn) modeRedactedBtn.addEventListener('click', () => { viewMode = 'redacted'; renderAll(); });
+    if (modeSplitBtn) modeSplitBtn.addEventListener('click', () => { viewMode = 'split'; renderAll(); });
 
     // Mobile Sheet View Mode Switchers
     document.querySelectorAll('.mobile-mode-opt').forEach(btn => {
@@ -2119,7 +2086,7 @@
       if (activePageIdx > 0) {
         activePageIdx--;
         renderAll();
-        window.scrollTo({ top: 110, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
     function goNext() {
@@ -2127,7 +2094,7 @@
       if (activePageIdx < subj.pageCount - 1) {
         activePageIdx++;
         renderAll();
-        window.scrollTo({ top: 110, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
     function jumpToAnswer() {
@@ -2138,92 +2105,110 @@
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
         renderAll();
-        window.scrollTo({ top: 110, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
       showToast('공식 NEIS 정답 및 배점표 면으로 이동했습니다.', 'success');
     }
 
-    prevPageBtn.addEventListener('click', goPrev);
-    nextPageBtn.addEventListener('click', goNext);
-    jumpAnsBtn.addEventListener('click', jumpToAnswer);
+    if (prevPageBtn) prevPageBtn.addEventListener('click', goPrev);
+    if (nextPageBtn) nextPageBtn.addEventListener('click', goNext);
+    if (jumpAnsBtn) jumpAnsBtn.addEventListener('click', jumpToAnswer);
 
     // Mobile Floating Buttons
-    mobileFloatPrevBtn.addEventListener('click', goPrev);
-    mobileFloatNextBtn.addEventListener('click', goNext);
-    mobileFloatAnsBtn.addEventListener('click', jumpToAnswer);
-    mobileFloatPageSelectorBtn.addEventListener('click', () => openSheet(sheetPages));
-    mobileSheetAnsBtn.addEventListener('click', () => {
-      closeSheet(sheetPages);
-      jumpToAnswer();
-    });
-
-    // Mobile Header Quick Triggers
-    mobileSubjectQuickBtn.addEventListener('click', () => openSheet(sheetSubject));
-    mobileAuthQuickBtn.addEventListener('click', () => openSheet(sheetAuth));
+    if (mobileFloatPrevBtn) mobileFloatPrevBtn.addEventListener('click', goPrev);
+    if (mobileFloatNextBtn) mobileFloatNextBtn.addEventListener('click', goNext);
+    if (mobileFloatAnsBtn) mobileFloatAnsBtn.addEventListener('click', jumpToAnswer);
+    if (mobileFloatPageSelectorBtn) mobileFloatPageSelectorBtn.addEventListener('click', () => openSheet(sheetPages));
+    if (mobileSheetAnsBtn) {
+      mobileSheetAnsBtn.addEventListener('click', () => {
+        closeSheet(sheetPages);
+        jumpToAnswer();
+      });
+    }
 
     // Mobile Dock Triggers
-    dockSubjBtn.addEventListener('click', () => openSheet(sheetSubject));
-    dockPagesBtn.addEventListener('click', () => openSheet(sheetPages));
-    dockAuthBtn.addEventListener('click', () => openSheet(sheetAuth));
-    dockModeBtn.addEventListener('click', () => openSheet(sheetMode));
-    dockPdfBtn.addEventListener('click', () => {
-      renderDriveModalContent();
-      driveModal.classList.remove('hidden');
-      driveModal.classList.add('flex');
-    });
+    if (dockSubjBtn) dockSubjBtn.addEventListener('click', () => openSheet(sheetSubject));
+    if (dockPagesBtn) dockPagesBtn.addEventListener('click', () => openSheet(sheetPages));
+    if (dockAuthBtn) dockAuthBtn.addEventListener('click', () => openSheet(sheetAuth));
+    if (dockModeBtn) dockModeBtn.addEventListener('click', () => openSheet(sheetMode));
+    if (dockPdfBtn) {
+      dockPdfBtn.addEventListener('click', () => {
+        renderDriveModalContent();
+        driveModal.classList.remove('hidden');
+        driveModal.classList.add('flex');
+      });
+    }
 
     // Toggle Continuous Scroll Mode
-    toggleScrollModeBtn.addEventListener('click', () => {
-      scrollAllPages = !scrollAllPages;
-      renderAll();
-      showToast(scrollAllPages ? '전 페이지 연속 스크롤 모드로 전환되었습니다.' : '1면씩 넘겨보기 모드로 전환되었습니다.');
-    });
+    if (toggleScrollModeBtn) {
+      toggleScrollModeBtn.addEventListener('click', () => {
+        scrollAllPages = !scrollAllPages;
+        renderAll();
+        showToast(scrollAllPages ? '전 페이지 연속 스크롤 모드로 전환되었습니다.' : '1면씩 넘겨보기 모드로 전환되었습니다.');
+      });
+    }
 
     // Zoom Controls
-    zoomOutBtn.addEventListener('click', () => {
-      if (zoomPercent > 65) {
-        zoomPercent -= 15;
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener('click', () => {
+        if (zoomPercent > 65) {
+          zoomPercent -= 15;
+          renderToolbar();
+          renderViewport();
+        }
+      });
+    }
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener('click', () => {
+        if (zoomPercent < 155) {
+          zoomPercent += 15;
+          renderToolbar();
+          renderViewport();
+        }
+      });
+    }
+    if (zoomFitBtn) {
+      zoomFitBtn.addEventListener('click', () => {
+        zoomPercent = 100;
         renderToolbar();
         renderViewport();
-      }
-    });
-    zoomInBtn.addEventListener('click', () => {
-      if (zoomPercent < 155) {
-        zoomPercent += 15;
-        renderToolbar();
-        renderViewport();
-      }
-    });
-    zoomFitBtn.addEventListener('click', () => {
-      zoomPercent = 100;
-      renderToolbar();
-      renderViewport();
-      showToast('화면 크기에 맞게 100% 비율로 초기화되었습니다.');
-    });
+        showToast('화면 크기에 맞게 100% 비율로 초기화되었습니다.');
+      });
+    }
 
     // Modal Events
-    openDriveModalBtn.addEventListener('click', () => {
-      renderDriveModalContent();
-      driveModal.classList.remove('hidden');
-      driveModal.classList.add('flex');
-    });
-    closeDriveModalBtn.addEventListener('click', () => {
-      driveModal.classList.add('hidden');
-      driveModal.classList.remove('flex');
-    });
+    if (openDriveModalBtn) {
+      openDriveModalBtn.addEventListener('click', () => {
+        renderDriveModalContent();
+        driveModal.classList.remove('hidden');
+        driveModal.classList.add('flex');
+      });
+    }
+    if (closeDriveModalBtn) {
+      closeDriveModalBtn.addEventListener('click', () => {
+        driveModal.classList.add('hidden');
+        driveModal.classList.remove('flex');
+      });
+    }
 
-    openGithubModalBtn.addEventListener('click', () => {
-      githubModal.classList.remove('hidden');
-      githubModal.classList.add('flex');
-    });
-    closeGithubModalBtn.addEventListener('click', () => {
-      githubModal.classList.add('hidden');
-      githubModal.classList.remove('flex');
-    });
+    if (openGithubModalBtn) {
+      openGithubModalBtn.addEventListener('click', () => {
+        githubModal.classList.remove('hidden');
+        githubModal.classList.add('flex');
+      });
+    }
+    if (closeGithubModalBtn) {
+      closeGithubModalBtn.addEventListener('click', () => {
+        githubModal.classList.add('hidden');
+        githubModal.classList.remove('flex');
+      });
+    }
 
-    closeToastBtn.addEventListener('click', () => {
-      toastBanner.classList.add('hidden');
-    });
+    if (closeToastBtn) {
+      closeToastBtn.addEventListener('click', () => {
+        toastBanner.classList.add('hidden');
+      });
+    }
 
     // Close Modals on Outer Click
     window.addEventListener('click', (e) => {
