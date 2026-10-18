@@ -172,7 +172,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans select-text pb-24 lg:pb-8">
+<body class="min-h-screen flex flex-col font-sans select-text pb-8 lg:pb-8">
 
   <!-- ========================================================================= -->
   <!-- Fixed Floating Toast Notification (Accessible on both Mobile & Desktop)    -->
@@ -371,6 +371,93 @@
   <!-- ========================================================================= -->
   <!-- Main Exam Paper Viewport Container                                        -->
   <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
+  <!-- [NEW] Ultra-Modern Mobile-First Navigation Header (lg:hidden)               -->
+  <!-- ========================================================================= -->
+  <div id="mobileAppHeader" class="lg:hidden sticky top-0 z-40 w-full glass-panel-subtle border-b border-slate-800/80 shadow-2xl backdrop-blur-xl">
+    
+    <!-- 1. Mobile Top Status Bar -->
+    <div class="px-3.5 py-2.5 flex items-center justify-between gap-2 border-b border-white/5 safe-top">
+      <!-- Brand & Security Badge -->
+      <div class="flex items-center gap-2 min-w-0">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center font-black text-slate-950 text-xs shadow-md shrink-0 font-mono">
+          CB
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5">
+            <h1 class="text-xs font-black text-white truncate font-sans">창북중 기출</h1>
+            <span id="mobileClearanceBadge" class="px-1.5 py-0.5 text-[9px] font-bold rounded-full bg-red-500/20 text-red-300 border border-red-500/40 font-mono shrink-0">
+              TOP SECRET
+            </span>
+          </div>
+          <p id="mobileHeaderSubtext" class="text-[10px] text-slate-400 truncate">3학년 2학기 기말 기출 아카이브</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons: Mini-Game & Download -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button
+          id="mobileHeaderGameBtn"
+          type="button"
+          class="px-2.5 py-1.5 rounded-xl text-xs font-extrabold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/50 shadow-sm flex items-center gap-1 active:scale-95 transition font-mono"
+        >
+          <span>🎮 미니게임</span>
+        </button>
+        <button
+          id="mobileHeaderDownloadBtn"
+          type="button"
+          class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600/30 hover:bg-indigo-600/40 text-indigo-200 border border-indigo-500/50 shadow-sm flex items-center gap-1 active:scale-95 transition"
+        >
+          <span>📥 다운로드</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. Mobile Horizontal Pill Subject Carousel (1-Tap Switch) -->
+    <div class="px-2 py-2 overflow-x-auto no-scrollbar border-b border-white/5 bg-dark-950/60">
+      <div id="mobileSubjectTabs" class="flex items-center gap-1.5 min-w-max px-1">
+        <!-- Rendered dynamically: e.g. [ 📚 국어 ] [ 🧮 수학 ] [ 🌐 영어 ] ... -->
+      </div>
+    </div>
+
+    <!-- 3. Mobile Compact Page Navigation & Answer Jump Strip -->
+    <div class="px-3 py-1.5 flex items-center justify-between gap-2 bg-dark-950/40">
+      <!-- Previous / Next Controls -->
+      <div class="flex items-center gap-1">
+        <button id="mobileNewPrevBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700/80 flex items-center justify-center text-xs font-bold active:scale-95 transition disabled:opacity-30">
+          ◀
+        </button>
+        <button id="mobileNewPagePillBtn" type="button" class="px-3 py-1.5 rounded-lg bg-dark-900 hover:bg-dark-850 border border-slate-700 text-xs font-mono font-bold text-white flex items-center gap-1.5 active:scale-95 transition">
+          <span id="mobileNewPageText">1 / 9면</span>
+          <span class="text-[9px] text-slate-400">▾</span>
+        </button>
+        <button id="mobileNewNextBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700/80 flex items-center justify-center text-xs font-bold active:scale-95 transition disabled:opacity-30">
+          ▶
+        </button>
+      </div>
+
+      <!-- Quick Answer Sheet Jump Button -->
+      <button id="mobileNewAnsBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition flex items-center gap-1 active:scale-95 font-mono">
+        <span>🎯 정답표 바로가기</span>
+      </button>
+    </div>
+
+    <!-- 4. Mobile Mode Switcher (Visible only when unlocked) -->
+    <div id="mobileUnlockedModeStrip" class="hidden px-3 py-1.5 flex items-center gap-1.5 border-t border-emerald-500/20 bg-emerald-950/20 overflow-x-auto no-scrollbar">
+      <span class="text-[10px] font-bold text-emerald-400 font-mono shrink-0">보기 모드:</span>
+      <button data-mode="orig" class="mobile-mode-tab-btn px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-500 text-slate-950 transition shrink-0">
+        원본 클린
+      </button>
+      <button data-mode="ts_orig" class="mobile-mode-tab-btn px-2.5 py-1 rounded-md text-[11px] font-semibold text-slate-300 hover:text-white bg-dark-850 border border-slate-700 transition shrink-0">
+        워터마크 원본
+      </button>
+      <button data-mode="redacted" class="mobile-mode-tab-btn px-2.5 py-1 rounded-md text-[11px] font-semibold text-slate-300 hover:text-white bg-dark-850 border border-slate-700 transition shrink-0">
+        기밀 블러본
+      </button>
+    </div>
+
+  </div>
+
   <main class="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-4 lg:py-6 flex flex-col items-center safe-top">
     
     <!-- Security Notice Callout (Shown when Locked) -->
@@ -398,208 +485,23 @@
   </main>
 
   <!-- ========================================================================= -->
-  <!-- Mobile Floating Quick-Page Navigator (Auto-Hides on Scroll)               -->
+  <!-- Mobile Page Quick-Jump Grid Modal                                         -->
   <!-- ========================================================================= -->
-  <div id="mobileFloatPillWrap" class="lg:hidden fixed bottom-16 inset-x-0 z-40 px-3 pointer-events-none flex justify-center">
-    <div class="pointer-events-auto glass-panel px-3 py-1.5 rounded-full border border-slate-700/90 shadow-2xl flex items-center gap-2">
-      <button id="mobileFloatPrevBtn" type="button" class="w-8 h-8 rounded-full bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700 flex items-center justify-center text-xs font-bold active:scale-95 transition">
-        ◀
-      </button>
-      <button id="mobileFloatPageSelectorBtn" type="button" class="px-2.5 py-1 rounded-full text-xs font-mono font-bold text-white bg-dark-950 border border-slate-700">
-        <span id="mobileFloatPageText">1 / 9면</span>
-      </button>
-      <button id="mobileFloatNextBtn" type="button" class="w-8 h-8 rounded-full bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700 flex items-center justify-center text-xs font-bold active:scale-95 transition">
-        ▶
-      </button>
-      <button id="mobileFloatAnsBtn" type="button" class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 active:scale-95 transition">
-        정답표
-      </button>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- Mobile App-like Bottom Dock Navigation (Auto-Hides on Scroll)              -->
-  <!-- ========================================================================= -->
-  <nav id="mobileBottomDock" class="lg:hidden fixed bottom-0 inset-x-0 z-40 glass-dock safe-bottom">
-    <div class="grid grid-cols-5 h-14">
-      
-      <!-- 1. 과목 선택 -->
-      <button id="dockSubjBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
-        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-        <span class="text-[10px] font-medium">과목선택</span>
-      </button>
-
-      <!-- 2. 면수 이동 -->
-      <button id="dockPagesBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
-        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-        <span class="text-[10px] font-medium">페이지</span>
-      </button>
-
-      <!-- 3. 보안 잠금/해제 -->
-      <button id="dockAuthBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
-        <div id="dockLockIconWrap" class="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400">
-          <svg id="dockLockSvg" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-        </div>
-        <span id="dockLockLabel" class="text-[10px] font-bold text-amber-300">잠금해제</span>
-      </button>
-
-      <!-- 4. 보기 모드 -->
-      <button id="dockModeBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
-        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-        <span class="text-[10px] font-medium">보기모드</span>
-      </button>
-
-      <!-- 5. PDF 다운로드 -->
-      <button id="dockPdfBtn" type="button" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white transition active:scale-95">
-        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-        <span class="text-[10px] font-medium">PDF다운</span>
-      </button>
-
-    </div>
-  </nav>
-
-  <!-- ========================================================================= -->
-  <!-- Mobile Bottom Sheet: Subject Picker                                       -->
-  <!-- ========================================================================= -->
-  <div id="sheetSubject" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm bottom-sheet bottom-sheet-closed flex flex-col justify-end">
-    <div class="glass-panel border-t border-slate-700/80 rounded-t-3xl p-5 max-h-[85vh] overflow-y-auto safe-bottom">
+  <div id="mobilePagePickerModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4">
+    <div class="glass-panel rounded-2xl max-w-sm w-full p-4 border border-slate-700 shadow-2xl">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div>
-          <h3 class="text-base font-extrabold text-white">시험 과목 선택</h3>
-          <p class="text-xs text-slate-400 mt-0.5">창북중학교 3학년 2학기 기말고사 전 과목 (6종)</p>
+          <h3 class="text-sm font-bold text-white font-sans">페이지 이동</h3>
+          <p id="mobilePagePickerSub" class="text-[11px] text-slate-400 mt-0.5">이동할 페이지를 선택하세요</p>
         </div>
-        <button type="button" class="close-sheet-btn p-1.5 text-slate-400 hover:text-white text-base">✕</button>
+        <button id="closeMobilePagePickerBtn" type="button" class="w-7 h-7 rounded-lg bg-dark-850 text-slate-300 flex items-center justify-center text-xs font-bold">✕</button>
       </div>
-      <div id="mobileSubjectList" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- Mobile Bottom Sheet: Page Selector & Jump                                 -->
-  <!-- ========================================================================= -->
-  <div id="sheetPages" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm bottom-sheet bottom-sheet-closed flex flex-col justify-end">
-    <div class="glass-panel border-t border-slate-700/80 rounded-t-3xl p-5 max-h-[80vh] overflow-y-auto safe-bottom">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-        <div>
-          <h3 class="text-base font-extrabold text-white">면(페이지) 바로가기</h3>
-          <p id="sheetPagesSub" class="text-xs text-slate-400 mt-0.5"></p>
-        </div>
-        <button type="button" class="close-sheet-btn p-1.5 text-slate-400 hover:text-white text-base">✕</button>
-      </div>
-      <div id="mobilePageChipsGrid" class="mt-4 grid grid-cols-4 gap-2"></div>
-      <div class="mt-4 pt-3 border-t border-slate-800 flex gap-2">
-        <button id="mobileSheetAnsBtn" type="button" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 text-center">
-          🎯 정답 및 배점표 바로가기
-        </button>
+      <div id="mobilePagePickerGrid" class="mt-3 grid grid-cols-4 gap-1.5 max-h-60 overflow-y-auto p-1">
+        <!-- Rendered page buttons -->
       </div>
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- Mobile Bottom Sheet: Auth / Unlock Modal                                  -->
-  <!-- ========================================================================= -->
-  <div id="sheetAuth" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm bottom-sheet bottom-sheet-closed flex flex-col justify-end">
-    <div class="glass-panel border-t border-slate-700/80 rounded-t-3xl p-5 safe-bottom">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          </div>
-          <div>
-            <h3 class="text-base font-extrabold text-white">보안 아카이브 잠금 해제</h3>
-            <p class="text-xs text-slate-400">보안 암호 입력 시 원본 시험지 및 정답표가 열람됩니다.</p>
-          </div>
-        </div>
-        <button type="button" class="close-sheet-btn p-1.5 text-slate-400 hover:text-white text-base">✕</button>
-      </div>
-      
-      <div class="mt-4 space-y-3">
-        <!-- Mini-Game Quick Trigger in Mobile Sheet -->
-        <button id="mobileOpenGameBtn" type="button" class="w-full py-2.5 rounded-xl text-xs font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 flex items-center justify-center gap-2 active:scale-98 transition shadow-sm">
-          <span>🎮 미니게임으로 알파벳 모아 암호 해독하기</span>
-        </button>
-
-        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 flex items-center gap-2">
-          <input
-            id="mobilePasswordInput"
-            type="password"
-            placeholder="직접 입력 차단됨 (미니게임 전용)"
-            autocomplete="off"
-            class="flex-1 bg-transparent text-sm text-white placeholder-slate-500 pl-2 py-2 focus:outline-none font-mono"
-          />
-          <button id="mobileTogglePwdBtn" type="button" class="px-2 py-1 rounded bg-slate-800 text-[11px] font-mono text-slate-400">SHOW</button>
-        </div>
-        <div class="flex items-center justify-between text-xs text-slate-400 px-1">
-          <span>비밀번호가 기억나지 않는다면?</span>
-          <button id="quickFillPwdBtn" type="button" class="text-cyan-400 font-bold hover:underline flex items-center gap-1">
-            <span>🎮 미니게임으로 해독</span>
-          </button>
-        </div>
-        <div class="flex gap-2 pt-2">
-          <button id="mobileUnlockBtn" type="button" class="flex-1 py-3 rounded-xl text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg active:scale-98 transition">
-            잠금 해제 (UNLOCK)
-          </button>
-          <button id="mobileLockBtn" type="button" class="hidden py-3 px-4 rounded-xl text-xs font-bold bg-dark-850 text-red-300 border border-red-800/60 active:scale-98 transition">
-            다시 잠그기
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- Mobile Bottom Sheet: View Mode Selector                                   -->
-  <!-- ========================================================================= -->
-  <div id="sheetMode" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm bottom-sheet bottom-sheet-closed flex flex-col justify-end">
-    <div class="glass-panel border-t border-slate-700/80 rounded-t-3xl p-5 safe-bottom">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-        <div>
-          <h3 class="text-base font-extrabold text-white">시험지 보기 모드</h3>
-          <p class="text-xs text-slate-400 mt-0.5">상황에 맞는 열람 모드를 선택하세요.</p>
-        </div>
-        <button type="button" class="close-sheet-btn p-1.5 text-slate-400 hover:text-white text-base">✕</button>
-      </div>
-      <div class="mt-4 space-y-2">
-        <button data-mode="orig" type="button" class="mobile-mode-opt w-full p-3 rounded-xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 flex items-center justify-between text-left transition">
-          <div>
-            <div class="text-xs font-bold text-white flex items-center gap-1.5">
-              <span>원본 클린 (Original)</span>
-              <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-mono">권장</span>
-            </div>
-            <div class="text-[11px] text-slate-400 mt-0.5">워터마크 없이 깨끗한 100% 원본 시험지 및 정답표</div>
-          </div>
-          <span class="check-icon text-emerald-400 hidden">✓</span>
-        </button>
-
-        <button data-mode="ts_orig" type="button" class="mobile-mode-opt w-full p-3 rounded-xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 flex items-center justify-between text-left transition">
-          <div>
-            <div class="text-xs font-bold text-white">TOP SECRET 워터마크 원본</div>
-            <div class="text-[11px] text-slate-400 mt-0.5">기밀 도장이 각인된 원본 시험지</div>
-          </div>
-          <span class="check-icon text-emerald-400 hidden">✓</span>
-        </button>
-
-        <button data-mode="redacted" type="button" class="mobile-mode-opt w-full p-3 rounded-xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 flex items-center justify-between text-left transition">
-          <div>
-            <div class="text-xs font-bold text-white">기밀·블러 미리보기본</div>
-            <div class="text-[11px] text-slate-400 mt-0.5">지문·도형 블러 및 정답표 REDACTED 마스킹</div>
-          </div>
-          <span class="check-icon text-emerald-400 hidden">✓</span>
-        </button>
-
-        <button data-mode="split" type="button" class="mobile-mode-opt w-full p-3 rounded-xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 flex items-center justify-between text-left transition">
-          <div>
-            <div class="text-xs font-bold text-white">기밀본 vs 원본 대조 비교</div>
-            <div class="text-[11px] text-slate-400 mt-0.5">블러 처리된 기밀본과 원본을 직접 대조</div>
-          </div>
-          <span class="check-icon text-emerald-400 hidden">✓</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- Mini-Game Modal: Hacker Cipher Word Decryption                            -->
   <!-- ========================================================================= -->
   <div id="gameModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-md p-2 sm:p-4">
     <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-xl w-full p-3 sm:p-6 shadow-2xl border border-cyan-500/50 flex flex-col max-h-[96vh] overflow-y-auto relative">
@@ -817,124 +719,118 @@
     <!-- ========================================================================= -->
   <!-- Modal: Download Terms of Service Agreement                                -->
   <!-- ========================================================================= -->
-  <div id="termsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-5">
+  <!-- Unified Download & Terms Agreement Modal (Zero Stacking Bug)                -->
+  <!-- ========================================================================= -->
+  <div id="downloadTermsModal" class="fixed inset-0 z-[80] hidden items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-5">
     <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-xl w-full p-4 sm:p-6 shadow-2xl max-h-[92vh] flex flex-col border border-slate-700/80">
       
       <!-- Modal Header -->
-      <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-800 shrink-0">
-        <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 flex items-center justify-center shrink-0">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-          </div>
-          <div>
-            <h2 class="text-sm sm:text-base font-extrabold text-white">자료 다운로드 이용약관</h2>
-            <p class="text-[11px] sm:text-xs text-slate-400 mt-0.5">파일 다운로드 전 이용약관 확인 및 동의가 필요합니다.</p>
-          </div>
-        </div>
-        <button id="closeTermsModalBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 flex items-center justify-center text-sm font-bold">✕</button>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="mt-4 overflow-y-auto flex-1 space-y-3.5 pr-1 text-xs">
-        
-        <!-- Standard Summary Box -->
-        <div class="p-3.5 rounded-xl bg-dark-950/90 border border-slate-800 leading-relaxed text-slate-300">
-          <p>
-            본 자료는 창북중학교 기출 시험지 아카이브 시스템에서 제공하는 학업 참고용 자료입니다. 자료의 안전한 보존 및 디지털 저작권·이용 에티켓 준수를 위해 아래 서비스 이용약관에 동의하셔야 다운로드가 진행됩니다.
-          </p>
-        </div>
-
-        <!-- Toggle Detail Button -->
-        <div class="flex items-center justify-between px-0.5">
-          <span class="text-xs font-bold text-slate-300 font-mono">이용약관</span>
-          <button id="toggleTermsDetailBtn" type="button" class="text-xs text-cyan-400 hover:text-cyan-300 font-bold underline flex items-center gap-1 font-mono transition">
-            <span id="toggleTermsDetailText">자세히 보기 ▾</span>
-          </button>
-        </div>
-
-        <!-- Expanded Full Terms (Hidden by default, shown when 자세히보기 clicked) -->
-        <div id="termsDetailContainer" class="hidden space-y-3 transition-all">
-          <div class="max-h-52 overflow-y-auto p-3.5 rounded-xl bg-dark-950 border border-slate-800 text-[11px] text-slate-400 space-y-2 leading-relaxed font-sans">
-            <div>
-              <strong class="text-slate-200">제1조 (목적)</strong><br/>
-              본 약관은 창북중학교 3학년 2학기 기출 시험지 보안 아카이브(이하 '아카이브')에서 제공하는 디지털 문서 파일의 다운로드 및 열람에 관한 조건과 절차를 규정함을 목적으로 합니다.
-            </div>
-            <div>
-              <strong class="text-slate-200">제2조 (자료의 성격 및 이용 범위)</strong><br/>
-              제공되는 시험지 및 정답표 자료는 학생들의 학업 증진 및 자기주도 학습 참고용으로서 비영리적인 개인적 목적에 한하여 열람 및 활용할 수 있습니다.
-            </div>
-            <div>
-              <strong class="text-slate-200">제3조 (지적 재산 및 보안 준수)</strong><br/>
-              이용자는 아카이브 내 보안 프로토콜을 침해하거나 자료를 무단 상업적 재판매하는 행위를 할 수 없습니다.
-            </div>
-            <div class="p-2.5 rounded-lg bg-indigo-950/30 border border-indigo-500/20 text-slate-300">
-              <strong class="text-indigo-300">제4조 (디지털 에티켓 및 관계적 경계 규범)</strong><br/>
-              이용자는 건전한 정보 네트워크 환경과 상호 간의 사생활 보호를 성실히 준수하여야 하며, <strong>휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다.</strong> 또한 상호 신뢰를 저해하는 일체의 과도한 디지털 탐색을 엄격히 자제합니다.
-            </div>
-            <div>
-              <strong class="text-slate-200">제5조 (동의의 효력 및 다운로드)</strong><br/>
-              이용자가 약관에 동의하고 다운로드를 실행하는 것은 본 약관의 전 조항과 제4조의 서약 규범을 완전히 수용하고 이를 이행할 것에 확약한 것으로 봅니다.
-            </div>
-          </div>
-
-          <!-- Highlighted callout when 자세히보기 is open -->
-          <div class="p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-[11px] text-cyan-200 leading-relaxed font-mono">
-            <div class="font-bold text-cyan-400 mb-1">📋 서약 준수 조항 확인:</div>
-            "휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다"
-          </div>
-        </div>
-
-        <!-- Agreement Checkbox -->
-        <div id="termsCheckWrap" class="p-3 rounded-xl bg-dark-900 border border-slate-700/80 flex items-center gap-3 transition">
-          <input type="checkbox" id="termsAgreeCheck" class="w-4 h-4 rounded text-cyan-500 bg-dark-950 border-slate-700 cursor-pointer shrink-0">
-          <label for="termsAgreeCheck" id="termsAgreeLabel" class="text-xs text-slate-200 cursor-pointer select-none">
-            [필수] 이용약관에 동의합니다.
-          </label>
-        </div>
-
-        <!-- Download Action Button -->
-        <button id="confirmTermsDownloadBtn" type="button" class="w-full py-3.5 rounded-xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-xl transition active:scale-98 flex items-center justify-center gap-2 font-mono">
-          <span>동의하고 파일 다운로드</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-        </button>
-
-      </div>
-    </div>
-  </div>
-
-<!-- Modal 1: PDF Download & Google Drive Center                               -->
-  <!-- ========================================================================= -->
-  <div id="driveModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-5">
-    <div class="glass-panel rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl max-h-[90vh] flex flex-col">
       <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-800 shrink-0">
         <div class="flex items-center gap-2.5">
           <div class="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 flex items-center justify-center shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
           </div>
           <div>
-            <h2 class="text-sm sm:text-base font-extrabold text-white">PDF 기출 다운로드 &amp; 열람 센터</h2>
-            <p id="driveModalSub" class="text-[11px] sm:text-xs text-slate-400 mt-0.5"></p>
+            <h2 class="text-sm sm:text-base font-extrabold text-white">기출 PDF 다운로드 센터</h2>
+            <p id="downloadModalSub" class="text-[11px] sm:text-xs text-slate-400 mt-0.5">다운로드할 과목 및 버전을 선택하여 사이트에서 바로 다운로드하세요.</p>
           </div>
         </div>
-        <button id="closeDriveModalBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 flex items-center justify-center text-sm font-bold">✕</button>
+        <button id="closeDownloadModalBtn" type="button" class="w-8 h-8 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 flex items-center justify-center text-sm font-bold">✕</button>
       </div>
 
-      <div class="mt-4 overflow-y-auto flex-1 space-y-3 pr-1">
-        <!-- Direct Google Drive Folder Link -->
+      <!-- Modal Body -->
+      <div class="mt-4 overflow-y-auto flex-1 space-y-4 pr-1 text-xs">
+        
+        <!-- 1. Subject Picker in Modal -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-400 mb-1.5 font-mono">1. 다운로드 대상 과목 선택:</label>
+          <div id="modalSubjectPickerGrid" class="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+            <!-- Dynamic subject buttons -->
+          </div>
+        </div>
+
+        <!-- 2. Version Download Cards -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-400 mb-1.5 font-mono">2. 다운로드할 시험지 버전 선택:</label>
+          <div id="modalVersionOptions" class="space-y-2">
+            <!-- Rendered based on lock status -->
+          </div>
+        </div>
+
+        <!-- 3. Google Drive Official Link -->
         <a
-          href="https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing" onclick="interceptDownloadClick(event, 'https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing')"
+          id="modalDriveDirectLink"
+          href="https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
-          class="w-full p-3 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-between text-xs font-bold text-indigo-200 transition shadow-sm"
+          class="block p-3 rounded-xl bg-indigo-950/40 hover:bg-indigo-900/50 border border-indigo-500/40 transition"
         >
-          <span class="flex items-center gap-2">
-            <span>📁 Google Drive 전체 폴더 열기 (전 과목 18종 PDF)</span>
-          </span>
-          <span class="font-mono text-[11px] bg-indigo-500/30 px-2 py-0.5 rounded">OPEN ↗</span>
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-indigo-300 flex items-center gap-1.5">
+              <span>📁 Google Drive 공식 파일 공유 링크</span>
+            </span>
+            <span class="text-[11px] font-mono bg-indigo-500/30 px-2 py-0.5 rounded text-indigo-200">OPEN ↗</span>
+          </div>
+          <div class="text-[10px] text-slate-400 mt-0.5">구글 드라이브 클라우드 바로가기</div>
         </a>
 
-        <!-- Local Direct PDF & Drive Links Table -->
-        <div id="driveLinksTableWrap" class="space-y-2"></div>
+        <!-- 4. Integrated Terms of Service Agreement Section (ZERO STACKING BUG) -->
+        <div class="p-3.5 rounded-2xl bg-dark-950/90 border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-200 font-mono">이용약관</span>
+              <span class="text-[10px] text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-500/30">필수 동의</span>
+            </div>
+            <button id="modalToggleTermsBtn" type="button" class="text-xs text-cyan-400 hover:text-cyan-300 font-bold underline flex items-center gap-1 font-mono transition">
+              <span id="modalToggleTermsText">자세히 보기 ▾</span>
+            </button>
+          </div>
+
+          <!-- Collapsible Terms Detail with Hidden Pledge -->
+          <div id="modalTermsDetailArea" class="hidden space-y-2.5 pt-1 transition-all">
+            <div class="max-h-48 overflow-y-auto p-3 rounded-xl bg-dark-900 border border-slate-800 text-[11px] text-slate-400 space-y-2 leading-relaxed font-sans">
+              <div>
+                <strong class="text-slate-200">제1조 (목적)</strong><br/>
+                본 약관은 창북중학교 3학년 2학기 기출 시험지 아카이브에서 제공하는 디지털 파일의 다운로드 및 열람에 관한 조건과 절차를 규정합니다.
+              </div>
+              <div>
+                <strong class="text-slate-200">제2조 (이용 목적)</strong><br/>
+                제공되는 모든 기출 시험지 및 정답표는 비영리 학습 및 학업 보조 목적에 한하여 자유롭게 열람 및 활용할 수 있습니다.
+              </div>
+              <div>
+                <strong class="text-slate-200">제3조 (지적 재산 보호)</strong><br/>
+                자료의 임의 상업적 재판매나 무단 변조 배포 행위를 일체 금합니다.
+              </div>
+              <div class="p-2.5 rounded-lg bg-indigo-950/40 border border-indigo-500/30 text-slate-300">
+                <strong class="text-indigo-300">제4조 (디지털 에티켓 및 관계적 경계 규범)</strong><br/>
+                이용자는 건전한 정보 네트워크 환경을 성실히 준수하여야 하며, <strong>휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다.</strong> 또한 상호 신뢰를 저해하는 일체의 과도한 디지털 탐색을 엄격히 자제합니다.
+              </div>
+              <div>
+                <strong class="text-slate-200">제5조 (서약의 효력)</strong><br/>
+                자료를 다운로드함은 상기 조항 및 제4조에 명시된 특별 서약 조항을 온전히 숙지하고 준수할 것에 확약한 것으로 간주합니다.
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-[11px] text-cyan-200 leading-relaxed font-mono">
+              <span class="font-bold text-cyan-400">📋 서약 확인:</span> "휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다"
+            </div>
+          </div>
+
+          <!-- Checkbox -->
+          <div id="modalTermsCheckWrap" class="p-2.5 rounded-xl bg-dark-900 border border-slate-700/80 flex items-center gap-2.5 transition">
+            <input type="checkbox" id="modalTermsCheck" class="w-4 h-4 rounded text-cyan-500 bg-dark-950 border-slate-700 cursor-pointer shrink-0">
+            <label for="modalTermsCheck" id="modalTermsCheckLabel" class="text-xs text-slate-200 cursor-pointer select-none">
+              [필수] 이용약관에 동의합니다.
+            </label>
+          </div>
+        </div>
+
+        <!-- Direct In-Site Download Action Button -->
+        <button id="modalExecuteDownloadBtn" type="button" class="w-full py-3.5 rounded-xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-xl transition active:scale-98 flex items-center justify-center gap-2 font-mono">
+          <span>동의하고 사이트에서 바로 다운로드</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </button>
+
       </div>
     </div>
   </div>
@@ -1233,45 +1129,52 @@
     const pagesViewport = document.getElementById('pagesViewport');
     const openDriveModalBtn = document.getElementById('openDriveModalBtn');
     const closeDriveModalBtn = document.getElementById('closeDriveModalBtn');
-    const driveModal = document.getElementById('driveModal');
-    const driveModalSub = document.getElementById('driveModalSub');
-    const driveLinksTableWrap = document.getElementById('driveLinksTableWrap');
+    // Helper: Direct In-Site File Download Engine
+    function downloadFileDirectly(url, filename) {
+      const a = document.createElement('a');
+      a.href = encodeURI(url);
+      if (filename) a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
 
+    function closeAllSheets() {}
 
-    // Mobile Elements
-    const mobileFloatPillWrap = document.getElementById('mobileFloatPillWrap');
-    const mobileFloatPrevBtn = document.getElementById('mobileFloatPrevBtn');
-    const mobileFloatNextBtn = document.getElementById('mobileFloatNextBtn');
-    const mobileFloatPageText = document.getElementById('mobileFloatPageText');
-    const mobileFloatPageSelectorBtn = document.getElementById('mobileFloatPageSelectorBtn');
-    const mobileFloatAnsBtn = document.getElementById('mobileFloatAnsBtn');
+    // [NEW] Mobile App Elements
+    const mobileAppHeader = document.getElementById('mobileAppHeader');
+    const mobileClearanceBadge = document.getElementById('mobileClearanceBadge');
+    const mobileHeaderSubtext = document.getElementById('mobileHeaderSubtext');
+    const mobileHeaderGameBtn = document.getElementById('mobileHeaderGameBtn');
+    const mobileHeaderDownloadBtn = document.getElementById('mobileHeaderDownloadBtn');
+    const mobileSubjectTabs = document.getElementById('mobileSubjectTabs');
+    const mobileNewPrevBtn = document.getElementById('mobileNewPrevBtn');
+    const mobileNewPagePillBtn = document.getElementById('mobileNewPagePillBtn');
+    const mobileNewPageText = document.getElementById('mobileNewPageText');
+    const mobileNewNextBtn = document.getElementById('mobileNewNextBtn');
+    const mobileNewAnsBtn = document.getElementById('mobileNewAnsBtn');
+    const mobileUnlockedModeStrip = document.getElementById('mobileUnlockedModeStrip');
+    const mobilePagePickerModal = document.getElementById('mobilePagePickerModal');
+    const mobilePagePickerSub = document.getElementById('mobilePagePickerSub');
+    const mobilePagePickerGrid = document.getElementById('mobilePagePickerGrid');
+    const closeMobilePagePickerBtn = document.getElementById('closeMobilePagePickerBtn');
 
-    // Dock Buttons
-    const mobileBottomDock = document.getElementById('mobileBottomDock');
-    const dockSubjBtn = document.getElementById('dockSubjBtn');
-    const dockPagesBtn = document.getElementById('dockPagesBtn');
-    const dockAuthBtn = document.getElementById('dockAuthBtn');
-    const dockModeBtn = document.getElementById('dockModeBtn');
-    const dockPdfBtn = document.getElementById('dockPdfBtn');
-    const dockLockSvg = document.getElementById('dockLockSvg');
-    const dockLockLabel = document.getElementById('dockLockLabel');
-    const dockLockIconWrap = document.getElementById('dockLockIconWrap');
+    // [NEW] Unified Download & Terms Modal Elements
+    const downloadTermsModal = document.getElementById('downloadTermsModal');
+    const closeDownloadModalBtn = document.getElementById('closeDownloadModalBtn');
+    const downloadModalSub = document.getElementById('downloadModalSub');
+    const modalSubjectPickerGrid = document.getElementById('modalSubjectPickerGrid');
+    const modalVersionOptions = document.getElementById('modalVersionOptions');
+    const modalToggleTermsBtn = document.getElementById('modalToggleTermsBtn');
+    const modalToggleTermsText = document.getElementById('modalToggleTermsText');
+    const modalTermsDetailArea = document.getElementById('modalTermsDetailArea');
+    const modalTermsCheckWrap = document.getElementById('modalTermsCheckWrap');
+    const modalTermsCheck = document.getElementById('modalTermsCheck');
+    const modalTermsCheckLabel = document.getElementById('modalTermsCheckLabel');
+    const modalExecuteDownloadBtn = document.getElementById('modalExecuteDownloadBtn');
 
-    // Sheets
-    const sheetSubject = document.getElementById('sheetSubject');
-    const sheetPages = document.getElementById('sheetPages');
-    const sheetAuth = document.getElementById('sheetAuth');
-    const sheetMode = document.getElementById('sheetMode');
-    const mobileSubjectList = document.getElementById('mobileSubjectList');
-    const mobilePageChipsGrid = document.getElementById('mobilePageChipsGrid');
-    const sheetPagesSub = document.getElementById('sheetPagesSub');
-    const mobileSheetAnsBtn = document.getElementById('mobileSheetAnsBtn');
-    const mobilePasswordInput = document.getElementById('mobilePasswordInput');
-    const mobileTogglePwdBtn = document.getElementById('mobileTogglePwdBtn');
-    const mobileUnlockBtn = document.getElementById('mobileUnlockBtn');
-    const mobileLockBtn = document.getElementById('mobileLockBtn');
-    const quickFillPwdBtn = document.getElementById('quickFillPwdBtn');
-    const mobileOpenGameBtn = document.getElementById('mobileOpenGameBtn');
+    let selectedModalSubjIdx = 0;
+    let selectedDownloadType = 'orig'; // 'orig' | 'ts' | 'red'
 
     // =========================================================================
     // Arcade & Cipher Mini-Game Elements
@@ -2563,6 +2466,11 @@
           clearanceBadge.className = 'px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono';
           clearanceBadge.textContent = 'ORIGINAL UNLOCKED';
         }
+
+        if (mobileClearanceBadge) {
+          mobileClearanceBadge.className = 'px-1.5 py-0.5 text-[9px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono shrink-0';
+          mobileClearanceBadge.textContent = 'CLEARED';
+        }
         
         if (headerSubtext) {
           headerSubtext.textContent = '보안 인증 완료: 창북중 3학년 2학기 기말고사 전 과목(국어·영어·수학·사회·역사·과학) 100% 원본 열람 중';
@@ -2575,16 +2483,19 @@
         }
         if (lockedCallout) lockedCallout.classList.add('hidden');
 
-        // Dock Lock Icon
-        if (dockLockIconWrap) dockLockIconWrap.className = 'w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400';
-        if (dockLockSvg) dockLockSvg.innerHTML = `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path>`;
-        if (dockLockLabel) {
-          dockLockLabel.textContent = '해제됨';
-          dockLockLabel.className = 'text-[10px] font-bold text-emerald-300';
+        // Mobile unlocked mode strip
+        if (mobileUnlockedModeStrip) {
+          mobileUnlockedModeStrip.classList.remove('hidden');
+          mobileUnlockedModeStrip.querySelectorAll('.mobile-mode-tab-btn').forEach(btn => {
+            if (btn.getAttribute('data-mode') === viewMode) {
+              btn.className = 'mobile-mode-tab-btn px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-500 text-slate-950 transition shrink-0';
+            } else {
+              btn.className = 'mobile-mode-tab-btn px-2.5 py-1 rounded-md text-[11px] font-semibold text-slate-300 hover:text-white bg-dark-850 border border-slate-700 transition shrink-0';
+            }
+          });
         }
-        if (mobileLockBtn) mobileLockBtn.classList.remove('hidden');
 
-        // Mode buttons styling
+        // Mode buttons styling (Desktop)
         const modeBtns = [
           [modeOrigBtn, 'orig'],
           [modeTsOrigBtn, 'ts_orig'],
@@ -2615,6 +2526,11 @@
           clearanceBadge.textContent = 'TOP SECRET';
         }
 
+        if (mobileClearanceBadge) {
+          mobileClearanceBadge.className = 'px-1.5 py-0.5 text-[9px] font-bold rounded-full bg-red-500/20 text-red-300 border border-red-500/40 font-mono shrink-0';
+          mobileClearanceBadge.textContent = 'TOP SECRET';
+        }
+
         if (headerSubtext) {
           headerSubtext.textContent = '전 과목(국어·영어·수학·사회·역사·과학) 기출 시험지 & 공식 NEIS 정답표 아카이브';
         }
@@ -2626,31 +2542,12 @@
         }
         if (lockedCallout) lockedCallout.classList.remove('hidden');
 
-        // Dock Lock Icon
-        if (dockLockIconWrap) dockLockIconWrap.className = 'w-7 h-7 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400';
-        if (dockLockSvg) dockLockSvg.innerHTML = `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>`;
-        if (dockLockLabel) {
-          dockLockLabel.textContent = '잠금해제';
-          dockLockLabel.className = 'text-[10px] font-bold text-amber-300';
-        }
-        if (mobileLockBtn) mobileLockBtn.classList.add('hidden');
+        if (mobileUnlockedModeStrip) mobileUnlockedModeStrip.classList.add('hidden');
       }
-
-      document.querySelectorAll('.mobile-mode-opt').forEach(btn => {
-        const m = btn.getAttribute('data-mode');
-        const check = btn.querySelector('.check-icon');
-        if (m === viewMode) {
-          btn.classList.add('border-emerald-500', 'bg-emerald-950/20');
-          if (check) check.classList.remove('hidden');
-        } else {
-          btn.classList.remove('border-emerald-500', 'bg-emerald-950/20');
-          if (check) check.classList.add('hidden');
-        }
-      });
     }
 
-    // Render Subject Selector Tabs (Desktop) & Sheet Cards (Mobile)
     function renderSubjects() {
+      // 1. Desktop Subject Tabs
       if (subjectTabs) {
         subjectTabs.innerHTML = '';
         SUBJECT_DATA.forEach((subj, idx) => {
@@ -2675,42 +2572,28 @@
         });
       }
 
-      // Mobile Sheet Cards
-      if (mobileSubjectList) {
-        mobileSubjectList.innerHTML = '';
+      // 2. Mobile Horizontal Pill Carousel
+      if (mobileSubjectTabs) {
+        mobileSubjectTabs.innerHTML = '';
+        const icons = ['📚', '🧮', '🌐', '🏛️', '⚖️', '🔬'];
         SUBJECT_DATA.forEach((subj, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
           const isAct = idx === activeSubjIdx;
-          const card = document.createElement('button');
-          card.type = 'button';
-          card.className = isAct
-            ? 'p-3 rounded-2xl bg-indigo-950/40 border-2 border-indigo-500 text-left flex items-center justify-between shadow-lg'
-            : 'p-3 rounded-2xl bg-dark-850 hover:bg-dark-800 border border-slate-700/80 text-left flex items-center justify-between transition';
-          
-          card.innerHTML = `
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-extrabold text-white">${subj.name}</span>
-                <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300">[${subj.code}]</span>
-                ${isUnlocked ? '<span class="text-[10px] text-emerald-400 font-bold">● 원본열람가능</span>' : '<span class="text-[10px] text-red-400 font-bold">● 기밀블러본</span>'}
-              </div>
-              <div class="text-xs text-slate-400 mt-1">
-                ${subj.date} · 총 ${subj.qCount}문항 · ${subj.pageCount}면
-              </div>
-            </div>
-            <span class="text-xs font-bold ${isAct ? 'text-indigo-400 font-mono text-base' : 'text-slate-500'}">${isAct ? '선택됨' : '열기 →'}</span>
-          `;
-          card.addEventListener('click', () => {
+          btn.className = isAct
+            ? 'px-3 py-1.5 rounded-xl text-xs font-black bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/30 transition flex items-center gap-1.5 shrink-0 border border-cyan-300'
+            : 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-300 bg-dark-900 hover:bg-dark-850 border border-slate-700/80 transition flex items-center gap-1.5 shrink-0';
+          btn.innerHTML = `<span>${icons[idx % icons.length]} ${subj.name}</span>`;
+          btn.addEventListener('click', () => {
             activeSubjIdx = idx;
             activePageIdx = 0;
-            closeSheet(sheetSubject);
             renderAll();
           });
-          mobileSubjectList.appendChild(card);
+          mobileSubjectTabs.appendChild(btn);
         });
       }
     }
 
-    // Render Secondary Toolbar & Page Chips
     function renderToolbar() {
       const subj = SUBJECT_DATA[activeSubjIdx];
       const modeLabel = !isUnlocked
@@ -2744,29 +2627,38 @@
         }
       }
 
-      if (sheetPagesSub) sheetPagesSub.textContent = `${subj.name} 총 ${subj.pageCount}면 중 이동할 페이지를 선택하세요.`;
-      if (mobilePageChipsGrid) {
-        mobilePageChipsGrid.innerHTML = '';
+      // [NEW] Mobile Pagination Bar Sync
+      if (mobileNewPrevBtn) mobileNewPrevBtn.disabled = activePageIdx <= 0;
+      if (mobileNewNextBtn) mobileNewNextBtn.disabled = activePageIdx >= subj.pageCount - 1;
+      if (mobileNewPageText) {
+        const isLast = activePageIdx === subj.pageCount - 1;
+        mobileNewPageText.textContent = isLast ? `${activePageIdx + 1}/${subj.pageCount}면 (정답표)` : `${activePageIdx + 1} / ${subj.pageCount}면`;
+      }
+
+      // [NEW] Mobile Quick-Jump Grid Modal Sync
+      if (mobilePagePickerGrid) {
+        mobilePagePickerGrid.innerHTML = '';
+        if (mobilePagePickerSub) {
+          mobilePagePickerSub.textContent = `${subj.name} 총 ${subj.pageCount}면 중 이동할 면 선택`;
+        }
         for (let i = 0; i < subj.pageCount; i++) {
-          const isLast = i === subj.pageCount - 1;
-          const chip = document.createElement('button');
-          chip.type = 'button';
+          const btn = document.createElement('button');
+          btn.type = 'button';
           const isCurrent = i === activePageIdx;
-          chip.className = isCurrent
-            ? 'py-3 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md'
-            : 'py-3 rounded-xl text-xs font-bold bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700';
-          chip.innerHTML = isLast ? `<span class="font-bold">🎯 정답표</span> <span class="text-[10px] opacity-80 font-mono">(${i + 1}면)</span>` : `${i + 1}면`;
-          chip.addEventListener('click', () => {
+          const isLast = i === subj.pageCount - 1;
+          btn.className = isCurrent
+            ? 'py-2.5 px-2 rounded-xl text-xs font-bold bg-cyan-500 text-slate-950 shadow-md'
+            : 'py-2.5 px-2 rounded-xl text-xs font-medium bg-dark-850 hover:bg-dark-800 text-slate-200 border border-slate-700';
+          btn.textContent = isLast ? `🎯 정답표` : `${i + 1}면`;
+          btn.addEventListener('click', () => {
             activePageIdx = i;
-            closeSheet(sheetPages);
+            if (mobilePagePickerModal) mobilePagePickerModal.classList.add('hidden');
             renderAll();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           });
-          mobilePageChipsGrid.appendChild(chip);
+          mobilePagePickerGrid.appendChild(btn);
         }
       }
-
-      if (mobileFloatPageText) mobileFloatPageText.textContent = `${activePageIdx + 1} / ${subj.pageCount}면`;
 
       if (prevPageBtn) prevPageBtn.disabled = scrollAllPages || activePageIdx <= 0;
       if (nextPageBtn) nextPageBtn.disabled = scrollAllPages || activePageIdx >= subj.pageCount - 1;
@@ -2774,7 +2666,6 @@
       if (zoomLabel) zoomLabel.textContent = `${zoomPercent}%`;
     }
 
-    // Build Single Page Card
     function buildPageCard(subj, pageIdx) {
       const isLast = pageIdx === subj.pageCount - 1;
       const pageTitle = isLast
@@ -2885,66 +2776,167 @@
       }
     }
 
-    // Render PDF Download Modal Links
-    function renderDriveModalContent() {
-      driveModalSub.textContent = isUnlocked
-        ? '보안 인증 완료: 원본 재구성본, TOP SECRET 워터마크본, 기밀블러본 PDF를 모두 다운로드할 수 있습니다.'
-        : '잠금 상태에서는 기밀·블러처리 PDF만 다운로드 가능합니다. 원본 PDF는 보안 암호 해제 후 활성화됩니다.';
+    // =========================================================================
+    // Unified In-Site Download Engine & Modal Management
+    // =========================================================================
+    function openDownloadModal(subjIdx = activeSubjIdx) {
+      selectedModalSubjIdx = subjIdx;
+      selectedDownloadType = isUnlocked ? 'orig' : 'red';
+      
+      if (modalTermsCheck) modalTermsCheck.checked = false;
+      if (modalTermsDetailArea) modalTermsDetailArea.classList.add('hidden');
+      if (modalToggleTermsText) modalToggleTermsText.textContent = '자세히 보기 ▾';
+      if (modalTermsCheckLabel) modalTermsCheckLabel.textContent = '[필수] 이용약관에 동의합니다.';
 
-      driveLinksTableWrap.innerHTML = '';
-      SUBJECT_DATA.forEach((subj) => {
-        const local = LOCAL_PDFS[subj.id] || {};
-        const row = document.createElement('div');
-        row.className = 'p-3 rounded-2xl bg-dark-900 border border-slate-700/80 flex flex-col md:flex-row md:items-center justify-between gap-3';
+      renderDownloadModalContent();
+
+      if (downloadTermsModal) {
+        downloadTermsModal.classList.remove('hidden');
+        downloadTermsModal.classList.add('flex');
+      }
+    }
+
+    function closeDownloadModal() {
+      if (downloadTermsModal) {
+        downloadTermsModal.classList.add('hidden');
+        downloadTermsModal.classList.remove('flex');
+      }
+    }
+
+    function renderDownloadModalContent() {
+      const subj = SUBJECT_DATA[selectedModalSubjIdx];
+      if (downloadModalSub) {
+        downloadModalSub.textContent = isUnlocked
+          ? `${subj.name}: 원본 재구성본 및 기밀본을 사이트에서 바로 다운로드할 수 있습니다.`
+          : `${subj.name}: 잠금 상태에서는 기밀블러 PDF만 다운로드 가능합니다. (원본은 미니게임 클리어 후 활성화)`;
+      }
+
+      // 1. Subject selection buttons in modal
+      if (modalSubjectPickerGrid) {
+        modalSubjectPickerGrid.innerHTML = '';
+        SUBJECT_DATA.forEach((s, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          const isSel = idx === selectedModalSubjIdx;
+          btn.className = isSel
+            ? 'py-2 px-1 rounded-xl text-xs font-bold bg-cyan-500 text-slate-950 shadow-md font-sans text-center'
+            : 'py-2 px-1 rounded-xl text-xs font-medium bg-dark-900 hover:bg-dark-850 text-slate-300 border border-slate-700 font-sans text-center';
+          btn.textContent = s.name;
+          btn.addEventListener('click', () => {
+            selectedModalSubjIdx = idx;
+            renderDownloadModalContent();
+          });
+          modalSubjectPickerGrid.appendChild(btn);
+        });
+      }
+
+      // 2. Version options in modal
+      if (modalVersionOptions) {
+        modalVersionOptions.innerHTML = '';
         
-        const origButtons = isUnlocked
-          ? `
-            <a href="${local.orig}" onclick="interceptDownloadClick(event, '${local.orig}')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition flex items-center gap-1 shadow-sm">
-              <span>⬇ 원본 PDF</span>
-            </a>
-            <a href="${local.ts}" onclick="interceptDownloadClick(event, '${local.ts}')" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition">
-              TOP SECRET본
-            </a>
-          `
-          : `
-            <button type="button" data-require-lock="1" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-dark-800 text-slate-400 border border-slate-700 hover:text-slate-200 transition">
-              🔒 원본 (암호 필요)
-            </button>
+        const versions = [
+          { type: 'orig', label: '⬇ 100% 원본 클린 PDF', desc: '워터마크 없는 깨끗한 기출 시험지 원본', reqLock: true },
+          { type: 'ts', label: '🛡️ TOP SECRET 워터마크 원본 PDF', desc: '기밀 각인 도장이 포함된 공식 원본 시험지', reqLock: true },
+          { type: 'red', label: '👁️ 기밀·블러처리 PDF', desc: '핵심 지문·정답 블러 미리보기본 (누구나 다운로드 가능)', reqLock: false }
+        ];
+
+        versions.forEach(v => {
+          const isSelected = selectedDownloadType === v.type;
+          const isLockedOpt = !isUnlocked && v.reqLock;
+
+          const opt = document.createElement('div');
+          let baseClass = 'p-3 rounded-xl border transition cursor-pointer flex items-center justify-between gap-2 ';
+          if (isLockedOpt) {
+            baseClass += 'bg-dark-950/60 border-slate-800 opacity-60 cursor-not-allowed';
+          } else if (isSelected) {
+            baseClass += 'bg-cyan-950/60 border-cyan-400/80 shadow-md shadow-cyan-500/10';
+          } else {
+            baseClass += 'bg-dark-900 border-slate-700/80 hover:border-slate-500';
+          }
+          opt.className = baseClass;
+
+          opt.innerHTML = `
+            <div>
+              <div class="text-xs font-bold ${isSelected ? 'text-cyan-300' : 'text-white'} flex items-center gap-1.5">
+                <span>${v.label}</span>
+                ${isLockedOpt ? '<span class="text-[10px] bg-red-950 text-red-400 px-1.5 py-0.2 rounded border border-red-800 font-mono">미니게임 필요</span>' : ''}
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">${v.desc}</div>
+            </div>
+            <div class="w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${isSelected ? 'border-cyan-400 bg-cyan-500 text-slate-950 text-xs font-bold' : 'border-slate-600'}">
+              ${isSelected ? '✓' : ''}
+            </div>
           `;
 
-        row.innerHTML = `
-          <div>
-            <div class="text-xs font-bold text-white flex items-center gap-1.5">
-              <span>${subj.name}</span>
-              <span class="text-slate-400 font-normal font-mono">[과목코드 ${subj.code}]</span>
-              <span class="text-slate-500 text-[11px]">· ${subj.qCount}문항 · ${subj.pageCount}면</span>
-            </div>
-            <div class="text-[11px] text-slate-400 mt-0.5">${subj.date} 실시</div>
-          </div>
-          <div class="flex items-center gap-1.5 flex-wrap">
-            ${origButtons}
-            <a href="${local.red}" onclick="interceptDownloadClick(event, '${local.red}')" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-600/20 hover:bg-red-600/30 text-red-200 border border-red-500/40 transition">
-              기밀블러 PDF
-            </a>
-          </div>
-        `;
-        driveLinksTableWrap.appendChild(row);
-      });
-
-      driveLinksTableWrap.querySelectorAll('[data-require-lock="1"]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          driveModal.classList.add('hidden');
-          driveModal.classList.remove('flex');
-          if (window.innerWidth < 1024) {
-            openSheet(sheetAuth);
-            setTimeout(() => mobilePasswordInput.focus(), 150);
+          if (!isLockedOpt) {
+            opt.addEventListener('click', () => {
+              selectedDownloadType = v.type;
+              renderDownloadModalContent();
+            });
           } else {
-            passwordInput.focus();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            opt.addEventListener('click', () => {
+              showToast('원본 PDF는 [미니게임]을 클리어해야 활성화됩니다!', 'error');
+            });
           }
-          showToast('보안 암호를 해제하시면 원본 PDF 다운로드가 활성화됩니다.', 'info');
+
+          modalVersionOptions.appendChild(opt);
         });
+      }
+    }
+
+    function executeInSiteDownload() {
+      // 1. Verify Terms Checkbox
+      if (!modalTermsCheck || !modalTermsCheck.checked) {
+        playBeep(220, 'sawtooth', 0.2);
+        if (modalTermsCheckWrap) {
+          modalTermsCheckWrap.classList.remove('shake-anim');
+          void modalTermsCheckWrap.offsetWidth;
+          modalTermsCheckWrap.classList.add('shake-anim');
+        }
+        showToast('[필수] 서비스 이용약관에 동의해주셔야 다운로드가 가능합니다.', 'info');
+        return;
+      }
+
+      // 2. Check Lock Status
+      const subj = SUBJECT_DATA[selectedModalSubjIdx];
+      if (!isUnlocked && (selectedDownloadType === 'orig' || selectedDownloadType === 'ts')) {
+        showToast('원본 PDF는 [미니게임]을 클리어하여 보안을 해제해야 다운로드할 수 있습니다.', 'error');
+        return;
+      }
+
+      // 3. Download the exact local file directly!
+      const targetUrl = LOCAL_PDFS[subj.id][selectedDownloadType];
+      const filename = `창북중학교_3학년2학기기말_${subj.name}_${selectedDownloadType}.pdf`;
+      
+      playChime([523, 659, 784, 1046]);
+      showToast(`🎉 ${subj.name} PDF 파일 다운로드가 시작되었습니다!`, 'success');
+      
+      downloadFileDirectly(targetUrl, filename);
+      closeDownloadModal();
+    }
+
+    // Modal Terms Accordion Toggle
+    if (modalToggleTermsBtn) {
+      modalToggleTermsBtn.addEventListener('click', () => {
+        const isHidden = modalTermsDetailArea.classList.contains('hidden');
+        if (isHidden) {
+          modalTermsDetailArea.classList.remove('hidden');
+          modalToggleTermsText.textContent = '접기 ▴';
+          modalTermsCheckLabel.innerHTML = '<strong>[필수]</strong> 이용약관 및 휘발성 감시의 역설에 관한 서약 내용에 완전히 동의합니다.';
+        } else {
+          modalTermsDetailArea.classList.add('hidden');
+          modalToggleTermsText.textContent = '자세히 보기 ▾';
+          modalTermsCheckLabel.textContent = '[필수] 이용약관에 동의합니다.';
+        }
       });
+    }
+
+    if (modalExecuteDownloadBtn) {
+      modalExecuteDownloadBtn.addEventListener('click', executeInSiteDownload);
+    }
+
+    if (closeDownloadModalBtn) {
+      closeDownloadModalBtn.addEventListener('click', closeDownloadModal);
     }
 
     // Touch Swipe Detection for Mobile (Natural Page Flipping)
@@ -2953,16 +2945,18 @@
     let touchEndX = 0;
     let touchEndY = 0;
 
-    pagesViewport.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
+    if (pagesViewport) {
+      pagesViewport.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
 
-    pagesViewport.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      touchEndY = e.changedTouches[0].screenY;
-      handleSwipe();
-    }, { passive: true });
+      pagesViewport.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+      }, { passive: true });
+    }
 
     function handleSwipe() {
       if (scrollAllPages) return;
@@ -2991,7 +2985,6 @@
       renderSubjects();
       renderToolbar();
       renderViewport();
-      renderDriveModalContent();
     }
 
     // =========================================================================
@@ -2999,7 +2992,7 @@
     // =========================================================================
 
     // Desktop Unlock
-    if (unlockBtn) unlockBtn.addEventListener('click', () => attemptUnlockWith(passwordInput.value));
+    if (unlockBtn) unlockBtn.addEventListener('click', () => attemptUnlockWith(passwordInput ? passwordInput.value : ''));
     if (passwordInput) {
       passwordInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
@@ -3009,7 +3002,7 @@
       });
     }
 
-    if (togglePwdBtn) {
+    if (togglePwdBtn && passwordInput) {
       togglePwdBtn.addEventListener('click', () => {
         if (passwordInput.type === 'password') {
           passwordInput.type = 'text';
@@ -3021,43 +3014,17 @@
       });
     }
 
-    // Mobile Unlock
-    if (mobileUnlockBtn) mobileUnlockBtn.addEventListener('click', () => attemptUnlockWith(mobilePasswordInput.value));
-    if (mobilePasswordInput) {
-      mobilePasswordInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          attemptUnlockWith(mobilePasswordInput.value);
-        }
-      });
-    }
-    if (mobileTogglePwdBtn) {
-      mobileTogglePwdBtn.addEventListener('click', () => {
-        if (mobilePasswordInput.type === 'password') {
-          mobilePasswordInput.type = 'text';
-          mobileTogglePwdBtn.textContent = 'HIDE';
-        } else {
-          mobilePasswordInput.type = 'password';
-          mobileTogglePwdBtn.textContent = 'SHOW';
-        }
-      });
-    }
-    if (quickFillPwdBtn) {
-      quickFillPwdBtn.addEventListener('click', () => {
-        openMiniGameModal();
-      });
-    }
-
     // Lock Buttons
     if (lockBtn) lockBtn.addEventListener('click', lockArchive);
-    if (mobileLockBtn) mobileLockBtn.addEventListener('click', lockArchive);
 
     // Focus Password Triggers
-    if (focusPwdBtn) {
-      focusPwdBtn.addEventListener('click', () => {
-        openMiniGameModal();
-      });
-    }
+    if (focusPwdBtn) focusPwdBtn.addEventListener('click', openMiniGameModal);
+    if (openGameBtn) openGameBtn.addEventListener('click', openMiniGameModal);
+    if (desktopOpenGameBtn) desktopOpenGameBtn.addEventListener('click', openMiniGameModal);
+
+    // Mobile Header Game & Download Triggers
+    if (mobileHeaderGameBtn) mobileHeaderGameBtn.addEventListener('click', openMiniGameModal);
+    if (mobileHeaderDownloadBtn) mobileHeaderDownloadBtn.addEventListener('click', () => openDownloadModal(activeSubjIdx));
 
     // Desktop View Mode Switchers
     if (modeOrigBtn) modeOrigBtn.addEventListener('click', () => { viewMode = 'orig'; renderAll(); });
@@ -3065,13 +3032,11 @@
     if (modeRedactedBtn) modeRedactedBtn.addEventListener('click', () => { viewMode = 'redacted'; renderAll(); });
     if (modeSplitBtn) modeSplitBtn.addEventListener('click', () => { viewMode = 'split'; renderAll(); });
 
-    // Mobile Sheet View Mode Switchers
-    document.querySelectorAll('.mobile-mode-opt').forEach(btn => {
+    // Mobile Mode tabs (when unlocked)
+    document.querySelectorAll('.mobile-mode-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         viewMode = btn.getAttribute('data-mode');
-        closeSheet(sheetMode);
         renderAll();
-        showToast(`보기 모드가 변경되었습니다: ${btn.querySelector('.text-xs').textContent.trim()}`);
       });
     });
 
@@ -3108,28 +3073,18 @@
     if (nextPageBtn) nextPageBtn.addEventListener('click', goNext);
     if (jumpAnsBtn) jumpAnsBtn.addEventListener('click', jumpToAnswer);
 
-    // Mobile Floating Buttons
-    if (mobileFloatPrevBtn) mobileFloatPrevBtn.addEventListener('click', goPrev);
-    if (mobileFloatNextBtn) mobileFloatNextBtn.addEventListener('click', goNext);
-    if (mobileFloatAnsBtn) mobileFloatAnsBtn.addEventListener('click', jumpToAnswer);
-    if (mobileFloatPageSelectorBtn) mobileFloatPageSelectorBtn.addEventListener('click', () => openSheet(sheetPages));
-    if (mobileSheetAnsBtn) {
-      mobileSheetAnsBtn.addEventListener('click', () => {
-        closeSheet(sheetPages);
-        jumpToAnswer();
+    // Mobile Navigation Controls
+    if (mobileNewPrevBtn) mobileNewPrevBtn.addEventListener('click', goPrev);
+    if (mobileNewNextBtn) mobileNewNextBtn.addEventListener('click', goNext);
+    if (mobileNewAnsBtn) mobileNewAnsBtn.addEventListener('click', jumpToAnswer);
+    if (mobileNewPagePillBtn) {
+      mobileNewPagePillBtn.addEventListener('click', () => {
+        if (mobilePagePickerModal) mobilePagePickerModal.classList.remove('hidden');
       });
     }
-
-    // Mobile Dock Triggers
-    if (dockSubjBtn) dockSubjBtn.addEventListener('click', () => openSheet(sheetSubject));
-    if (dockPagesBtn) dockPagesBtn.addEventListener('click', () => openSheet(sheetPages));
-    if (dockAuthBtn) dockAuthBtn.addEventListener('click', () => openSheet(sheetAuth));
-    if (dockModeBtn) dockModeBtn.addEventListener('click', () => openSheet(sheetMode));
-    if (dockPdfBtn) {
-      dockPdfBtn.addEventListener('click', () => {
-        renderDriveModalContent();
-        driveModal.classList.remove('hidden');
-        driveModal.classList.add('flex');
+    if (closeMobilePagePickerBtn) {
+      closeMobilePagePickerBtn.addEventListener('click', () => {
+        if (mobilePagePickerModal) mobilePagePickerModal.classList.add('hidden');
       });
     }
 
@@ -3170,135 +3125,27 @@
       });
     }
 
-    // Modal Events
+    // Download Center Trigger (Desktop)
     if (openDriveModalBtn) {
-      openDriveModalBtn.addEventListener('click', () => {
-        renderDriveModalContent();
-        driveModal.classList.remove('hidden');
-        driveModal.classList.add('flex');
-      });
+      openDriveModalBtn.addEventListener('click', () => openDownloadModal(activeSubjIdx));
     }
-    if (closeDriveModalBtn) {
-      closeDriveModalBtn.addEventListener('click', () => {
-        driveModal.classList.add('hidden');
-        driveModal.classList.remove('flex');
-      });
-    }
-
-
 
     if (closeToastBtn) {
       closeToastBtn.addEventListener('click', () => {
-        toastBanner.classList.add('hidden');
+        if (toastBanner) toastBanner.classList.add('hidden');
       });
     }
 
     // Close Modals on Outer Click
     window.addEventListener('click', (e) => {
-      if (e.target === termsModal) { closeTermsModal(); }
-      if (e.target === driveModal) {
-        driveModal.classList.add('hidden');
-        driveModal.classList.remove('flex');
-      }
-
+      if (e.target === downloadTermsModal) closeDownloadModal();
+      if (e.target === mobilePagePickerModal) mobilePagePickerModal.classList.add('hidden');
+      if (e.target === gameModal) closeMiniGameModal();
     });
 
     // Initial Render
     renderAll();
-  
-    // =========================================================================
-    // Terms of Service Agreement & Download Interceptor
-    // =========================================================================
-    const termsModal = document.getElementById('termsModal');
-    const closeTermsModalBtn = document.getElementById('closeTermsModalBtn');
-    const toggleTermsDetailBtn = document.getElementById('toggleTermsDetailBtn');
-    const toggleTermsDetailText = document.getElementById('toggleTermsDetailText');
-    const termsDetailContainer = document.getElementById('termsDetailContainer');
-    const termsCheckWrap = document.getElementById('termsCheckWrap');
-    const termsAgreeCheck = document.getElementById('termsAgreeCheck');
-    const termsAgreeLabel = document.getElementById('termsAgreeLabel');
-    const confirmTermsDownloadBtn = document.getElementById('confirmTermsDownloadBtn');
 
-    const TARGET_DRIVE_DOWNLOAD_URL = 'https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing';
-    let pendingDownloadFileUrl = TARGET_DRIVE_DOWNLOAD_URL;
-
-    function openTermsModal(targetUrl = TARGET_DRIVE_DOWNLOAD_URL) {
-      pendingDownloadFileUrl = targetUrl || TARGET_DRIVE_DOWNLOAD_URL;
-      if (termsAgreeCheck) termsAgreeCheck.checked = false;
-      
-      // Default: 자세히보기 안 눌렀을 때는 '이용약관'으로만 표시
-      if (termsDetailContainer) termsDetailContainer.classList.add('hidden');
-      if (toggleTermsDetailText) toggleTermsDetailText.textContent = '자세히 보기 ▾';
-      if (termsAgreeLabel) termsAgreeLabel.textContent = '[필수] 이용약관에 동의합니다.';
-
-      if (termsModal) {
-        termsModal.classList.remove('hidden');
-        termsModal.classList.add('flex');
-      }
-    }
-
-    function closeTermsModal() {
-      if (termsModal) {
-        termsModal.classList.add('hidden');
-        termsModal.classList.remove('flex');
-      }
-    }
-
-    if (toggleTermsDetailBtn) {
-      toggleTermsDetailBtn.addEventListener('click', () => {
-        const isHidden = termsDetailContainer.classList.contains('hidden');
-        if (isHidden) {
-          termsDetailContainer.classList.remove('hidden');
-          toggleTermsDetailText.textContent = '접기 ▴';
-          termsAgreeLabel.innerHTML = '<strong>[필수]</strong> 이용약관 및 휘발성 감시의 역설에 관한 서약 내용에 완전히 동의합니다.';
-        } else {
-          termsDetailContainer.classList.add('hidden');
-          toggleTermsDetailText.textContent = '자세히 보기 ▾';
-          termsAgreeLabel.textContent = '[필수] 이용약관에 동의합니다.';
-        }
-      });
-    }
-
-    if (closeTermsModalBtn) {
-      closeTermsModalBtn.addEventListener('click', closeTermsModal);
-    }
-
-    if (confirmTermsDownloadBtn) {
-      confirmTermsDownloadBtn.addEventListener('click', () => {
-        if (!termsAgreeCheck || !termsAgreeCheck.checked) {
-          playBeep(220, 'sawtooth', 0.2);
-          if (termsCheckWrap) {
-            termsCheckWrap.classList.remove('shake-anim');
-            void termsCheckWrap.offsetWidth;
-            termsCheckWrap.classList.add('shake-anim');
-          }
-          showToast('[필수] 이용약관에 동의해주셔야 다운로드가 진행됩니다.', 'info');
-          return;
-        }
-
-        // Agreed!
-        playChime([523, 659, 784, 1046]);
-        showToast('이용약관 동의 완료! 지정된 기출 파일 다운로드로 연결합니다.', 'success');
-        closeTermsModal();
-
-        // Open target download URL
-        window.open(TARGET_DRIVE_DOWNLOAD_URL, '_blank');
-      });
-    }
-
-    // Intercept all file downloads to trigger Terms Modal first
-    function interceptDownloadClick(e, originalUrl) {
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      openTermsModal(originalUrl);
-    }
-
-    window.interceptDownloadClick = interceptDownloadClick;
-    window.openTermsModal = openTermsModal;
-    window.closeTermsModal = closeTermsModal;
-
-    </script>
+  </script>
 </body>
 </html>
