@@ -1125,8 +1125,6 @@
       document.body.removeChild(a);
     }
 
-    function closeAllSheets() {}
-
     // [NEW] Mobile App Elements
     const mobileAppHeader = document.getElementById('mobileAppHeader');
     const mobileClearanceBadge = document.getElementById('mobileClearanceBadge');
@@ -2218,7 +2216,6 @@
 
     // Modal Visibility Triggers
     function openMiniGameModal() {
-      closeAllSheets();
       gameStage1.classList.remove('hidden');
       gameStage2.classList.add('hidden');
       gameStage3.classList.add('hidden');
@@ -2249,7 +2246,6 @@
     // Event Listeners for Game
     if (openGameBtn) openGameBtn.addEventListener('click', openMiniGameModal);
     if (desktopOpenGameBtn) desktopOpenGameBtn.addEventListener('click', openMiniGameModal);
-    if (mobileOpenGameBtn) mobileOpenGameBtn.addEventListener('click', openMiniGameModal);
     if (closeGameModalBtn) closeGameModalBtn.addEventListener('click', closeMiniGameModal);
     if (clearSlotsBtn) clearSlotsBtn.addEventListener('click', clearAllDecoderSlots);
     const restartStage1Btn = document.getElementById('restartStage1Btn');
@@ -2273,7 +2269,6 @@
       });
     }
 
-    // SheetAuth Quick Fill -> Opens Mini Game instead of typing password!
     const quickFillBtn = document.getElementById('quickFillPwdBtn');
     if (quickFillBtn) {
       quickFillBtn.addEventListener('click', () => {
@@ -2287,133 +2282,30 @@
       }
     });
 
-    // =========================================================================
-    // Mobile Scroll Auto-Hide Engine (스크롤 시 모바일 UI 자동 숨김)
-    // =========================================================================
-    let lastScrollY = window.scrollY;
-    let isMobileUIHidden = false;
-
-    function hideMobileUI() {
-      if (isMobileUIHidden) return;
-      if (window.innerWidth >= 1024) return;
-      isMobileUIHidden = true;
-
-      if (mobileFloatPillWrap) {
-        mobileFloatPillWrap.style.transform = 'translateY(220%)';
-        mobileFloatPillWrap.style.opacity = '0';
-        mobileFloatPillWrap.style.pointerEvents = 'none';
-      }
-      if (mobileBottomDock) {
-        mobileBottomDock.style.transform = 'translateY(120%)';
-        mobileBottomDock.style.opacity = '0';
-        mobileBottomDock.style.pointerEvents = 'none';
-      }
-    }
-
-    function showMobileUI() {
-      if (!isMobileUIHidden) return;
-      isMobileUIHidden = false;
-
-      if (mobileFloatPillWrap) {
-        mobileFloatPillWrap.style.transform = 'translateY(0)';
-        mobileFloatPillWrap.style.opacity = '1';
-        mobileFloatPillWrap.style.pointerEvents = 'auto';
-      }
-      if (mobileBottomDock) {
-        mobileBottomDock.style.transform = 'translateY(0)';
-        mobileBottomDock.style.opacity = '1';
-        mobileBottomDock.style.pointerEvents = 'auto';
-      }
-    }
-
-    window.addEventListener('scroll', () => {
-      if (window.innerWidth >= 1024) {
-        showMobileUI();
-        return;
-      }
-
-      const currentScrollY = window.scrollY;
-      const delta = currentScrollY - lastScrollY;
-
-      if (currentScrollY <= 40) {
-        showMobileUI();
-        lastScrollY = currentScrollY;
-        return;
-      }
-
-      if (delta > 8 && currentScrollY > 70) {
-        hideMobileUI();
-      } else if (delta < -8) {
-        showMobileUI();
-      }
-
-      lastScrollY = currentScrollY;
-    }, { passive: true });
-
-    pagesViewport.addEventListener('click', () => {
-      if (window.innerWidth < 1024 && isMobileUIHidden) {
-        showMobileUI();
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 1024) {
-        showMobileUI();
-      }
-    });
-
     // Toast Functionality
     function showToast(msg, type = 'info') {
+      if (!toastBanner) return;
       toastBanner.classList.remove('hidden');
-      toastText.textContent = msg;
-      if (type === 'success') {
-        toastInner.className = 'max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border bg-emerald-950/95 border-emerald-500/60 text-emerald-200 shadow-emerald-900/30 shadow-2xl';
-      } else if (type === 'error') {
-        toastInner.className = 'max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border bg-red-950/95 border-red-500/60 text-red-200 shadow-red-900/30 shadow-2xl';
-      } else {
-        toastInner.className = 'max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border bg-dark-850/95 border-slate-700 text-slate-200 shadow-2xl';
+      if (toastText) toastText.textContent = msg;
+      if (toastInner) {
+        if (type === 'success') {
+          toastInner.className = 'max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border bg-emerald-950/95 border-emerald-500/60 text-emerald-200 shadow-emerald-900/30 shadow-2xl';
+        } else if (type === 'error') {
+          toastInner.className = 'max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border bg-red-950/95 border-red-500/60 text-red-200 shadow-red-900/30 shadow-2xl';
+        } else {
+          toastInner.className = 'max-w-md mx-auto pointer-events-auto px-4 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border bg-dark-850/95 border-slate-700 text-slate-200 shadow-2xl';
+        }
       }
       setTimeout(() => {
-        toastBanner.classList.add('hidden');
+        if (toastBanner) toastBanner.classList.add('hidden');
       }, 5000);
     }
-
-    // Sheet Controls
-    function openSheet(el) {
-      showMobileUI();
-      el.classList.remove('bottom-sheet-closed');
-      el.classList.add('bottom-sheet-open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeSheet(el) {
-      el.classList.remove('bottom-sheet-open');
-      el.classList.add('bottom-sheet-closed');
-      document.body.style.overflow = '';
-    }
-    function closeAllSheets() {
-      [sheetSubject, sheetPages, sheetAuth, sheetMode].forEach(closeSheet);
-    }
-
-    document.querySelectorAll('.close-sheet-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const sheet = e.target.closest('.bottom-sheet');
-        if (sheet) closeSheet(sheet);
-      });
-    });
-
-    [sheetSubject, sheetPages, sheetAuth, sheetMode].forEach(sheet => {
-      sheet.addEventListener('click', (e) => {
-        if (e.target === sheet) closeSheet(sheet);
-      });
-    });
 
     // Unlock & Lock Functions
     function unlockArchiveFromGame() {
       isUnlocked = true;
       viewMode = 'orig';
       if (passwordInput) passwordInput.value = '';
-      if (mobilePasswordInput) mobilePasswordInput.value = '';
-      closeAllSheets();
       playChime([523, 659, 784, 1046]);
       showToast('🎉 사이버 미니게임 클리어! 전 과목 원본 시험지가 활성화되었습니다.', 'success');
       renderAll();
@@ -2430,14 +2322,12 @@
         unlockFormWrap.classList.add('shake-anim');
       }
       if (passwordInput) passwordInput.value = '';
-      if (mobilePasswordInput) mobilePasswordInput.value = '';
       showToast('⚠️ 직접 암호 입력 방식은 차단되었습니다! [미니게임으로 해독]을 통해서만 아카이브가 해제됩니다.', 'error');
     }
 
     function lockArchive() {
       isUnlocked = false;
       viewMode = 'redacted';
-      closeAllSheets();
       showToast('보안 아카이브가 다시 잠겼습니다. (TOP SECRET 기밀·블러 미리보기 모드)', 'info');
       renderAll();
     }
