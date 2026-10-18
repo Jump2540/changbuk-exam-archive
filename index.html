@@ -641,9 +641,10 @@
           <div>
             <div class="flex items-center justify-between text-xs text-slate-400 mb-1.5">
               <span class="font-medium text-slate-300">조합 슬롯:</span>
-              <button id="clearSlotsBtn" type="button" class="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline font-mono flex items-center gap-1">
-                <span>↺ 슬롯 비우기</span>
-              </button>
+              <div class="flex items-center gap-3">
+                <button id="restartStage1Btn" type="button" class="text-[11px] text-slate-400 hover:text-slate-200 underline font-mono flex items-center gap-1"><span>⏮ 코어 다시 모으기</span></button>
+                <button id="clearSlotsBtn" type="button" class="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline font-mono flex items-center gap-1"><span>↺ 슬롯 비우기</span></button>
+              </div>
             </div>
             
             <div id="decoderSlotsContainer" class="flex items-center justify-center gap-1.5 sm:gap-2.5 py-3.5 px-1 bg-dark-950 rounded-2xl border border-cyan-500/30 shadow-inner">
@@ -757,22 +758,7 @@
           </div>
         </div>
 
-        <!-- 3. Google Drive Official Link -->
-        <a
-          id="modalDriveDirectLink"
-          href="https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="block p-3 rounded-xl bg-indigo-950/40 hover:bg-indigo-900/50 border border-indigo-500/40 transition"
-        >
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-indigo-300 flex items-center gap-1.5">
-              <span>📁 Google Drive 공식 파일 공유 링크</span>
-            </span>
-            <span class="text-[11px] font-mono bg-indigo-500/30 px-2 py-0.5 rounded text-indigo-200">OPEN ↗</span>
-          </div>
-          <div class="text-[10px] text-slate-400 mt-0.5">구글 드라이브 클라우드 바로가기</div>
-        </a>
+        
 
         <!-- 4. Integrated Terms of Service Agreement Section (ZERO STACKING BUG) -->
         <div class="p-3.5 rounded-2xl bg-dark-950/90 border border-slate-800 space-y-3">
@@ -803,7 +789,7 @@
               </div>
               <div class="p-2.5 rounded-lg bg-indigo-950/40 border border-indigo-500/30 text-slate-300">
                 <strong class="text-indigo-300">제4조 (디지털 에티켓 및 관계적 경계 규범)</strong><br/>
-                이용자는 건전한 정보 네트워크 환경을 성실히 준수하여야 하며, <strong>휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다.</strong> 또한 상호 신뢰를 저해하는 일체의 과도한 디지털 탐색을 엄격히 자제합니다.
+                이용자는 건전한 정보 네트워크 환경을 성실히 준수하여야 하며, <strong><a href="https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="underline text-cyan-300 hover:text-cyan-200 font-bold">휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구</a>를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다.</strong> 또한 상호 신뢰를 저해하는 일체의 과도한 디지털 탐색을 엄격히 자제합니다.
               </div>
               <div>
                 <strong class="text-slate-200">제5조 (서약의 효력)</strong><br/>
@@ -812,7 +798,7 @@
             </div>
 
             <div class="p-2.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-[11px] text-cyan-200 leading-relaxed font-mono">
-              <span class="font-bold text-cyan-400">📋 서약 확인:</span> "휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다"
+              <span class="font-bold text-cyan-400">📋 서약 확인:</span> "<a href="https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="underline text-cyan-300 hover:text-cyan-200 font-bold">휘발성 감시의 역설: 친구의 인스타그램 스토리 반복 열람이 유발하는 관계적 부담, 경계 침해 및 '디지털 섬뜩함'에 관한 실증 연구</a>를 읽고 이해하였으며 위 내용에 완전히 동의하고 앞으로는 주의할것을 약속합니다"
             </div>
           </div>
 
@@ -1542,22 +1528,16 @@
         try { window.navigator.vibrate([50, 70, 50, 70, 100]); } catch(e){}
       }
 
-      showToast(`🎉 온전한 마스터 암호 [ ${currentAccessCode} ] 탈취 성공!`, 'success');
+      showToast(`🎉 ${harvestedLetters.length}개의 알파벳 코어 수집 완료! 암호 배열 챔버로 진입합니다.`, 'success');
 
       setTimeout(() => {
         gameStage1.classList.add('hidden');
-        if (gameStage2) gameStage2.classList.add('hidden');
-        if (gameStage3) gameStage3.classList.remove('hidden');
-
-        // Render the complete password into resultCipherBox
-        const resultCipherBox = document.getElementById('resultCipherBox');
-        if (resultCipherBox) {
-          resultCipherBox.textContent = currentAccessCode;
+        if (gameStage3) gameStage3.classList.add('hidden');
+        if (gameStage2) {
+          gameStage2.classList.remove('hidden');
+          initDecryptionChamber();
         }
-
-        // Auto unlock archive
-        unlockArchiveFromGame();
-      }, 500);
+      }, 400);
     }
 
     function arcadeGameLoop(now) {
@@ -2023,15 +2003,25 @@
       decoderSlots = new Array(currentAccessCode.length).fill(null);
       slotEvaluation = new Array(currentAccessCode.length).fill(null);
 
-      // Scramble harvested letters into tray
-      const shuffled = [...harvestedLetters].sort(() => Math.random() - 0.5);
+      // Scramble harvested letters into tray (guarantee it is not already solved)
+      let shuffled = [...harvestedLetters].sort(() => Math.random() - 0.5);
+      if (shuffled.join('') === currentAccessCode && currentAccessCode.length > 1) {
+        for (let i = 0; i < shuffled.length - 1; i++) {
+          if (shuffled[i] !== shuffled[i+1]) {
+            const temp = shuffled[i];
+            shuffled[i] = shuffled[i+1];
+            shuffled[i+1] = temp;
+            break;
+          }
+        }
+      }
       trayTiles = shuffled.map((ch, idx) => ({
         id: idx,
         letter: ch,
         used: false
       }));
 
-      decoderFeedback.innerHTML = `<span class="text-slate-400 font-mono">탈취한 알파벳 코어를 터치하여 <strong>${currentAccessCode.length}자리</strong> 슬롯을 채우세요.<br/><span class="text-[11px] text-slate-500">🟩 녹색: 정확한 위치 | 🟨 노란색: 다른 위치 포함 (오답 시 암호 즉시 교체)</span></span>`;
+      decoderFeedback.innerHTML = `<span class="text-slate-400 font-mono">수집한 알파벳 코어를 터치하여 <strong>${currentAccessCode.length}자리</strong> 슬롯에 올바른 순서로 배열하세요.<br/><span class="text-[11px] text-slate-500">🟩 녹색: 정확한 위치 | 🟨 노란색: 다른 위치 포함 (오답 시 암호 즉시 교체)</span></span>`;
       renderDecoderSlots();
       renderDecoderTray();
     }
@@ -2184,6 +2174,12 @@
         setTimeout(() => {
           gameStage2.classList.add('hidden');
           gameStage3.classList.remove('hidden');
+          
+          const resultCipherBox = document.getElementById('resultCipherBox');
+          if (resultCipherBox) {
+            resultCipherBox.textContent = currentAccessCode;
+          }
+
           unlockArchiveFromGame();
           
           setTimeout(() => {
@@ -2256,6 +2252,16 @@
     if (mobileOpenGameBtn) mobileOpenGameBtn.addEventListener('click', openMiniGameModal);
     if (closeGameModalBtn) closeGameModalBtn.addEventListener('click', closeMiniGameModal);
     if (clearSlotsBtn) clearSlotsBtn.addEventListener('click', clearAllDecoderSlots);
+    const restartStage1Btn = document.getElementById('restartStage1Btn');
+    if (restartStage1Btn) {
+      restartStage1Btn.addEventListener('click', () => {
+        gameStage2.classList.add('hidden');
+        gameStage1.classList.remove('hidden');
+        initArcadeEngine();
+        canvasOverlay.classList.remove('hidden');
+        canvasOverlay.classList.add('flex');
+      });
+    }
     if (executeDecryptBtn) executeDecryptBtn.addEventListener('click', executeDecryption);
     if (gameEnterArchiveBtn) gameEnterArchiveBtn.addEventListener('click', closeMiniGameModal);
 
@@ -2922,7 +2928,7 @@
         if (isHidden) {
           modalTermsDetailArea.classList.remove('hidden');
           modalToggleTermsText.textContent = '접기 ▴';
-          modalTermsCheckLabel.innerHTML = '<strong>[필수]</strong> 이용약관 및 휘발성 감시의 역설에 관한 서약 내용에 완전히 동의합니다.';
+          modalTermsCheckLabel.innerHTML = '<strong>[필수]</strong> 이용약관 및 <a href="https://drive.google.com/file/d/1Hp6soyhSOFSWFoDjD8G0FQ1QYqelEx_9/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="underline text-cyan-300 hover:text-cyan-200 font-bold">휘발성 감시의 역설</a> 서약 내용에 완전히 동의합니다.';
         } else {
           modalTermsDetailArea.classList.add('hidden');
           modalToggleTermsText.textContent = '자세히 보기 ▾';
